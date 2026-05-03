@@ -192,6 +192,75 @@
       ul.norm {
         padding-left: 1.2rem;
       }
+      .editorial-disclosure {
+        padding: 0;
+        overflow: hidden;
+      }
+      .editorial-disclosure > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 1rem 1.35rem;
+        font-size: 1.02rem;
+        color: var(--accent);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .editorial-disclosure > summary::-webkit-details-marker {
+        display: none;
+      }
+      .editorial-disclosure > summary::before {
+        content: "▸";
+        display: inline-block;
+        transition: transform 0.15s ease;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      .editorial-disclosure[open] > summary::before {
+        transform: rotate(90deg);
+      }
+      .editorial-disclosure > summary:hover {
+        color: #a8bcff;
+      }
+      .editorial-playbook-body {
+        border-top: 1px solid var(--border);
+        padding: 0.25rem 1.35rem 1.25rem;
+      }
+      .editorial-playbook-body h3 {
+        font-size: 1.05rem;
+        margin: 1.15rem 0 0.5rem;
+        color: #d8dce3;
+        font-family: "IBM Plex Serif", Georgia, serif;
+        font-weight: 600;
+      }
+      .editorial-playbook-body h3:first-of-type {
+        margin-top: 0.85rem;
+      }
+      .editorial-playbook-body .playbook-title {
+        font-family: "IBM Plex Serif", Georgia, serif;
+        font-size: 1.2rem;
+        margin: 0.5rem 0 0.75rem;
+        color: #eef0f3;
+        font-weight: 600;
+        line-height: 1.25;
+      }
+      .editorial-playbook-body .playbook-lead {
+        margin: 0 0 0.75rem;
+        font-size: 0.98rem;
+      }
+      .editorial-playbook-body hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 1rem 0;
+      }
+      .editorial-playbook-body ul {
+        margin: 0.4rem 0 0;
+        padding-left: 1.2rem;
+      }
+      .editorial-playbook-body li {
+        margin-bottom: 0.5rem;
+      }
     </style>
   </head>
   <body>
@@ -252,6 +321,38 @@
         </p>
         <ul id="exec-bullets"></ul>
       </div>
+
+      <details class="card editorial-disclosure">
+        <summary>Want to know how a video editor would interpret this data?</summary>
+        <div class="editorial-playbook-body">
+          <!-- EDITORIAL_PLAYBOOK_BEGIN -->
+          <h2 class="playbook-title">Highlight reel editorial playbook (plain English)</h2>
+          <p class="playbook-lead">Practical takeaways for video editing and social — derived from aggregate winner-channel vs loser-channel patterns (2–3 minute match highlights). Use as <strong>directional</strong> instinct, not a rigid formula; brand, opponent, and how rough the result was still override averages.</p>
+          <hr>
+          <h3>When we <strong>win</strong>, the reel tends to…</h3>
+          <ul>
+          <li><strong>Breathe more.</strong> Fewer total clips, but <strong>each moment stays on screen longer</strong>, and the <strong>whole video is a bit longer</strong> (~4%). It feels less frantic, more “let this moment land.”</li>
+          <li><strong>Lean into joy.</strong> After <strong>our</strong> goals, we spend <strong>a lot more time</strong> on <strong>celebrations</strong> (especially in games where both teams scored). The story is: we scored, and we’re <em>feeling</em> it — linger on hugs, runs, crowd, bench.</li>
+          <li><strong>Show our misses a bit less.</strong> We include <strong>fewer</strong> “we almost scored” moments overall — the edit doesn’t need to prove we <em>could</em> have; the result already did.</li>
+          <li><strong>Let the rival sweat (a little).</strong> When they fluff a chance, we give <strong>more</strong> of <strong>their</strong> frustrated reactions — it reads as “they had their moments but couldn’t take them,” which flatters our win.</li>
+          </ul>
+          <hr>
+          <h3>When we <strong>lose</strong>, the reel tends to…</h3>
+          <ul>
+          <li><strong>Cut faster and pack more in.</strong> <strong>More clips</strong>, <strong>shorter</strong> average clip — snappier, more “here’s everything that happened,” less time to sit in any single beat.</li>
+          <li><strong>Spend less time celebrating our goals</strong> (again, where both teams scored). We still show we scored, but we <strong>don’t milk</strong> the happy bits as long — the mood of the day pulls the cut forward.</li>
+          <li><strong>Show more of our near-goals.</strong> <strong>More</strong> own-team <strong>non-goal chances</strong> — often reads as “we were in it,” “look how close it was,” or simply “we didn’t get the breaks.” It’s the classic “we fought / could’ve been different” layer.</li>
+          <li><strong>Give the opponent a bit more non-goal spotlight.</strong> <strong>More replays</strong> of their <strong>non-goal</strong> highlights (saves, close calls, etc.) — not necessarily more <em>chances</em> in the data, but <strong>more editorial emphasis</strong> on those moments. Visually, the opponent’s story gets a bit more air.</li>
+          </ul>
+          <hr>
+          <h3>One-line takeaway for the desk</h3>
+          <p><strong>Wins</strong> sell <strong>emotion and clarity</strong>: longer holds, bigger celebrations, fewer “almost” clips, a touch of rival pain. <strong>Losses</strong> sell <strong>effort and narrative</strong>: quicker pace, more “our chances” and “their moments” to frame the game, with celebrations trimmed so the piece doesn’t pretend it was a party.</p>
+          <hr>
+          <h3>Caveat</h3>
+          <p>Sample sizes in the underlying study are modest (<em>n</em> in the teens–30s for some metrics). Treat this as <strong>directional</strong> editorial instinct, not a proof — adjust for context every time.</p>
+          <!-- EDITORIAL_PLAYBOOK_END -->
+        </div>
+      </details>
 
       <h2>Figure 1 — Optional rival football exposure</h2>
       <p class="note" style="margin: 0 0 0.5rem">
@@ -357,6 +458,10 @@
       <ul class="norm">
         <li><code>docs/results.md</code> — paired tables &amp; synthesis.</li>
         <li><code>docs/methodology.md</code> — definitions, clip accounting.</li>
+        <li>
+          <code>docs/editorial-playbook.md</code> — plain-language editorial interpretation
+          (expanded in the section above).
+        </li>
         <li><code>scripts/build_stats.py</code> — regenerate <code>stats.json</code>.</li>
       </ul>
     </div>

@@ -19,9 +19,10 @@ Internal research kit comparing **winner-channel** vs **loser-channel** Premier 
 | `docs/index.html` | Static dashboard (Chart.js) — open locally after refresh |
 | `docs/stats.json` | Machine-readable aggregates |
 | `scripts/build_stats.py` | Reads spreadsheet → writes `docs/stats.json` |
-| `scripts/embed_stats_in_html.py` | Inlines JSON into `docs/index.html` for offline viewing |
+| `scripts/embed_stats_in_html.py` | Inlines `stats.json` and `editorial-playbook.md` into `docs/index.html` |
+| `scripts/embed_docs.py` | Same end result as `embed_stats_in_html.py` (convenience alias) |
 
-## Refresh numbers after editing the workbook
+## Refresh the report (numbers and/or editorial copy)
 
 Default spreadsheet path: `~/Downloads/pl_highlight_links_ENRICHED.xlsx`, or set:
 
@@ -29,25 +30,29 @@ Default spreadsheet path: `~/Downloads/pl_highlight_links_ENRICHED.xlsx`, or set
 export HIGHLIGHTS_XLSX=/path/to/pl_highlight_links_ENRICHED.xlsx
 ```
 
-Then refresh aggregates and the offline HTML embed:
+Then rebuild aggregates and embed everything into `docs/index.html` (**stats + editorial playbook**):
 
 ```bash
 python3 scripts/build_stats.py && python3 scripts/embed_stats_in_html.py
 ```
 
+Edit **`docs/editorial-playbook.md`** for the collapsible “video editor” interpretation; run **`python3 scripts/embed_stats_in_html.py`** afterward (no spreadsheet step needed).
+
 Optional: copy the workbook to `data/pl_highlight_links_ENRICHED.xlsx` for a portable checkout.
 
 ## Dependencies
 
-Python **3** with `pandas` + `openpyxl`:
+Python **3**. Install from the repo root:
 
 ```bash
-pip install pandas openpyxl
+python3 -m pip install -r requirements.txt
 ```
+
+(`pandas`, `openpyxl`, `markdown` — the last one renders the editorial playbook into HTML.)
 
 ## Viewing the HTML report
 
-Open `docs/index.html` in a browser (stats are embedded after running `embed_stats_in_html.py`).
+Open `docs/index.html` in a browser after running `embed_stats_in_html.py`.
 
 ## Editing
 

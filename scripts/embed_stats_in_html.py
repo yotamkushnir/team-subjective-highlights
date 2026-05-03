@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-"""Inline docs/stats.json into docs/index.html as const STATS = {...}"""
+"""Inline docs/stats.json into docs/index.html as const STATS = {...}.
+
+Also runs embed_editorial_playbook.py so one invocation refreshes charts copy + playbook.
+"""
 import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,3 +29,7 @@ if n != 1:
     )
 html_path.write_text(new_html, encoding="utf-8")
 print(f"Inlined stats into {html_path}")
+
+playbook_script = Path(__file__).resolve().parent / "embed_editorial_playbook.py"
+r = subprocess.run([sys.executable, str(playbook_script)], cwd=str(ROOT))
+raise SystemExit(r.returncode)
