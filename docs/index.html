@@ -21,7 +21,8 @@
         --winner: #4ade80;
         --loser: #f472b6;
         --border: #2a2f3a;
-        --maxw: 52rem;
+        --callout: #1e2430;
+        --maxw: 54rem;
       }
       * {
         box-sizing: border-box;
@@ -44,24 +45,29 @@
       h3 {
         font-family: "IBM Plex Serif", Georgia, serif;
         font-weight: 600;
-        line-height: 1.2;
+        line-height: 1.25;
       }
       h1 {
-        font-size: 1.85rem;
-        margin: 0 0 0.5rem;
+        font-size: 1.75rem;
+        margin: 0 0 1rem;
       }
       h2 {
-        font-size: 1.2rem;
-        margin: 2.25rem 0 0.75rem;
-        color: #d0d3d8;
+        font-size: 1.22rem;
+        margin: 2.35rem 0 0.65rem;
+        color: #d8dce3;
+      }
+      h3.hero-part {
+        font-family: "IBM Plex Serif", Georgia, serif;
+        font-size: 1.05rem;
+        margin: 1.25rem 0 0.5rem;
+        color: var(--accent);
+      }
+      h3.hero-part:first-of-type {
+        margin-top: 0.75rem;
       }
       p,
       li {
         color: #c4c7ce;
-      }
-      .lede {
-        font-size: 1.05rem;
-        color: #eef0f3;
       }
       .tag {
         display: inline-block;
@@ -77,7 +83,20 @@
         border: 1px solid var(--border);
         border-radius: 10px;
         padding: 1.25rem 1.35rem;
-        margin: 1.5rem 0;
+        margin: 1.25rem 0;
+      }
+      .hero-card p {
+        margin: 0 0 0.65rem;
+      }
+      .exec-summary {
+        background: var(--callout);
+        border: 1px solid #2e3648;
+      }
+      .exec-summary ul {
+        margin: 0.5rem 0 0;
+      }
+      .exec-summary li {
+        margin-bottom: 0.45rem;
       }
       .grid-2 {
         display: grid;
@@ -90,8 +109,11 @@
       }
       .chart-box {
         position: relative;
-        height: 280px;
+        height: 300px;
         margin-top: 0.5rem;
+      }
+      .chart-box.tall {
+        height: 220px;
       }
       .stat-pill {
         display: flex;
@@ -99,17 +121,64 @@
         gap: 0.5rem 1rem;
         font-size: 0.9rem;
         color: var(--muted);
-        margin: 0.5rem 0 0;
+        margin: 0.75rem 0 0;
       }
       .stat-pill strong {
         color: var(--text);
       }
+      .conclusions {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0 0;
+      }
+      .conclusions li {
+        position: relative;
+        padding-left: 1.1rem;
+        margin-bottom: 0.45rem;
+        font-size: 0.98rem;
+      }
+      .conclusions li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .metric-deep {
+        margin-top: 1rem;
+      }
+      .metric-deep h4 {
+        margin: 0 0 0.35rem;
+        font-size: 1rem;
+        font-family: "IBM Plex Serif", Georgia, serif;
+        color: #eef0f3;
+      }
+      .metric-deep p {
+        margin: 0 0 0.75rem;
+        font-size: 0.95rem;
+      }
+      .metric-deep dl {
+        margin: 0;
+        font-size: 0.92rem;
+      }
+      .metric-deep dt {
+        color: var(--muted);
+        font-weight: 600;
+        margin-top: 0.5rem;
+      }
+      .metric-deep dt:first-child {
+        margin-top: 0;
+      }
+      .metric-deep dd {
+        margin: 0.15rem 0 0 0;
+        color: #b8bcc4;
+      }
       .note {
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         color: var(--muted);
         border-left: 3px solid var(--border);
         padding-left: 0.75rem;
-        margin: 1rem 0 0;
+        margin: 0.85rem 0 0;
       }
       a {
         color: var(--accent);
@@ -120,94 +189,139 @@
         padding: 0.1em 0.35em;
         border-radius: 4px;
       }
-      ul {
+      ul.norm {
         padding-left: 1.2rem;
       }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <p class="tag">Internal — Team Subjective Highlights</p>
-      <h1>How winner-channel vs loser-channel edits differ (club-blind)</h1>
-      <p class="lede">
-        This view compares the <strong>winning club’s</strong> official highlight to the
-        <strong>losing club’s</strong> for the same match. All headline numbers are
-        <strong>role-based</strong> (winner edit / loser edit), not brand-based. We do
-        <strong>not</strong> try to explain <em>which</em> PBP events were included—goals
-        and obvious top plays are <em>given</em>. The signal we model is
-        <strong>pacing</strong>, <strong>volume splits</strong>,
-        <strong>persona/emotional time</strong>, <strong>replay counts</strong>, and
-        <strong>optional rival exposure</strong>.
-      </p>
+      <p class="tag">Team Subjective Highlights</p>
+      <h1>Winner-channel vs loser-channel edits (club-blind)</h1>
 
-      <div class="stat-pill" id="pill-meta"></div>
+      <div class="card hero-card">
+        <h3 class="hero-part">Role-based scope</h3>
+        <p>
+          We compare <strong>winner-channel</strong> vs <strong>loser-channel</strong> edits for the
+          same matches, <strong>club-blind</strong> in the main analysis: teams are only
+          “winner” or “loser” in that fixture, not named brands in the headline claim.
+        </p>
 
-      <h2>Figure 1 — Paired means (winner vs loser channel)</h2>
-      <div class="card">
-        <div class="chart-box"><canvas id="chartMeans"></canvas></div>
-        <p class="note">
-          Paired fixtures only; some metrics drop rows when source cells were incomplete in the
-          sheet (<span id="note-n"></span>). Negative deltas favor the loser-role edit on that
-          metric.
+        <h3 class="hero-part">What this study does not try to explain</h3>
+        <p>
+          We did not analyze what happened in the match in terms of type of action (e.g. shot
+          shape, set pieces, “quality” of save or goal). The play-by-play content of the match is
+          <strong>given</strong>: goals and obviously strong plays will appear. There is no
+          meaningful “editorial voice” in which PBP moments get in at that level. The editorial
+          voice shows up in <strong>pacing</strong>, how things are split
+          (<strong>how many</strong> of each kind of beat, not which specific plays),
+          <strong>exposure to people</strong> (how much time on self vs rival personas),
+          <strong>emotional emphasis</strong>, and how much room is left to the opponent in the
+          cut.
+        </p>
+
+        <h3 class="hero-part">Cordiality</h3>
+        <p style="margin-bottom: 0">
+          Any extra exposure to the rival is “generous” in this framework — not only optional
+          chances. <strong>Rival reaction time</strong> is not the opposite of self celebration;
+          it is another form of screen time you can give the opponent. High rival exposure
+          (reactions, rival celebrations you still show, etc.) reads cordial in the same
+          direction as showing rival non-goal chances — you are <strong>ceding space</strong> in
+          the edit.
         </p>
       </div>
 
-      <h2>Figure 2 — Persona exposure (aggregated)</h2>
+      <div class="stat-pill" id="pill-meta"></div>
+
+      <h2>Executive summary</h2>
+      <div class="card exec-summary">
+        <p style="margin: 0; color: #aab0b8; font-size: 0.92rem">
+          Bottom line first (paired fixtures; exact <em>n</em> varies by column completeness in the
+          sheet — see each figure).
+          <strong>% convention:</strong> where winner-role is higher, we report
+          <code>100×(W−L)/L</code> (“vs loser baseline”). Where loser-role is higher (clips, rival
+          replays, rival-only persona), we report <code>100×(high−low)/low</code> using the lower
+          mean as baseline.
+        </p>
+        <ul id="exec-bullets"></ul>
+      </div>
+
+      <h2>Figure 1 — Structure &amp; optional rival exposure (paired means)</h2>
+      <p class="note" style="margin: 0 0 0.5rem">
+        Same vertical scale for clip pacing and rival exposure metrics.
+        <strong>Total runtime</strong> is plotted separately (Figure 2) because it sits on a much
+        larger numeric range.
+      </p>
+      <div class="card">
+        <div class="chart-box"><canvas id="chartStructure"></canvas></div>
+        <ul class="conclusions" id="fig1-conc"></ul>
+        <p class="note" id="fig1-note-n"></p>
+      </div>
+
+      <h2>Figure 2 — Total runtime</h2>
+      <div class="card">
+        <div class="chart-box tall"><canvas id="chartRuntime"></canvas></div>
+        <ul class="conclusions" id="fig2-conc"></ul>
+      </div>
+
+      <h2>Figure 3 — Persona exposure (aggregated)</h2>
       <p>
-        <strong>Celebration</strong> and <strong>reaction</strong> are not opposites here: we
-        <strong>sum</strong> self+rival celebration and self+rival reaction into
-        <em>total persona seconds</em>, then express as
-        <strong>share of runtime</strong> and <strong>seconds per clip</strong> (final-whistle
-        block handled per methodology). More <strong>rival</strong> celebration+reaction time
-        is treated as <strong>more cordial</strong> optional exposure to the opponent.
+        <strong>Celebration</strong> and <strong>reaction</strong> are not opposites: we sum
+        self + rival celebration and self + rival reaction into <em>total persona seconds</em>,
+        then normalize by runtime and by clip count (final-whistle block excluded per
+        methodology). <strong>Rival-only</strong> persona isolates time on <strong>rival</strong>
+        faces/crowds (celebration + reaction).
       </p>
       <div class="grid-2">
         <div class="card">
           <h3 style="margin: 0 0 0.5rem; font-size: 1rem">Persona share of runtime</h3>
-          <div class="chart-box" style="height: 220px">
-            <canvas id="chartPersonaShare"></canvas>
-          </div>
+          <div class="chart-box tall"><canvas id="chartPersonaShare"></canvas></div>
+          <ul class="conclusions" id="fig3a-conc"></ul>
         </div>
         <div class="card">
           <h3 style="margin: 0 0 0.5rem; font-size: 1rem">Persona seconds per clip</h3>
-          <div class="chart-box" style="height: 220px">
-            <canvas id="chartPersonaPerClip"></canvas>
-          </div>
+          <div class="chart-box tall"><canvas id="chartPersonaPerClip"></canvas></div>
+          <ul class="conclusions" id="fig3b-conc"></ul>
         </div>
       </div>
       <div class="card">
-        <h3 style="margin: 0 0 0.5rem; font-size: 1rem">Rival-only persona (rival celebration + reaction)</h3>
-        <div class="chart-box" style="height: 220px">
-          <canvas id="chartRivalPersona"></canvas>
-        </div>
-        <p class="note" id="rival-note"></p>
+        <h3 style="margin: 0 0 0.5rem; font-size: 1rem">
+          Rival-only persona (rival celebration + rival reaction)
+        </h3>
+        <div class="chart-box tall"><canvas id="chartRivalPersona"></canvas></div>
+        <ul class="conclusions" id="fig3c-conc"></ul>
       </div>
 
-      <h2>Later & exploratory (not the hero claim)</h2>
-      <ul>
+      <h2>What each metric means</h2>
+      <p style="margin-top: 0">
+        Short definitions aligned with the tagging sheet and <code>docs/methodology.md</code>.
+      </p>
+      <div class="card metric-deep" id="deep-metrics"></div>
+
+      <h2>Later &amp; exploratory (not the headline claim)</h2>
+      <ul class="norm">
         <li>
-          <strong>Per-club</strong> cuts (how a team edits as winner vs loser) need larger n per
-          club—optional follow-up.
+          <strong>Per-club</strong> cuts need larger <em>n</em> per club — optional follow-up.
         </li>
         <li>
-          <strong>Rival identity</strong> (big-six vs rest) is future scope—test whether pacing or
+          <strong>Rival identity</strong> (e.g. big-six vs rest): future scope for whether pacing or
           generosity shifts by opponent draw.
         </li>
       </ul>
 
       <div class="card" style="border-color: #3d3428">
-        <h3 style="margin: 0 0 0.35rem; font-size: 1rem">Before any per-team dashboard</h3>
+        <h3 style="margin: 0 0 0.35rem; font-size: 1rem">Before any per-team view</h3>
         <p style="margin: 0">
-          Per-team charts are <strong>exploratory only</strong>. The main aggregate spans only
-          <strong id="mw-count"></strong> matchweeks; slice-by-club sample sizes are tiny—use as a
-          conversation starter unless we expand tagging.
+          Per-team charts are <strong>exploratory only</strong>. The aggregate window spans only
+          <strong id="mw-count"></strong> matchweeks; slice-by-club sample sizes are tiny — use as
+          a conversation starter unless tagging expands.
         </p>
       </div>
 
       <h2>References</h2>
-      <ul>
-        <li><code>docs/results.md</code> — full paired tables & synthesis.</li>
-        <li><code>docs/methodology.md</code> — definitions, clip accounting, QA.</li>
+      <ul class="norm">
+        <li><code>docs/results.md</code> — paired tables &amp; synthesis.</li>
+        <li><code>docs/methodology.md</code> — definitions, clip accounting.</li>
         <li><code>scripts/build_stats.py</code> — regenerate <code>stats.json</code>.</li>
       </ul>
     </div>
@@ -305,9 +419,36 @@
         if (!S) {
           document.body.insertAdjacentHTML(
             "afterbegin",
-            '<div style="background:#3d1111;color:#fecaca;padding:10px;text-align:center">Load stats failed — run python3 scripts/build_stats.py and rebuild index.</div>'
+            '<div style="background:#3d1111;color:#fecaca;padding:10px;text-align:center">Load stats failed — run python3 scripts/build_stats.py and scripts/embed_stats_in_html.py.</div>'
           );
           return;
+        }
+
+        Chart.defaults.color = "#c4c7ce";
+        Chart.defaults.borderColor = "#2a2f3a";
+
+        /** Winner vs loser-role baseline (L): 100*(W-L)/L — negative ⇒ winner lower. */
+        function pctWL(W, L) {
+          if (L === 0 || !isFinite(W) || !isFinite(L)) return null;
+          return (100 * (W - L)) / L;
+        }
+
+        /** How much higher `high` is than `low`, vs low: 100*(high-low)/low */
+        function pctAbove(high, low) {
+          if (low === 0 || !isFinite(high) || !isFinite(low)) return null;
+          return (100 * (high - low)) / low;
+        }
+
+        function fmtPct(p) {
+          if (p == null || !isFinite(p)) return "—";
+          const sign = p > 0 ? "+" : "";
+          return sign + p.toFixed(1) + "%";
+        }
+
+        function fmtNum(v, d) {
+          if (v == null || !isFinite(v)) return "—";
+          const dec = d != null ? d : v < 10 && v % 1 !== 0 ? 2 : 1;
+          return v.toFixed(dec);
         }
 
         document.getElementById("pill-meta").innerHTML =
@@ -317,182 +458,522 @@
           S.matchday_count +
           " (MW " +
           S.matchdays.join(", ") +
-          ") · <strong>Source:</strong> <span style=\"font-size:0.85rem\">" +
+          ") · <strong>Source:</strong> <span style=\"font-size:0.82rem;word-break:break-all\">" +
           S.source_file +
           "</span>";
 
         document.getElementById("mw-count").textContent = S.matchday_count;
-        document.getElementById("note-n").textContent =
-          "rival replays n=" +
-          S.rival_non_goal_replays.n +
-          ", avg clip n=" +
-          S.avg_clip_length.n;
 
+        const rn = S.rival_non_goal_chances;
+        const rr = S.rival_non_goal_replays;
+        const ac = S.avg_clip_length;
+        const cc = S.clip_count;
+        const tl = S.total_length;
+        const ps = S.persona_share_of_runtime;
+        const ppc = S.persona_sec_per_clip;
         const rp = S.rival_persona_sec;
-        document.getElementById("rival-note").textContent =
-          "Mean rival-only persona time is higher for loser-role edits (" +
-          rp.loser_mean.toFixed(2) +
-          "s vs " +
-          rp.winner_mean.toFixed(2) +
-          "s; Δ " +
-          rp.mean_diff_w_minus_l.toFixed(2) +
-          "s across n=" +
-          rp.n +
-          " paired fixtures).";
 
-        Chart.defaults.color = "#c4c7ce";
-        Chart.defaults.borderColor = "#2a2f3a";
+        const pClipAbove = pctAbove(cc.loser_mean, cc.winner_mean);
+        const pAvg = pctWL(ac.winner_mean, ac.loser_mean);
+        const pTl = pctWL(tl.winner_mean, tl.loser_mean);
+        const pPs = pctWL(ps.winner_mean, ps.loser_mean);
+        const pPpc = pctWL(ppc.winner_mean, ppc.loser_mean);
+        const pRivalFaceAbove = pctAbove(rp.loser_mean, rp.winner_mean);
 
-        const mkMeansChart = () => {
-          const labels = [
-            "Rival non-goal chances",
-            "Rival non-goal replays (count)",
-            "Avg clip length (s)",
-            "Clip count",
-            "Total length (s)",
-          ];
-          const w = [
-            S.rival_non_goal_chances.winner_mean,
-            S.rival_non_goal_replays.winner_mean,
-            S.avg_clip_length.winner_mean,
-            S.clip_count.winner_mean,
-            S.total_length.winner_mean,
-          ];
-          const l = [
-            S.rival_non_goal_chances.loser_mean,
-            S.rival_non_goal_replays.loser_mean,
-            S.avg_clip_length.loser_mean,
-            S.clip_count.loser_mean,
-            S.total_length.loser_mean,
-          ];
-          new Chart(document.getElementById("chartMeans"), {
-            type: "bar",
-            data: {
-              labels,
-              datasets: [
-                {
-                  label: "Winner-role edit",
-                  data: w,
-                  backgroundColor: "rgba(74,222,128,0.65)",
-                  borderWidth: 0,
-                },
-                {
-                  label: "Loser-role edit",
-                  data: l,
-                  backgroundColor: "rgba(244,114,182,0.65)",
-                  borderWidth: 0,
-                },
-              ],
+        const exec = [];
+        exec.push(
+          "<strong>Pacing:</strong> Loser-role edits use <strong>" +
+            fmtPct(pClipAbove) +
+            "</strong> more clips than winner-role on average (means <strong>" +
+            fmtNum(cc.loser_mean, 2) +
+            "</strong> vs winner <strong>" +
+            fmtNum(cc.winner_mean, 2) +
+            "</strong> clips per video; <em>n</em>=" +
+            cc.n +
+            "). Winner-role average clip length is <strong>" +
+            fmtPct(pAvg) +
+            "</strong> vs loser-role (<strong>" +
+            fmtNum(ac.winner_mean, 2) +
+            "</strong>s vs <strong>" +
+            fmtNum(ac.loser_mean, 2) +
+            "</strong>s)."
+        );
+        exec.push(
+          "<strong>Runtime:</strong> Winner-role videos run about <strong>" +
+            fmtPct(pTl) +
+            "</strong> longer on average than loser-role (<strong>" +
+            fmtNum(tl.winner_mean, 1) +
+            "</strong>s vs <strong>" +
+            fmtNum(tl.loser_mean, 1) +
+            "</strong>s; <em>n</em>=" +
+            tl.n +
+            ")."
+        );
+        exec.push(
+          "<strong>Optional rival football exposure:</strong> Rival non-goal <strong>replay counts</strong> skew toward loser-role edits (means <strong>" +
+            fmtNum(rr.loser_mean, 2) +
+            "</strong> vs <strong>" +
+            fmtNum(rr.winner_mean, 2) +
+            "</strong>; <em>n</em>=" +
+            rr.n +
+            "). Rival non-goal <strong>chance</strong> counts are flat on average (<strong>" +
+            fmtNum(rn.winner_mean, 2) +
+            "</strong> vs <strong>" +
+            fmtNum(rn.loser_mean, 2) +
+            "</strong>; <em>n</em>=" +
+            rn.n +
+            ")."
+        );
+        exec.push(
+          "<strong>Persona time:</strong> Winner-role devotes a larger share of runtime to <strong>people-focused</strong> beats (celebration + reaction, self + rival): share of runtime <strong>" +
+            fmtPct(pPs) +
+            "</strong> vs loser baseline (<strong>" +
+            fmtNum(100 * ps.winner_mean, 1) +
+            "%</strong> vs <strong>" +
+            fmtNum(100 * ps.loser_mean, 1) +
+            "%</strong>; <em>n</em>=" +
+            ps.n +
+            "). Per clip, winner-role dedicates <strong>" +
+            fmtPct(pPpc) +
+            "</strong> more persona seconds (<strong>" +
+            fmtNum(ppc.winner_mean, 2) +
+            "</strong>s vs <strong>" +
+            fmtNum(ppc.loser_mean, 2) +
+            "</strong>s)."
+        );
+        exec.push(
+          "<strong>Rival-only persona:</strong> Loser-role averages <strong>" +
+            fmtPct(pRivalFaceAbove) +
+            "</strong> more rival celebration + reaction time than winner-role (<strong>" +
+            fmtNum(rp.loser_mean, 2) +
+            "</strong>s vs <strong>" +
+            fmtNum(rp.winner_mean, 2) +
+            "</strong>s; <em>n</em>=" +
+            rp.n +
+            ") — more cordial rival face-time when losing in this sample."
+        );
+
+        document.getElementById("exec-bullets").innerHTML = exec
+          .map(function (h) {
+            return "<li>" + h + "</li>";
+          })
+          .join("");
+
+        document.getElementById("fig1-note-n").textContent =
+          "Paired rows: rival non-goal chances n=" +
+          rn.n +
+          ", rival replays n=" +
+          rr.n +
+          ", avg clip length n=" +
+          ac.n +
+          ", clip count n=" +
+          cc.n +
+          ".";
+
+        function barLabelsPlugin() {
+          return {
+            id: "barLabels",
+            afterDatasetsDraw: function (chart) {
+              const ctx = chart.ctx;
+              chart.data.datasets.forEach(function (ds, di) {
+                const meta = chart.getDatasetMeta(di);
+                meta.data.forEach(function (el, i) {
+                  const v = ds.data[i];
+                  if (v == null || !el) return;
+                  var pt =
+                    typeof el.tooltipPosition === "function"
+                      ? el.tooltipPosition()
+                      : { x: el.x, y: el.y };
+                  ctx.save();
+                  ctx.fillStyle = "#e8eaed";
+                  ctx.font = "600 11px DM Sans, system-ui, sans-serif";
+                  ctx.textAlign = "center";
+                  ctx.textBaseline = "bottom";
+                  var txt =
+                    typeof v === "number"
+                      ? Math.abs(v) >= 10
+                        ? v.toFixed(1)
+                        : v.toFixed(2)
+                      : String(v);
+                  ctx.fillText(txt, pt.x, pt.y - 4);
+                  ctx.restore();
+                });
+              });
             },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: {
-                x: { ticks: { maxRotation: 35, minRotation: 0 } },
-                y: { beginAtZero: true, grid: { color: "#2a2f3a" } },
+          };
+        }
+
+        Chart.register(barLabelsPlugin());
+
+        function mkTooltipN(keys) {
+          return {
+            callbacks: {
+              footer: function (items) {
+                var i = items[0].dataIndex;
+                var k = keys[i];
+                return "n=" + S[k].n;
               },
-              plugins: {
-                legend: { labels: { boxWidth: 12 } },
-                tooltip: {
-                  callbacks: {
-                    footer: (items) => {
-                      const i = items[0].dataIndex;
-                      const keys = [
-                        "rival_non_goal_chances",
-                        "rival_non_goal_replays",
-                        "avg_clip_length",
-                        "clip_count",
-                        "total_length",
-                      ];
-                      const k = keys[i];
-                      return "n=" + S[k].n;
-                    },
+            },
+          };
+        }
+
+        function conclusionLines(htmlArr) {
+          return htmlArr.map(function (h) {
+            return "<li>" + h + "</li>";
+          }).join("");
+        }
+
+        /* Figure 1 */
+        const keys1 = ["rival_non_goal_chances", "rival_non_goal_replays", "avg_clip_length", "clip_count"];
+        new Chart(document.getElementById("chartStructure"), {
+          type: "bar",
+          data: {
+            labels: [
+              "Rival non-goal chances",
+              "Rival non-goal replays (count)",
+              "Avg clip length (s)",
+              "Clip count",
+            ],
+            datasets: [
+              {
+                label: "Winner-role edit",
+                data: [rn.winner_mean, rr.winner_mean, ac.winner_mean, cc.winner_mean],
+                backgroundColor: "rgba(74,222,128,0.7)",
+                borderWidth: 0,
+              },
+              {
+                label: "Loser-role edit",
+                data: [rn.loser_mean, rr.loser_mean, ac.loser_mean, cc.loser_mean],
+                backgroundColor: "rgba(244,114,182,0.7)",
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { ticks: { maxRotation: 28 } },
+              y: { beginAtZero: true, grid: { color: "#2a2f3a" } },
+            },
+            plugins: {
+              legend: { labels: { boxWidth: 12 } },
+              tooltip: mkTooltipN(keys1),
+            },
+          },
+        });
+
+        var fig1Html = [];
+        fig1Html.push(
+          "<strong>Rival non-goal chances:</strong> winner-role mean <strong>" +
+            fmtNum(rn.winner_mean, 2) +
+            "</strong>, loser-role <strong>" +
+            fmtNum(rn.loser_mean, 2) +
+            "</strong> — Δ vs loser baseline <strong>" +
+            fmtPct(pctWL(rn.winner_mean, rn.loser_mean)) +
+            "</strong> (<em>n</em>=" +
+            rn.n +
+            "). Essentially flat on average."
+        );
+        fig1Html.push(
+          "<strong>Rival non-goal replays:</strong> loser-role mean <strong>" +
+            fmtNum(rr.loser_mean, 2) +
+            "</strong> vs winner-role <strong>" +
+            fmtNum(rr.winner_mean, 2) +
+            "</strong> — loser averages <strong>" +
+            fmtPct(pctAbove(rr.loser_mean, rr.winner_mean)) +
+            "</strong> more replay angles than winner-role (same paired fixtures). Small absolute means — treat % as illustrative."
+        );
+        fig1Html.push(
+          "<strong>Avg clip length:</strong> winner-role <strong>" +
+            fmtNum(ac.winner_mean, 2) +
+            "</strong>s vs loser-role <strong>" +
+            fmtNum(ac.loser_mean, 2) +
+            "</strong>s → winner <strong>" +
+            fmtPct(pctWL(ac.winner_mean, ac.loser_mean)) +
+            "</strong> vs loser baseline (<em>n</em>=" +
+            ac.n +
+            ")."
+        );
+        fig1Html.push(
+          "<strong>Clip count:</strong> loser-role <strong>" +
+            fmtNum(cc.loser_mean, 2) +
+            "</strong> vs winner-role <strong>" +
+            fmtNum(cc.winner_mean, 2) +
+            "</strong> clips → loser averages <strong>" +
+            fmtPct(pctAbove(cc.loser_mean, cc.winner_mean)) +
+            "</strong> more clips than winner-role (<em>n</em>=" +
+            cc.n +
+            ")."
+        );
+        document.getElementById("fig1-conc").innerHTML = conclusionLines(fig1Html);
+
+        /* Figure 2 runtime */
+        new Chart(document.getElementById("chartRuntime"), {
+          type: "bar",
+          data: {
+            labels: ["Total video length (s)"],
+            datasets: [
+              {
+                label: "Winner-role edit",
+                data: [tl.winner_mean],
+                backgroundColor: "rgba(74,222,128,0.75)",
+                borderWidth: 0,
+              },
+              {
+                label: "Loser-role edit",
+                data: [tl.loser_mean],
+                backgroundColor: "rgba(244,114,182,0.75)",
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true, grid: { color: "#2a2f3a" } } },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  footer: function () {
+                    return "n=" + tl.n;
                   },
                 },
               },
             },
-          });
-        };
+          },
+        });
+        document.getElementById("fig2-conc").innerHTML = conclusionLines([
+          "Winner-role runtime averages <strong>" +
+            fmtNum(tl.winner_mean, 1) +
+            "</strong>s vs loser-role <strong>" +
+            fmtNum(tl.loser_mean, 1) +
+            "</strong>s — winner <strong>" +
+            fmtPct(pctWL(tl.winner_mean, tl.loser_mean)) +
+            "</strong> vs loser baseline (<em>n</em>=" +
+            tl.n +
+            ").",
+        ]);
 
-        const personaShare = () =>
-          new Chart(document.getElementById("chartPersonaShare"), {
-            type: "bar",
-            data: {
-              labels: ["Persona / runtime"],
-              datasets: [
-                {
-                  label: "Winner role",
-                  data: [S.persona_share_of_runtime.winner_mean * 100],
-                  backgroundColor: "rgba(74,222,128,0.7)",
-                },
-                {
-                  label: "Loser role",
-                  data: [S.persona_share_of_runtime.loser_mean * 100],
-                  backgroundColor: "rgba(244,114,182,0.7)",
-                },
-              ],
+        /* Figure 3 panels */
+        new Chart(document.getElementById("chartPersonaShare"), {
+          type: "bar",
+          data: {
+            labels: ["Persona time ÷ runtime"],
+            datasets: [
+              {
+                label: "Winner-role",
+                data: [100 * ps.winner_mean],
+                backgroundColor: "rgba(74,222,128,0.75)",
+              },
+              {
+                label: "Loser-role",
+                data: [100 * ps.loser_mean],
+                backgroundColor: "rgba(244,114,182,0.75)",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: "% of runtime" },
+                grid: { color: "#2a2f3a" },
+              },
             },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: { y: { beginAtZero: true, title: { display: true, text: "%" } } },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  footer: function () {
+                    return "n=" + ps.n;
+                  },
+                },
+              },
             },
-          });
+          },
+        });
+        document.getElementById("fig3a-conc").innerHTML = conclusionLines([
+          "Winner-role devotes <strong>" +
+            fmtNum(100 * ps.winner_mean, 1) +
+            "%</strong> of runtime to persona beats vs <strong>" +
+            fmtNum(100 * ps.loser_mean, 1) +
+            "%</strong> for loser-role — relative gap <strong>" +
+            fmtPct(pctWL(ps.winner_mean, ps.loser_mean)) +
+            "</strong> vs loser baseline (<em>n</em>=" +
+            ps.n +
+            ").",
+        ]);
 
-        const personaPer = () =>
-          new Chart(document.getElementById("chartPersonaPerClip"), {
-            type: "bar",
-            data: {
-              labels: ["Persona seconds / clip"],
-              datasets: [
-                {
-                  label: "Winner role",
-                  data: [S.persona_sec_per_clip.winner_mean],
-                  backgroundColor: "rgba(74,222,128,0.7)",
-                },
-                {
-                  label: "Loser role",
-                  data: [S.persona_sec_per_clip.loser_mean],
-                  backgroundColor: "rgba(244,114,182,0.7)",
-                },
-              ],
+        new Chart(document.getElementById("chartPersonaPerClip"), {
+          type: "bar",
+          data: {
+            labels: ["Persona seconds per clip"],
+            datasets: [
+              {
+                label: "Winner-role",
+                data: [ppc.winner_mean],
+                backgroundColor: "rgba(74,222,128,0.75)",
+              },
+              {
+                label: "Loser-role",
+                data: [ppc.loser_mean],
+                backgroundColor: "rgba(244,114,182,0.75)",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: { beginAtZero: true, title: { display: true, text: "seconds" }, grid: { color: "#2a2f3a" } },
             },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: { y: { beginAtZero: true, title: { display: true, text: "s" } } },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  footer: function () {
+                    return "n=" + ppc.n;
+                  },
+                },
+              },
             },
-          });
+          },
+        });
+        document.getElementById("fig3b-conc").innerHTML = conclusionLines([
+          "<strong>" +
+            fmtNum(ppc.winner_mean, 2) +
+            "</strong>s vs <strong>" +
+            fmtNum(ppc.loser_mean, 2) +
+            "</strong>s persona time per clip — winner-role <strong>" +
+            fmtPct(pctWL(ppc.winner_mean, ppc.loser_mean)) +
+            "</strong> vs loser baseline (<em>n</em>=" +
+            ppc.n +
+            ").",
+        ]);
 
-        const rivalP = () =>
-          new Chart(document.getElementById("chartRivalPersona"), {
-            type: "bar",
-            data: {
-              labels: ["Rival celebration + reaction (s)"],
-              datasets: [
-                {
-                  label: "Winner role",
-                  data: [S.rival_persona_sec.winner_mean],
-                  backgroundColor: "rgba(74,222,128,0.7)",
+        new Chart(document.getElementById("chartRivalPersona"), {
+          type: "bar",
+          data: {
+            labels: ["Rival celebration + reaction (s)"],
+            datasets: [
+              {
+                label: "Winner-role",
+                data: [rp.winner_mean],
+                backgroundColor: "rgba(74,222,128,0.75)",
+              },
+              {
+                label: "Loser-role",
+                data: [rp.loser_mean],
+                backgroundColor: "rgba(244,114,182,0.75)",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true, title: { display: true, text: "seconds" }, grid: { color: "#2a2f3a" } } },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  footer: function () {
+                    return "n=" + rp.n;
+                  },
                 },
-                {
-                  label: "Loser role",
-                  data: [S.rival_persona_sec.loser_mean],
-                  backgroundColor: "rgba(244,114,182,0.7)",
-                },
-              ],
+              },
             },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: { y: { beginAtZero: true, title: { display: true, text: "s" } } },
-            },
-          });
+          },
+        });
+        document.getElementById("fig3c-conc").innerHTML = conclusionLines([
+          "Rival-only persona: loser-role <strong>" +
+            fmtNum(rp.loser_mean, 2) +
+            "</strong>s vs winner-role <strong>" +
+            fmtNum(rp.winner_mean, 2) +
+            "</strong>s — loser-role runs <strong>" +
+            fmtPct(pctAbove(rp.loser_mean, rp.winner_mean)) +
+            "</strong> more rival persona time (<em>n</em>=" +
+            rp.n +
+            ").",
+        ]);
 
-        mkMeansChart();
-        personaShare();
-        personaPer();
-        rivalP();
+        /* Deep-dive blocks */
+        var deep = [
+          {
+            title: "Rival non-goal chances (count)",
+            measured:
+              "Number of clips that are non-goal attacking chances for the **rival**, per official highlight video. A clip is one play; anything that is not a goal counts as a chance for the attacking side in that clip.",
+            implies:
+              "Shows how often the editor includes **optional** rival attacking moments they could omit (beyond mandatory goals). Higher counts trend **cordial** — more space ceded to the opponent’s story.",
+          },
+          {
+            title: "Rival non-goal replays (count)",
+            measured:
+              "Count of **extra angles** for rival non-goal actions (not seconds). Attribution follows the project’s benefit-of-the-doubt rules for whose replay it is.",
+            implies:
+              "Captures **optional re-showing** of rival near-miss / defensive highlights. Often lower means near-zero baselines — interpret next to absolute means.",
+          },
+          {
+            title: "Average clip length (seconds)",
+            measured:
+              "(Total runtime minus final-whistle celebration block) ÷ clip count. Final-whistle celebration is excluded from both clip list and time base.",
+            implies:
+              "A **pacing** measure: longer averages imply looser cutting within plays on average.",
+          },
+          {
+            title: "Clip count",
+            measured:
+              "Number of plays (clips) in the edit under project rules — chances, goals, red-card logic, etc.",
+            implies:
+              "Higher counts imply **busier** edits with more discrete beats per video.",
+          },
+          {
+            title: "Total video length (seconds)",
+            measured:
+              "Wall-clock length of the published highlight as tagged.",
+            implies:
+              "Overall package length; compare alongside clip count and avg clip length to separate **runtime** from **density**.",
+          },
+          {
+            title: "Persona share of runtime",
+            measured:
+              "(Self + rival celebration + self + rival reaction seconds) ÷ total length. Blank celebration/reaction cells treated as zero when summing.",
+            implies:
+              "Share of the edit devoted to **people-focused** beats vs pure play. Not positive/negative — aggregate exposure.",
+          },
+          {
+            title: "Persona seconds per clip",
+            measured:
+              "Same persona sum as above, divided by clip count.",
+            implies:
+              "**Intensity** of persona focus per play — how much human/emotional framing each clip carries on average.",
+          },
+          {
+            title: "Rival-only persona (seconds)",
+            measured:
+              "Rival celebration seconds + rival reaction seconds only.",
+            implies:
+              "Isolates **cordial** rival face-time — exposure explicitly on the opponent’s emotional reactions.",
+          },
+        ];
+
+        document.getElementById("deep-metrics").innerHTML = deep
+          .map(function (d) {
+            return (
+              "<div style=\"margin-bottom:1.35rem;padding-bottom:1.15rem;border-bottom:1px solid var(--border)\">" +
+              "<h4>" +
+              d.title +
+              "</h4>" +
+              "<dl>" +
+              "<dt>Measured</dt><dd>" +
+              d.measured +
+              "</dd>" +
+              "<dt>Interpreting</dt><dd>" +
+              d.implies +
+              "</dd>" +
+              "</dl></div>"
+            );
+          })
+          .join("");
       })();
     </script>
   </body>
