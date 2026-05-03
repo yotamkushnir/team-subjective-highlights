@@ -1,0 +1,84 @@
+{
+  "source_file": "/Users/yotam.kushnir/Downloads/pl_highlight_links_ENRICHED.xlsx",
+  "fixture_count_decisive": 36,
+  "matchdays": [
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "matchday_count": 5,
+  "rival_non_goal_chances": {
+    "n": 32,
+    "winner_mean": 1.90625,
+    "loser_mean": 1.9375,
+    "mean_diff_w_minus_l": -0.03125,
+    "median_diff": 0.0,
+    "pct_winner_higher": 40.625
+  },
+  "rival_non_goal_replays": {
+    "n": 31,
+    "winner_mean": 0.16129032258064516,
+    "loser_mean": 0.5161290322580645,
+    "mean_diff_w_minus_l": -0.3548387096774194,
+    "median_diff": 0.0,
+    "pct_winner_higher": 9.67741935483871
+  },
+  "avg_clip_length": {
+    "n": 32,
+    "winner_mean": 20.266222492187502,
+    "loser_mean": 17.9727379339375,
+    "mean_diff_w_minus_l": 2.2934845582499994,
+    "median_diff": 3.3666666649999986,
+    "pct_winner_higher": 59.375
+  },
+  "total_length": {
+    "n": 32,
+    "winner_mean": 144.125,
+    "loser_mean": 138.5,
+    "mean_diff_w_minus_l": 5.625,
+    "median_diff": 8.5,
+    "pct_winner_higher": 59.375
+  },
+  "clip_count": {
+    "n": 32,
+    "winner_mean": 7.21875,
+    "loser_mean": 8.8125,
+    "mean_diff_w_minus_l": -1.59375,
+    "median_diff": -1.0,
+    "pct_winner_higher": 31.25
+  },
+  "persona_total_sec": {
+    "n": 36,
+    "winner_mean": 21.555555555555557,
+    "loser_mean": 12.694444444444445,
+    "mean_diff_w_minus_l": 8.86111111111111,
+    "median_diff": 8.0,
+    "pct_winner_higher": 83.33333333333334
+  },
+  "persona_share_of_runtime": {
+    "n": 32,
+    "winner_mean": 0.15223841743844715,
+    "loser_mean": 0.10247732659266293,
+    "mean_diff_w_minus_l": 0.049761090845784214,
+    "median_diff": 0.03776216936428203,
+    "pct_winner_higher": 78.125
+  },
+  "persona_sec_per_clip": {
+    "n": 32,
+    "winner_mean": 3.3680363906926405,
+    "loser_mean": 1.9099292615596966,
+    "mean_diff_w_minus_l": 1.4581071291329444,
+    "median_diff": 1.2294254658385093,
+    "pct_winner_higher": 75.0
+  },
+  "rival_persona_sec": {
+    "n": 36,
+    "winner_mean": 4.166666666666667,
+    "loser_mean": 6.25,
+    "mean_diff_w_minus_l": -2.0833333333333335,
+    "median_diff": 0.0,
+    "pct_winner_higher": 36.11111111111111
+  }
+}

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Team Subjective Highlights — Results</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+      :root {
+        --bg: #0f1115;
+        --card: #171a21;
+        --text: #e8eaed;
+        --muted: #9aa0a6;
+        --accent: #7c9eff;
+        --winner: #4ade80;
+        --loser: #f472b6;
+        --border: #2a2f3a;
+        --maxw: 52rem;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", system-ui, sans-serif;
+        line-height: 1.55;
+        font-size: 1.02rem;
+      }
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 2.5rem 1.25rem 4rem;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "IBM Plex Serif", Georgia, serif;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      h1 {
+        font-size: 1.85rem;
+        margin: 0 0 0.5rem;
+      }
+      h2 {
+        font-size: 1.2rem;
+        margin: 2.25rem 0 0.75rem;
+        color: #d0d3d8;
+      }
+      p,
+      li {
+        color: #c4c7ce;
+      }
+      .lede {
+        font-size: 1.05rem;
+        color: #eef0f3;
+      }
+      .tag {
+        display: inline-block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1.25rem 1.35rem;
+        margin: 1.5rem 0;
+      }
+      .grid-2 {
+        display: grid;
+        gap: 1rem;
+      }
+      @media (min-width: 720px) {
+        .grid-2 {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .chart-box {
+        position: relative;
+        height: 280px;
+        margin-top: 0.5rem;
+      }
+      .stat-pill {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin: 0.5rem 0 0;
+      }
+      .stat-pill strong {
+        color: var(--text);
+      }
+      .note {
+        font-size: 0.9rem;
+        color: var(--muted);
+        border-left: 3px solid var(--border);
+        padding-left: 0.75rem;
+        margin: 1rem 0 0;
+      }
+      a {
+        color: var(--accent);
+      }
+      code {
+        font-size: 0.88em;
+        background: #0b0c0f;
+        padding: 0.1em 0.35em;
+        border-radius: 4px;
+      }
+      ul {
+        padding-left: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <p class="tag">Internal — Team Subjective Highlights</p>
+      <h1>How winner-channel vs loser-channel edits differ (club-blind)</h1>
+      <p class="lede">
+        This view compares the <strong>winning club’s</strong> official highlight to the
+        <strong>losing club’s</strong> for the same match. All headline numbers are
+        <strong>role-based</strong> (winner edit / loser edit), not brand-based. We do
+        <strong>not</strong> try to explain <em>which</em> PBP events were included—goals
+        and obvious top plays are <em>given</em>. The signal we model is
+        <strong>pacing</strong>, <strong>volume splits</strong>,
+        <strong>persona/emotional time</strong>, <strong>replay counts</strong>, and
+        <strong>optional rival exposure</strong>.
+      </p>
+
+      <div class="stat-pill" id="pill-meta"></div>
+
+      <h2>Figure 1 — Paired means (winner vs loser channel)</h2>
+      <div class="card">
+        <div class="chart-box"><canvas id="chartMeans"></canvas></div>
+        <p class="note">
+          Paired fixtures only; some metrics drop rows when source cells were incomplete in the
+          sheet (<span id="note-n"></span>). Negative deltas favor the loser-role edit on that
+          metric.
+        </p>
+      </div>
+
+      <h2>Figure 2 — Persona exposure (aggregated)</h2>
+      <p>
+        <strong>Celebration</strong> and <strong>reaction</strong> are not opposites here: we
+        <strong>sum</strong> self+rival celebration and self+rival reaction into
+        <em>total persona seconds</em>, then express as
+        <strong>share of runtime</strong> and <strong>seconds per clip</strong> (final-whistle
+        block handled per methodology). More <strong>rival</strong> celebration+reaction time
+        is treated as <strong>more cordial</strong> optional exposure to the opponent.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin: 0 0 0.5rem; font-size: 1rem">Persona share of runtime</h3>
+          <div class="chart-box" style="height: 220px">
+            <canvas id="chartPersonaShare"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="margin: 0 0 0.5rem; font-size: 1rem">Persona seconds per clip</h3>
+          <div class="chart-box" style="height: 220px">
+            <canvas id="chartPersonaPerClip"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin: 0 0 0.5rem; font-size: 1rem">Rival-only persona (rival celebration + reaction)</h3>
+        <div class="chart-box" style="height: 220px">
+          <canvas id="chartRivalPersona"></canvas>
+        </div>
+        <p class="note" id="rival-note"></p>
+      </div>
+
+      <h2>Later & exploratory (not the hero claim)</h2>
+      <ul>
+        <li>
+          <strong>Per-club</strong> cuts (how a team edits as winner vs loser) need larger n per
+          club—optional follow-up.
+        </li>
+        <li>
+          <strong>Rival identity</strong> (big-six vs rest) is future scope—test whether pacing or
+          generosity shifts by opponent draw.
+        </li>
+      </ul>
+
+      <div class="card" style="border-color: #3d3428">
+        <h3 style="margin: 0 0 0.35rem; font-size: 1rem">Before any per-team dashboard</h3>
+        <p style="margin: 0">
+          Per-team charts are <strong>exploratory only</strong>. The main aggregate spans only
+          <strong id="mw-count"></strong> matchweeks; slice-by-club sample sizes are tiny—use as a
+          conversation starter unless we expand tagging.
+        </p>
+      </div>
+
+      <h2>References</h2>
+      <ul>
+        <li><code>docs/results.md</code> — full paired tables & synthesis.</li>
+        <li><code>docs/methodology.md</code> — definitions, clip accounting, QA.</li>
+        <li><code>scripts/build_stats.py</code> — regenerate <code>stats.json</code>.</li>
+      </ul>
+    </div>
+
+    <!-- STATS_EMBED -->
+    <script>
+      const STATS = {
+  "source_file": "/Users/yotam.kushnir/Downloads/pl_highlight_links_ENRICHED.xlsx",
+  "fixture_count_decisive": 36,
+  "matchdays": [
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "matchday_count": 5,
+  "rival_non_goal_chances": {
+    "n": 32,
+    "winner_mean": 1.90625,
+    "loser_mean": 1.9375,
+    "mean_diff_w_minus_l": -0.03125,
+    "median_diff": 0.0,
+    "pct_winner_higher": 40.625
+  },
+  "rival_non_goal_replays": {
+    "n": 31,
+    "winner_mean": 0.16129032258064516,
+    "loser_mean": 0.5161290322580645,
+    "mean_diff_w_minus_l": -0.3548387096774194,
+    "median_diff": 0.0,
+    "pct_winner_higher": 9.67741935483871
+  },
+  "avg_clip_length": {
+    "n": 32,
+    "winner_mean": 20.266222492187502,
+    "loser_mean": 17.9727379339375,
+    "mean_diff_w_minus_l": 2.2934845582499994,
+    "median_diff": 3.3666666649999986,
+    "pct_winner_higher": 59.375
+  },
+  "total_length": {
+    "n": 32,
+    "winner_mean": 144.125,
+    "loser_mean": 138.5,
+    "mean_diff_w_minus_l": 5.625,
+    "median_diff": 8.5,
+    "pct_winner_higher": 59.375
+  },
+  "clip_count": {
+    "n": 32,
+    "winner_mean": 7.21875,
+    "loser_mean": 8.8125,
+    "mean_diff_w_minus_l": -1.59375,
+    "median_diff": -1.0,
+    "pct_winner_higher": 31.25
+  },
+  "persona_total_sec": {
+    "n": 36,
+    "winner_mean": 21.555555555555557,
+    "loser_mean": 12.694444444444445,
+    "mean_diff_w_minus_l": 8.86111111111111,
+    "median_diff": 8.0,
+    "pct_winner_higher": 83.33333333333334
+  },
+  "persona_share_of_runtime": {
+    "n": 32,
+    "winner_mean": 0.15223841743844715,
+    "loser_mean": 0.10247732659266293,
+    "mean_diff_w_minus_l": 0.049761090845784214,
+    "median_diff": 0.03776216936428203,
+    "pct_winner_higher": 78.125
+  },
+  "persona_sec_per_clip": {
+    "n": 32,
+    "winner_mean": 3.3680363906926405,
+    "loser_mean": 1.9099292615596966,
+    "mean_diff_w_minus_l": 1.4581071291329444,
+    "median_diff": 1.2294254658385093,
+    "pct_winner_higher": 75.0
+  },
+  "rival_persona_sec": {
+    "n": 36,
+    "winner_mean": 4.166666666666667,
+    "loser_mean": 6.25,
+    "mean_diff_w_minus_l": -2.0833333333333335,
+    "median_diff": 0.0,
+    "pct_winner_higher": 36.11111111111111
+  }
+};
+    </script>
+    <script>
+      (function () {
+        const S = typeof STATS !== "undefined" && STATS.fixture_count_decisive ? STATS : null;
+        if (!S) {
+          document.body.insertAdjacentHTML(
+            "afterbegin",
+            '<div style="background:#3d1111;color:#fecaca;padding:10px;text-align:center">Load stats failed — run python3 scripts/build_stats.py and rebuild index.</div>'
+          );
+          return;
+        }
+
+        document.getElementById("pill-meta").innerHTML =
+          "<strong>Decisive fixtures:</strong> " +
+          S.fixture_count_decisive +
+          " · <strong>Matchweeks:</strong> " +
+          S.matchday_count +
+          " (MW " +
+          S.matchdays.join(", ") +
+          ") · <strong>Source:</strong> <span style=\"font-size:0.85rem\">" +
+          S.source_file +
+          "</span>";
+
+        document.getElementById("mw-count").textContent = S.matchday_count;
+        document.getElementById("note-n").textContent =
+          "rival replays n=" +
+          S.rival_non_goal_replays.n +
+          ", avg clip n=" +
+          S.avg_clip_length.n;
+
+        const rp = S.rival_persona_sec;
+        document.getElementById("rival-note").textContent =
+          "Mean rival-only persona time is higher for loser-role edits (" +
+          rp.loser_mean.toFixed(2) +
+          "s vs " +
+          rp.winner_mean.toFixed(2) +
+          "s; Δ " +
+          rp.mean_diff_w_minus_l.toFixed(2) +
+          "s across n=" +
+          rp.n +
+          " paired fixtures).";
+
+        Chart.defaults.color = "#c4c7ce";
+        Chart.defaults.borderColor = "#2a2f3a";
+
+        const mkMeansChart = () => {
+          const labels = [
+            "Rival non-goal chances",
+            "Rival non-goal replays (count)",
+            "Avg clip length (s)",
+            "Clip count",
+            "Total length (s)",
+          ];
+          const w = [
+            S.rival_non_goal_chances.winner_mean,
+            S.rival_non_goal_replays.winner_mean,
+            S.avg_clip_length.winner_mean,
+            S.clip_count.winner_mean,
+            S.total_length.winner_mean,
+          ];
+          const l = [
+            S.rival_non_goal_chances.loser_mean,
+            S.rival_non_goal_replays.loser_mean,
+            S.avg_clip_length.loser_mean,
+            S.clip_count.loser_mean,
+            S.total_length.loser_mean,
+          ];
+          new Chart(document.getElementById("chartMeans"), {
+            type: "bar",
+            data: {
+              labels,
+              datasets: [
+                {
+                  label: "Winner-role edit",
+                  data: w,
+                  backgroundColor: "rgba(74,222,128,0.65)",
+                  borderWidth: 0,
+                },
+                {
+                  label: "Loser-role edit",
+                  data: l,
+                  backgroundColor: "rgba(244,114,182,0.65)",
+                  borderWidth: 0,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                x: { ticks: { maxRotation: 35, minRotation: 0 } },
+                y: { beginAtZero: true, grid: { color: "#2a2f3a" } },
+              },
+              plugins: {
+                legend: { labels: { boxWidth: 12 } },
+                tooltip: {
+                  callbacks: {
+                    footer: (items) => {
+                      const i = items[0].dataIndex;
+                      const keys = [
+                        "rival_non_goal_chances",
+                        "rival_non_goal_replays",
+                        "avg_clip_length",
+                        "clip_count",
+                        "total_length",
+                      ];
+                      const k = keys[i];
+                      return "n=" + S[k].n;
+                    },
+                  },
+                },
+              },
+            },
+          });
+        };
+
+        const personaShare = () =>
+          new Chart(document.getElementById("chartPersonaShare"), {
+            type: "bar",
+            data: {
+              labels: ["Persona / runtime"],
+              datasets: [
+                {
+                  label: "Winner role",
+                  data: [S.persona_share_of_runtime.winner_mean * 100],
+                  backgroundColor: "rgba(74,222,128,0.7)",
+                },
+                {
+                  label: "Loser role",
+                  data: [S.persona_share_of_runtime.loser_mean * 100],
+                  backgroundColor: "rgba(244,114,182,0.7)",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: { y: { beginAtZero: true, title: { display: true, text: "%" } } },
+            },
+          });
+
+        const personaPer = () =>
+          new Chart(document.getElementById("chartPersonaPerClip"), {
+            type: "bar",
+            data: {
+              labels: ["Persona seconds / clip"],
+              datasets: [
+                {
+                  label: "Winner role",
+                  data: [S.persona_sec_per_clip.winner_mean],
+                  backgroundColor: "rgba(74,222,128,0.7)",
+                },
+                {
+                  label: "Loser role",
+                  data: [S.persona_sec_per_clip.loser_mean],
+                  backgroundColor: "rgba(244,114,182,0.7)",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: { y: { beginAtZero: true, title: { display: true, text: "s" } } },
+            },
+          });
+
+        const rivalP = () =>
+          new Chart(document.getElementById("chartRivalPersona"), {
+            type: "bar",
+            data: {
+              labels: ["Rival celebration + reaction (s)"],
+              datasets: [
+                {
+                  label: "Winner role",
+                  data: [S.rival_persona_sec.winner_mean],
+                  backgroundColor: "rgba(74,222,128,0.7)",
+                },
+                {
+                  label: "Loser role",
+                  data: [S.rival_persona_sec.loser_mean],
+                  backgroundColor: "rgba(244,114,182,0.7)",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: { y: { beginAtZero: true, title: { display: true, text: "s" } } },
+            },
+          });
+
+        mkMeansChart();
+        personaShare();
+        personaPer();
+        rivalP();
+      })();
+    </script>
+  </body>
+</html>
