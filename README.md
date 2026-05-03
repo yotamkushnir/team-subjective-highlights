@@ -2,6 +2,11 @@
 
 Internal research kit comparing **winner-channel** vs **loser-channel** Premier League official highlight edits for the same fixtures (club-blind aggregate).
 
+**Live report (GitHub Pages):** [https://yotamkushnir.github.io/team-subjective-highlights/](https://yotamkushnir.github.io/team-subjective-highlights/)  
+*First deploy can take 1–2 minutes; hard-refresh if charts look empty.*
+
+**Repository:** [https://github.com/yotamkushnir/team-subjective-highlights](https://github.com/yotamkushnir/team-subjective-highlights)
+
 ## Repo layout
 
 | Path | Purpose |
