@@ -15,6 +15,7 @@ Internal research kit comparing **winner-channel** vs **loser-channel** Premier 
 |------|---------|
 | `docs/methodology.md` | Tagging definitions, clip accounting, cordiality framing |
 | `docs/results.md` | Narrative + paired summary tables |
+| `docs/editorial-playbook.md` | Plain-English editing/social takeaways (winner vs loser cuts) |
 | `docs/index.html` | Static dashboard (Chart.js) — open locally after refresh |
 | `docs/stats.json` | Machine-readable aggregates |
 | `scripts/build_stats.py` | Reads spreadsheet → writes `docs/stats.json` |
