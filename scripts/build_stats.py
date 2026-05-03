@@ -95,6 +95,11 @@ def main() -> int:
         "winner total rival replays - non goals",
         "loser total rival replays - non goals",
     )
+    stats["self_non_goal_chances"] = paired(
+        df,
+        "winner amount of self non-goal chances",
+        "loser amount of self non-goal chances",
+    )
     stats["avg_clip_length"] = paired(
         df, "winner average clip lenght", "loser average clip lenght"
     )

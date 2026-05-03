@@ -25,6 +25,14 @@
     "median_diff": 0.0,
     "pct_winner_higher": 9.67741935483871
   },
+  "self_non_goal_chances": {
+    "n": 32,
+    "winner_mean": 2.4375,
+    "loser_mean": 4.0625,
+    "mean_diff_w_minus_l": -1.625,
+    "median_diff": -1.0,
+    "pct_winner_higher": 18.75
+  },
   "avg_clip_length": {
     "n": 32,
     "winner_mean": 20.266222492187502,

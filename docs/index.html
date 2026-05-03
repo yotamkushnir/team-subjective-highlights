@@ -264,10 +264,22 @@
         <p class="note" id="fig1a-note-n"></p>
       </div>
 
-      <h2>Figure 2 — Pacing (clip structure)</h2>
+      <h2>Figure 2 — Self non-goal chances (optional own-team exposure)</h2>
+      <p class="note" style="margin: 0 0 0.5rem">
+        Non-goal attacking clips for <strong>your own</strong> team — shots and attacks you chose
+        to show beyond mandatory goals. Compares to optional <strong>rival</strong> chances in
+        Figure 1.
+      </p>
+      <div class="card">
+        <div class="chart-box tall"><canvas id="chartSelfNonGoalChances"></canvas></div>
+        <ul class="conclusions" id="fig-self-ng-conc"></ul>
+        <p class="note" id="fig-self-ng-note"></p>
+      </div>
+
+      <h2>Figure 3 — Pacing (clip structure)</h2>
       <p class="note" style="margin: 0 0 0.5rem">
         Average length of a play and how many plays make up the highlight (excluding total
-        runtime — see Figure 3).
+        runtime — see Figure 4).
       </p>
       <div class="card">
         <div class="chart-box"><canvas id="chartPacing"></canvas></div>
@@ -275,13 +287,13 @@
         <p class="note" id="fig1b-note-n"></p>
       </div>
 
-      <h2>Figure 3 — Total runtime</h2>
+      <h2>Figure 4 — Total runtime</h2>
       <div class="card">
         <div class="chart-box tall"><canvas id="chartRuntime"></canvas></div>
         <ul class="conclusions" id="fig2-conc"></ul>
       </div>
 
-      <h2>Figure 4 — Persona &amp; emotion (score-adjusted)</h2>
+      <h2>Figure 5 — Persona &amp; emotion (score-adjusted)</h2>
       <p>
         Raw celebration seconds mostly track <strong>how many goals</strong> each side scored, which
         biases winner edits upward. Here we <strong>control for score and exposure volume</strong>:
@@ -377,6 +389,14 @@
     "mean_diff_w_minus_l": -0.3548387096774194,
     "median_diff": 0.0,
     "pct_winner_higher": 9.67741935483871
+  },
+  "self_non_goal_chances": {
+    "n": 32,
+    "winner_mean": 2.4375,
+    "loser_mean": 4.0625,
+    "mean_diff_w_minus_l": -1.625,
+    "median_diff": -1.0,
+    "pct_winner_higher": 18.75
   },
   "avg_clip_length": {
     "n": 32,
@@ -513,6 +533,7 @@
 
         const rn = S.rival_non_goal_chances;
         const rr = S.rival_non_goal_replays;
+        const sng = S.self_non_goal_chances;
         const ac = S.avg_clip_length;
         const cc = S.clip_count;
         const tl = S.total_length;
@@ -570,6 +591,17 @@
             "</strong>; <em>n</em>=" +
             rn.n +
             ")."
+        );
+        exec.push(
+          "<strong>Self non-goal chances (own team):</strong> mean counts <strong>" +
+            fmtNum(sng.winner_mean, 2) +
+            "</strong> (winner edits) vs <strong>" +
+            fmtNum(sng.loser_mean, 2) +
+            "</strong> (loser edits); Δ vs loser baseline <strong>" +
+            fmtPct(pctWL(sng.winner_mean, sng.loser_mean)) +
+            "</strong> (<em>n</em>=" +
+            sng.n +
+            "). Negative Δ ⇒ loser cuts include more optional own-team chances on average."
         );
         exec.push(
           "<strong>Score-adjusted emotion:</strong> <strong>Self celebration per goal</strong> is <strong>" +
@@ -765,7 +797,64 @@
             ").",
         ]);
 
-        /* Figure 3 — runtime */
+        /* Figure 2 — self non-goal chances */
+        const keysSng = ["self_non_goal_chances"];
+        new Chart(document.getElementById("chartSelfNonGoalChances"), {
+          type: "bar",
+          data: {
+            labels: ["Self non-goal chances (count)"],
+            datasets: [
+              {
+                label: "Winner",
+                data: [sng.winner_mean],
+                backgroundColor: "rgba(74,222,128,0.75)",
+                borderWidth: 0,
+              },
+              {
+                label: "Loser",
+                data: [sng.loser_mean],
+                backgroundColor: "rgba(244,114,182,0.75)",
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true, grid: { color: "#2a2f3a" } } },
+            plugins: {
+              legend: { labels: { boxWidth: 12 } },
+              tooltip: mkTooltipN(keysSng),
+            },
+          },
+        });
+        var sngConc =
+          sng.loser_mean > sng.winner_mean
+            ? "Loser edits average <strong>" +
+              fmtPct(pctAbove(sng.loser_mean, sng.winner_mean)) +
+              "</strong> more self non-goal chances than winner edits (<strong>" +
+              fmtNum(sng.loser_mean, 2) +
+              "</strong> vs <strong>" +
+              fmtNum(sng.winner_mean, 2) +
+              "</strong>; <em>n</em>=" +
+              sng.n +
+              ")."
+            : "Winner edits average <strong>" +
+              fmtPct(pctAbove(sng.winner_mean, sng.loser_mean)) +
+              "</strong> more self non-goal chances than loser edits (<strong>" +
+              fmtNum(sng.winner_mean, 2) +
+              "</strong> vs <strong>" +
+              fmtNum(sng.loser_mean, 2) +
+              "</strong>; <em>n</em>=" +
+              sng.n +
+              ").";
+        document.getElementById("fig-self-ng-conc").innerHTML = conclusionLines([sngConc]);
+        document.getElementById("fig-self-ng-note").textContent =
+          "Count of non-goal attacking clips for the channel’s own team in that highlight. Paired <em>n</em>=" +
+          sng.n +
+          ".";
+
+        /* Figure 4 — runtime */
         new Chart(document.getElementById("chartRuntime"), {
           type: "bar",
           data: {
@@ -812,7 +901,7 @@
             ").",
         ]);
 
-        /* Figure 4 — score-adjusted persona */
+        /* Figure 5 — score-adjusted persona */
         const keys4a = ["self_celebration_per_goal"];
         new Chart(document.getElementById("chartCelebPerGoal"), {
           type: "bar",
@@ -949,6 +1038,13 @@
               "Count of **extra angles** for opponent non-goal actions (not seconds). Attribution follows the project’s benefit-of-the-doubt rules.",
             implies:
               "Captures **optional re-showing** of opponent near-miss / defensive highlights. Near-zero baselines inflate % — read absolutes too.",
+          },
+          {
+            title: "Self non-goal chances (count)",
+            measured:
+              "Number of clips where **your** team has a non-goal attacking chance in **your** official highlight — optional **own-team** football beyond goals.",
+            implies:
+              "Higher counts mean the editor kept more **self** attacking beats in the cut. Compare to **rival** non-goal chances (Figure 1) for generosity vs self-focus.",
           },
           {
             title: "Average clip length (seconds)",
