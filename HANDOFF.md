@@ -28,24 +28,20 @@ Compare **official match highlights** (winner-channel vs loser-channel) for the 
 | `docs/index.html` | Dashboard (**must** have embedded `STATS` JSON — see below) |
 | `docs/stats.json` | Output of `build_stats.py` |
 | `scripts/build_stats.py` | Reads enriched `.xlsx` → writes `stats.json` |
-| `scripts/embed_stats_in_html.py` | Inlines `stats.json` + `editorial-playbook.md` into `index.html` |
-| `scripts/embed_editorial_playbook.py` | Markdown → HTML (called by `embed_stats_in_html.py`) |
-| `docs/editorial-playbook.md` | Source for the collapsible “video editor” section on the report |
+| `scripts/embed_stats_in_html.py` | Inlines `stats.json` into `index.html` |
 | `docs/methodology.md` | Source of truth for definitions |
 | `docs/results.md` | Written narrative (may lag the HTML) |
 
-## Refresh workflow (data and/or narrative)
-
-`embed_stats_in_html.py` **always** re-inlines **stats** and the **editorial playbook** (from `docs/editorial-playbook.md`). You do not need a separate step for the playbook.
+## Refresh workflow (after spreadsheet changes)
 
 ```bash
 cd /path/to/team-subjective-highlights
 python3 scripts/build_stats.py && python3 scripts/embed_stats_in_html.py
 git add docs/stats.json docs/index.html
-git commit -m "Refresh report" && git push
+git commit -m "Refresh stats" && git push
 ```
 
-**Playbook / prose only** (no spreadsheet change): run `python3 scripts/embed_stats_in_html.py` (or `python3 scripts/embed_docs.py` — same effect).
+The collapsible **“video editor”** interpretation lives **inline in `docs/index.html`** (below Executive summary). Edit that HTML block directly when the prose changes; then commit/push — no separate generator.
 
 Default Excel path in script: `~/Downloads/pl_highlight_links_ENRICHED.xlsx` or env `HIGHLIGHTS_XLSX`.
 
@@ -55,7 +51,6 @@ Charts read `const STATS = { ... }` inside `docs/index.html`. If `STATS` is **`{
 
 - A **fully embedded** `index.html` is **~1100+ lines** (JSON is large).
 - If the editor shows **~400 lines** and `const STATS = {};`, the buffer is **stale** or embed **was not run** — re-run `embed_stats_in_html.py` and save.
-- The collapsible **editorial** block is generated from `docs/editorial-playbook.md`. Edit the `.md` file, then run `embed_stats_in_html.py` (no need to touch the HTML body by hand).
 
 ## What `stats.json` contains (high level)
 

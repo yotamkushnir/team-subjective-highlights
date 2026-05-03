@@ -15,14 +15,12 @@ Internal research kit comparing **winner-channel** vs **loser-channel** Premier 
 |------|---------|
 | `docs/methodology.md` | Tagging definitions, clip accounting, cordiality framing |
 | `docs/results.md` | Narrative + paired summary tables |
-| `docs/editorial-playbook.md` | Plain-English editing/social takeaways (winner vs loser cuts) |
-| `docs/index.html` | Static dashboard (Chart.js) — open locally after refresh |
+| `docs/index.html` | Static dashboard (Chart.js); includes inline collapsible “video editor” copy |
 | `docs/stats.json` | Machine-readable aggregates |
 | `scripts/build_stats.py` | Reads spreadsheet → writes `docs/stats.json` |
-| `scripts/embed_stats_in_html.py` | Inlines `stats.json` and `editorial-playbook.md` into `docs/index.html` |
-| `scripts/embed_docs.py` | Same end result as `embed_stats_in_html.py` (convenience alias) |
+| `scripts/embed_stats_in_html.py` | Inlines `stats.json` into `docs/index.html` |
 
-## Refresh the report (numbers and/or editorial copy)
+## Refresh numbers after editing the workbook
 
 Default spreadsheet path: `~/Downloads/pl_highlight_links_ENRICHED.xlsx`, or set:
 
@@ -30,13 +28,13 @@ Default spreadsheet path: `~/Downloads/pl_highlight_links_ENRICHED.xlsx`, or set
 export HIGHLIGHTS_XLSX=/path/to/pl_highlight_links_ENRICHED.xlsx
 ```
 
-Then rebuild aggregates and embed everything into `docs/index.html` (**stats + editorial playbook**):
+Then refresh aggregates and embed stats into `docs/index.html`:
 
 ```bash
 python3 scripts/build_stats.py && python3 scripts/embed_stats_in_html.py
 ```
 
-Edit **`docs/editorial-playbook.md`** for the collapsible “video editor” interpretation; run **`python3 scripts/embed_stats_in_html.py`** afterward (no spreadsheet step needed).
+To change the collapsible editorial copy under **Executive summary**, edit the `<details class="card editorial-disclosure">` block in **`docs/index.html`** and push.
 
 Optional: copy the workbook to `data/pl_highlight_links_ENRICHED.xlsx` for a portable checkout.
 
@@ -48,7 +46,7 @@ Python **3**. Install from the repo root:
 python3 -m pip install -r requirements.txt
 ```
 
-(`pandas`, `openpyxl`, `markdown` — the last one renders the editorial playbook into HTML.)
+(`pandas` and `openpyxl`.)
 
 ## Viewing the HTML report
 
