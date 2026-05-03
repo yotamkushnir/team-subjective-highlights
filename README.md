@@ -21,7 +21,7 @@ Default spreadsheet path: `~/Downloads/pl_highlight_links_ENRICHED.xlsx`, or set
 export HIGHLIGHTS_XLSX=/path/to/pl_highlight_links_ENRICHED.xlsx
 ```
 
-Then:
+Then refresh aggregates and the offline HTML embed:
 
 ```bash
 python3 scripts/build_stats.py && python3 scripts/embed_stats_in_html.py
