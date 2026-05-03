@@ -231,6 +231,13 @@
         </p>
       </div>
 
+      <div class="card" style="border-color: #334155; padding: 1rem 1.25rem">
+        <p style="margin: 0; font-size: 0.95rem">
+          <strong>“Rival”</strong> always means <strong>the other team in this match</strong> (your
+          opponent that day), not a historic derby “rival.”
+        </p>
+      </div>
+
       <div class="stat-pill" id="pill-meta"></div>
 
       <h2>Executive summary</h2>
@@ -238,58 +245,74 @@
         <p style="margin: 0; color: #aab0b8; font-size: 0.92rem">
           Bottom line first (paired fixtures; exact <em>n</em> varies by column completeness in the
           sheet — see each figure).
-          <strong>% convention:</strong> where winner-role is higher, we report
-          <code>100×(W−L)/L</code> (“vs loser baseline”). Where loser-role is higher (clips, rival
-          replays, rival-only persona), we report <code>100×(high−low)/low</code> using the lower
-          mean as baseline.
+          <strong>% convention:</strong> where <strong>winner</strong> edits are higher on average,
+          we report <code>100×(W−L)/L</code> (“vs loser baseline”). Where <strong>loser</strong> edits
+          are higher (e.g. clips, rival replays), we report
+          <code>100×(high−low)/low</code> using the lower mean as baseline.
         </p>
         <ul id="exec-bullets"></ul>
       </div>
 
-      <h2>Figure 1 — Structure &amp; optional rival exposure (paired means)</h2>
+      <h2>Figure 1 — Optional rival football exposure</h2>
       <p class="note" style="margin: 0 0 0.5rem">
-        Same vertical scale for clip pacing and rival exposure metrics.
-        <strong>Total runtime</strong> is plotted separately (Figure 2) because it sits on a much
-        larger numeric range.
+        Optional moments involving the <strong>opponent</strong> in the fixture (same vertical
+        scale for both metrics).
       </p>
       <div class="card">
-        <div class="chart-box"><canvas id="chartStructure"></canvas></div>
-        <ul class="conclusions" id="fig1-conc"></ul>
-        <p class="note" id="fig1-note-n"></p>
+        <div class="chart-box"><canvas id="chartRivalOptional"></canvas></div>
+        <ul class="conclusions" id="fig1a-conc"></ul>
+        <p class="note" id="fig1a-note-n"></p>
       </div>
 
-      <h2>Figure 2 — Total runtime</h2>
+      <h2>Figure 2 — Pacing (clip structure)</h2>
+      <p class="note" style="margin: 0 0 0.5rem">
+        Average length of a play and how many plays make up the highlight (excluding total
+        runtime — see Figure 3).
+      </p>
+      <div class="card">
+        <div class="chart-box"><canvas id="chartPacing"></canvas></div>
+        <ul class="conclusions" id="fig1b-conc"></ul>
+        <p class="note" id="fig1b-note-n"></p>
+      </div>
+
+      <h2>Figure 3 — Total runtime</h2>
       <div class="card">
         <div class="chart-box tall"><canvas id="chartRuntime"></canvas></div>
         <ul class="conclusions" id="fig2-conc"></ul>
       </div>
 
-      <h2>Figure 3 — Persona exposure (aggregated)</h2>
+      <h2>Figure 4 — Persona &amp; emotion (score-adjusted)</h2>
       <p>
-        <strong>Celebration</strong> and <strong>reaction</strong> are not opposites: we sum
-        self + rival celebration and self + rival reaction into <em>total persona seconds</em>,
-        then normalize by runtime and by clip count (final-whistle block excluded per
-        methodology). <strong>Rival-only</strong> persona isolates time on <strong>rival</strong>
-        faces/crowds (celebration + reaction).
+        Raw celebration seconds mostly track <strong>how many goals</strong> each side scored, which
+        biases winner edits upward. Here we <strong>control for score and exposure volume</strong>:
+        <strong>self celebration ÷ goals scored</strong> by that channel’s team (from the match
+        score columns), <strong>self reaction ÷ self non-goal chances</strong> (only rows where that
+        side had at least one self non-goal chance), and <strong>rival reaction ÷ rival non-goal
+        chances</strong> (cordial rival face-time per optional rival chance shown).
+        <strong>Celebration</strong> and <strong>reaction</strong> are not opposites — both are
+        persona dwell; these ratios make cuts comparable across different scorelines.
       </p>
       <div class="grid-2">
         <div class="card">
-          <h3 style="margin: 0 0 0.5rem; font-size: 1rem">Persona share of runtime</h3>
-          <div class="chart-box tall"><canvas id="chartPersonaShare"></canvas></div>
-          <ul class="conclusions" id="fig3a-conc"></ul>
+          <h3 style="margin: 0 0 0.5rem; font-size: 1rem">Self celebration per goal scored</h3>
+          <div class="chart-box tall"><canvas id="chartCelebPerGoal"></canvas></div>
+          <ul class="conclusions" id="fig4a-conc"></ul>
         </div>
         <div class="card">
-          <h3 style="margin: 0 0 0.5rem; font-size: 1rem">Persona seconds per clip</h3>
-          <div class="chart-box tall"><canvas id="chartPersonaPerClip"></canvas></div>
-          <ul class="conclusions" id="fig3b-conc"></ul>
+          <h3 style="margin: 0 0 0.5rem; font-size: 1rem">
+            Self reaction per self non-goal chance
+          </h3>
+          <div class="chart-box tall"><canvas id="chartSelfRxPerChance"></canvas></div>
+          <ul class="conclusions" id="fig4b-conc"></ul>
         </div>
       </div>
       <div class="card">
         <h3 style="margin: 0 0 0.5rem; font-size: 1rem">
-          Rival-only persona (rival celebration + rival reaction)
+          Rival reaction per rival non-goal chance
         </h3>
-        <div class="chart-box tall"><canvas id="chartRivalPersona"></canvas></div>
-        <ul class="conclusions" id="fig3c-conc"></ul>
+        <div class="chart-box tall"><canvas id="chartRivalRxPerChance"></canvas></div>
+        <ul class="conclusions" id="fig4c-conc"></ul>
+        <p class="note" id="fig4-note-n"></p>
       </div>
 
       <h2>What each metric means</h2>
@@ -410,6 +433,30 @@
     "mean_diff_w_minus_l": -2.0833333333333335,
     "median_diff": 0.0,
     "pct_winner_higher": 36.11111111111111
+  },
+  "self_celebration_per_goal": {
+    "n": 16,
+    "winner_mean": 6.755208333333333,
+    "loser_mean": 4.291666666666667,
+    "mean_diff_w_minus_l": 2.4635416666666665,
+    "median_diff": 3.5,
+    "pct_winner_higher": 75.0
+  },
+  "self_reaction_per_self_non_goal_chance": {
+    "n": 25,
+    "winner_mean": 1.4213333333333333,
+    "loser_mean": 1.638,
+    "mean_diff_w_minus_l": -0.21666666666666667,
+    "median_diff": 0.16666666666666669,
+    "pct_winner_higher": 56.00000000000001
+  },
+  "rival_reaction_per_rival_non_goal_chance": {
+    "n": 18,
+    "winner_mean": 0.9212962962962963,
+    "loser_mean": 0.7817460317460317,
+    "mean_diff_w_minus_l": 0.13955026455026454,
+    "median_diff": 0.0,
+    "pct_winner_higher": 44.44444444444444
   }
 };
     </script>
@@ -427,7 +474,7 @@
         Chart.defaults.color = "#c4c7ce";
         Chart.defaults.borderColor = "#2a2f3a";
 
-        /** Winner vs loser-role baseline (L): 100*(W-L)/L — negative ⇒ winner lower. */
+        /** Winner vs loser baseline (L): 100*(W-L)/L — negative ⇒ winner lower. */
         function pctWL(W, L) {
           if (L === 0 || !isFinite(W) || !isFinite(L)) return null;
           return (100 * (W - L)) / L;
@@ -469,39 +516,39 @@
         const ac = S.avg_clip_length;
         const cc = S.clip_count;
         const tl = S.total_length;
-        const ps = S.persona_share_of_runtime;
-        const ppc = S.persona_sec_per_clip;
-        const rp = S.rival_persona_sec;
+        const cg = S.self_celebration_per_goal;
+        const rx = S.self_reaction_per_self_non_goal_chance;
+        const rivrx = S.rival_reaction_per_rival_non_goal_chance;
 
         const pClipAbove = pctAbove(cc.loser_mean, cc.winner_mean);
         const pAvg = pctWL(ac.winner_mean, ac.loser_mean);
         const pTl = pctWL(tl.winner_mean, tl.loser_mean);
-        const pPs = pctWL(ps.winner_mean, ps.loser_mean);
-        const pPpc = pctWL(ppc.winner_mean, ppc.loser_mean);
-        const pRivalFaceAbove = pctAbove(rp.loser_mean, rp.winner_mean);
+        const pCeleb = pctWL(cg.winner_mean, cg.loser_mean);
+        const pRx = pctWL(rx.winner_mean, rx.loser_mean);
+        const pRivRx = pctWL(rivrx.winner_mean, rivrx.loser_mean);
 
         const exec = [];
         exec.push(
-          "<strong>Pacing:</strong> Loser-role edits use <strong>" +
+          "<strong>Pacing:</strong> Loser edits use <strong>" +
             fmtPct(pClipAbove) +
-            "</strong> more clips than winner-role on average (means <strong>" +
+            "</strong> more clips than winner edits on average (<strong>" +
             fmtNum(cc.loser_mean, 2) +
-            "</strong> vs winner <strong>" +
+            "</strong> vs <strong>" +
             fmtNum(cc.winner_mean, 2) +
-            "</strong> clips per video; <em>n</em>=" +
+            "</strong> clips; <em>n</em>=" +
             cc.n +
-            "). Winner-role average clip length is <strong>" +
+            "). Winner average clip length is <strong>" +
             fmtPct(pAvg) +
-            "</strong> vs loser-role (<strong>" +
+            "</strong> vs loser (<strong>" +
             fmtNum(ac.winner_mean, 2) +
             "</strong>s vs <strong>" +
             fmtNum(ac.loser_mean, 2) +
             "</strong>s)."
         );
         exec.push(
-          "<strong>Runtime:</strong> Winner-role videos run about <strong>" +
+          "<strong>Runtime:</strong> Winner videos run about <strong>" +
             fmtPct(pTl) +
-            "</strong> longer on average than loser-role (<strong>" +
+            "</strong> longer on average than loser (<strong>" +
             fmtNum(tl.winner_mean, 1) +
             "</strong>s vs <strong>" +
             fmtNum(tl.loser_mean, 1) +
@@ -510,13 +557,13 @@
             ")."
         );
         exec.push(
-          "<strong>Optional rival football exposure:</strong> Rival non-goal <strong>replay counts</strong> skew toward loser-role edits (means <strong>" +
+          "<strong>Optional rival football exposure:</strong> Rival non-goal <strong>replay counts</strong> skew toward <strong>loser</strong> edits (<strong>" +
             fmtNum(rr.loser_mean, 2) +
             "</strong> vs <strong>" +
             fmtNum(rr.winner_mean, 2) +
             "</strong>; <em>n</em>=" +
             rr.n +
-            "). Rival non-goal <strong>chance</strong> counts are flat on average (<strong>" +
+            "). Rival non-goal <strong>chance</strong> counts are flat (<strong>" +
             fmtNum(rn.winner_mean, 2) +
             "</strong> vs <strong>" +
             fmtNum(rn.loser_mean, 2) +
@@ -525,32 +572,23 @@
             ")."
         );
         exec.push(
-          "<strong>Persona time:</strong> Winner-role devotes a larger share of runtime to <strong>people-focused</strong> beats (celebration + reaction, self + rival): share of runtime <strong>" +
-            fmtPct(pPs) +
+          "<strong>Score-adjusted emotion:</strong> <strong>Self celebration per goal</strong> is <strong>" +
+            fmtPct(pCeleb) +
             "</strong> vs loser baseline (<strong>" +
-            fmtNum(100 * ps.winner_mean, 1) +
-            "%</strong> vs <strong>" +
-            fmtNum(100 * ps.loser_mean, 1) +
-            "%</strong>; <em>n</em>=" +
-            ps.n +
-            "). Per clip, winner-role dedicates <strong>" +
-            fmtPct(pPpc) +
-            "</strong> more persona seconds (<strong>" +
-            fmtNum(ppc.winner_mean, 2) +
+            fmtNum(cg.winner_mean, 2) +
             "</strong>s vs <strong>" +
-            fmtNum(ppc.loser_mean, 2) +
-            "</strong>s)."
-        );
-        exec.push(
-          "<strong>Rival-only persona:</strong> Loser-role averages <strong>" +
-            fmtPct(pRivalFaceAbove) +
-            "</strong> more rival celebration + reaction time than winner-role (<strong>" +
-            fmtNum(rp.loser_mean, 2) +
-            "</strong>s vs <strong>" +
-            fmtNum(rp.winner_mean, 2) +
-            "</strong>s; <em>n</em>=" +
-            rp.n +
-            ") — more cordial rival face-time when losing in this sample."
+            fmtNum(cg.loser_mean, 2) +
+            "</strong>s per goal; paired <em>n</em>=" +
+            cg.n +
+            " — fixtures where both sides scored ≥1). <strong>Self reaction per self non-goal chance</strong>: <strong>" +
+            fmtPct(pRx) +
+            "</strong> (<em>n</em>=" +
+            rx.n +
+            "). <strong>Rival reaction per rival non-goal chance</strong>: <strong>" +
+            fmtPct(pRivRx) +
+            "</strong> (<em>n</em>=" +
+            rivrx.n +
+            ")."
         );
 
         document.getElementById("exec-bullets").innerHTML = exec
@@ -559,16 +597,10 @@
           })
           .join("");
 
-        document.getElementById("fig1-note-n").textContent =
-          "Paired rows: rival non-goal chances n=" +
-          rn.n +
-          ", rival replays n=" +
-          rr.n +
-          ", avg clip length n=" +
-          ac.n +
-          ", clip count n=" +
-          cc.n +
-          ".";
+        document.getElementById("fig1a-note-n").textContent =
+          "Paired rows: rival non-goal chances n=" + rn.n + ", rival replays n=" + rr.n + ".";
+        document.getElementById("fig1b-note-n").textContent =
+          "Paired rows: avg clip length n=" + ac.n + ", clip count n=" + cc.n + ".";
 
         function barLabelsPlugin() {
           return {
@@ -623,27 +655,22 @@
           }).join("");
         }
 
-        /* Figure 1 */
-        const keys1 = ["rival_non_goal_chances", "rival_non_goal_replays", "avg_clip_length", "clip_count"];
-        new Chart(document.getElementById("chartStructure"), {
+        /* Figure 1a — rival optional exposure */
+        const keys1a = ["rival_non_goal_chances", "rival_non_goal_replays"];
+        new Chart(document.getElementById("chartRivalOptional"), {
           type: "bar",
           data: {
-            labels: [
-              "Rival non-goal chances",
-              "Rival non-goal replays (count)",
-              "Avg clip length (s)",
-              "Clip count",
-            ],
+            labels: ["Rival non-goal chances", "Rival non-goal replays (count)"],
             datasets: [
               {
-                label: "Winner-role edit",
-                data: [rn.winner_mean, rr.winner_mean, ac.winner_mean, cc.winner_mean],
+                label: "Winner",
+                data: [rn.winner_mean, rr.winner_mean],
                 backgroundColor: "rgba(74,222,128,0.7)",
                 borderWidth: 0,
               },
               {
-                label: "Loser-role edit",
-                data: [rn.loser_mean, rr.loser_mean, ac.loser_mean, cc.loser_mean],
+                label: "Loser",
+                data: [rn.loser_mean, rr.loser_mean],
                 backgroundColor: "rgba(244,114,182,0.7)",
                 borderWidth: 0,
               },
@@ -653,75 +680,105 @@
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-              x: { ticks: { maxRotation: 28 } },
+              x: { ticks: { maxRotation: 22 } },
               y: { beginAtZero: true, grid: { color: "#2a2f3a" } },
             },
             plugins: {
               legend: { labels: { boxWidth: 12 } },
-              tooltip: mkTooltipN(keys1),
+              tooltip: mkTooltipN(keys1a),
             },
           },
         });
-
-        var fig1Html = [];
-        fig1Html.push(
-          "<strong>Rival non-goal chances:</strong> winner-role mean <strong>" +
+        document.getElementById("fig1a-conc").innerHTML = conclusionLines([
+          "<strong>Rival non-goal chances:</strong> winner mean <strong>" +
             fmtNum(rn.winner_mean, 2) +
-            "</strong>, loser-role <strong>" +
+            "</strong>, loser <strong>" +
             fmtNum(rn.loser_mean, 2) +
             "</strong> — Δ vs loser baseline <strong>" +
             fmtPct(pctWL(rn.winner_mean, rn.loser_mean)) +
             "</strong> (<em>n</em>=" +
             rn.n +
-            "). Essentially flat on average."
-        );
-        fig1Html.push(
-          "<strong>Rival non-goal replays:</strong> loser-role mean <strong>" +
+            "). Flat on average.",
+          "<strong>Rival non-goal replays:</strong> loser mean <strong>" +
             fmtNum(rr.loser_mean, 2) +
-            "</strong> vs winner-role <strong>" +
+            "</strong> vs winner <strong>" +
             fmtNum(rr.winner_mean, 2) +
-            "</strong> — loser averages <strong>" +
+            "</strong> — loser <strong>" +
             fmtPct(pctAbove(rr.loser_mean, rr.winner_mean)) +
-            "</strong> more replay angles than winner-role (same paired fixtures). Small absolute means — treat % as illustrative."
-        );
-        fig1Html.push(
-          "<strong>Avg clip length:</strong> winner-role <strong>" +
+            "</strong> higher vs winner baseline; absolute counts small (<em>n</em>=" +
+            rr.n +
+            ").",
+        ]);
+
+        /* Figure 1b — pacing */
+        const keys1b = ["avg_clip_length", "clip_count"];
+        new Chart(document.getElementById("chartPacing"), {
+          type: "bar",
+          data: {
+            labels: ["Avg clip length (s)", "Clip count"],
+            datasets: [
+              {
+                label: "Winner",
+                data: [ac.winner_mean, cc.winner_mean],
+                backgroundColor: "rgba(74,222,128,0.7)",
+                borderWidth: 0,
+              },
+              {
+                label: "Loser",
+                data: [ac.loser_mean, cc.loser_mean],
+                backgroundColor: "rgba(244,114,182,0.7)",
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { ticks: { maxRotation: 22 } },
+              y: { beginAtZero: true, grid: { color: "#2a2f3a" } },
+            },
+            plugins: {
+              legend: { labels: { boxWidth: 12 } },
+              tooltip: mkTooltipN(keys1b),
+            },
+          },
+        });
+        document.getElementById("fig1b-conc").innerHTML = conclusionLines([
+          "<strong>Avg clip length:</strong> winner <strong>" +
             fmtNum(ac.winner_mean, 2) +
-            "</strong>s vs loser-role <strong>" +
+            "</strong>s vs loser <strong>" +
             fmtNum(ac.loser_mean, 2) +
-            "</strong>s → winner <strong>" +
+            "</strong>s → <strong>" +
             fmtPct(pctWL(ac.winner_mean, ac.loser_mean)) +
             "</strong> vs loser baseline (<em>n</em>=" +
             ac.n +
-            ")."
-        );
-        fig1Html.push(
-          "<strong>Clip count:</strong> loser-role <strong>" +
+            ").",
+          "<strong>Clip count:</strong> loser <strong>" +
             fmtNum(cc.loser_mean, 2) +
-            "</strong> vs winner-role <strong>" +
+            "</strong> vs winner <strong>" +
             fmtNum(cc.winner_mean, 2) +
-            "</strong> clips → loser averages <strong>" +
+            "</strong> — loser <strong>" +
             fmtPct(pctAbove(cc.loser_mean, cc.winner_mean)) +
-            "</strong> more clips than winner-role (<em>n</em>=" +
+            "</strong> more clips (<em>n</em>=" +
             cc.n +
-            ")."
-        );
-        document.getElementById("fig1-conc").innerHTML = conclusionLines(fig1Html);
+            ").",
+        ]);
 
-        /* Figure 2 runtime */
+        /* Figure 3 — runtime */
         new Chart(document.getElementById("chartRuntime"), {
           type: "bar",
           data: {
             labels: ["Total video length (s)"],
             datasets: [
               {
-                label: "Winner-role edit",
+                label: "Winner",
                 data: [tl.winner_mean],
                 backgroundColor: "rgba(74,222,128,0.75)",
                 borderWidth: 0,
               },
               {
-                label: "Loser-role edit",
+                label: "Loser",
                 data: [tl.loser_mean],
                 backgroundColor: "rgba(244,114,182,0.75)",
                 borderWidth: 0,
@@ -744,127 +801,106 @@
           },
         });
         document.getElementById("fig2-conc").innerHTML = conclusionLines([
-          "Winner-role runtime averages <strong>" +
+          "Winner runtime <strong>" +
             fmtNum(tl.winner_mean, 1) +
-            "</strong>s vs loser-role <strong>" +
+            "</strong>s vs loser <strong>" +
             fmtNum(tl.loser_mean, 1) +
-            "</strong>s — winner <strong>" +
+            "</strong>s — <strong>" +
             fmtPct(pctWL(tl.winner_mean, tl.loser_mean)) +
             "</strong> vs loser baseline (<em>n</em>=" +
             tl.n +
             ").",
         ]);
 
-        /* Figure 3 panels */
-        new Chart(document.getElementById("chartPersonaShare"), {
+        /* Figure 4 — score-adjusted persona */
+        const keys4a = ["self_celebration_per_goal"];
+        new Chart(document.getElementById("chartCelebPerGoal"), {
           type: "bar",
           data: {
-            labels: ["Persona time ÷ runtime"],
+            labels: ["Self celebration ÷ goals scored (s/goal)"],
             datasets: [
-              {
-                label: "Winner-role",
-                data: [100 * ps.winner_mean],
-                backgroundColor: "rgba(74,222,128,0.75)",
-              },
-              {
-                label: "Loser-role",
-                data: [100 * ps.loser_mean],
-                backgroundColor: "rgba(244,114,182,0.75)",
-              },
+              { label: "Winner", data: [cg.winner_mean], backgroundColor: "rgba(74,222,128,0.75)" },
+              { label: "Loser", data: [cg.loser_mean], backgroundColor: "rgba(244,114,182,0.75)" },
             ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-              y: {
-                beginAtZero: true,
-                title: { display: true, text: "% of runtime" },
-                grid: { color: "#2a2f3a" },
-              },
-            },
+            scales: { y: { beginAtZero: true, title: { display: true, text: "s / goal" }, grid: { color: "#2a2f3a" } } },
             plugins: {
               tooltip: {
                 callbacks: {
                   footer: function () {
-                    return "n=" + ps.n;
+                    return "n=" + cg.n + " (both teams scored ≥1 in pair)";
                   },
                 },
               },
             },
           },
         });
-        document.getElementById("fig3a-conc").innerHTML = conclusionLines([
-          "Winner-role devotes <strong>" +
-            fmtNum(100 * ps.winner_mean, 1) +
-            "%</strong> of runtime to persona beats vs <strong>" +
-            fmtNum(100 * ps.loser_mean, 1) +
-            "%</strong> for loser-role — relative gap <strong>" +
-            fmtPct(pctWL(ps.winner_mean, ps.loser_mean)) +
+        document.getElementById("fig4a-conc").innerHTML = conclusionLines([
+          "Winner edits average <strong>" +
+            fmtNum(cg.winner_mean, 2) +
+            "</strong>s of self celebration per goal vs <strong>" +
+            fmtNum(cg.loser_mean, 2) +
+            "</strong>s for loser — <strong>" +
+            fmtPct(pctWL(cg.winner_mean, cg.loser_mean)) +
             "</strong> vs loser baseline (<em>n</em>=" +
-            ps.n +
-            ").",
+            cg.n +
+            " paired fixtures where both sides scored).",
         ]);
 
-        new Chart(document.getElementById("chartPersonaPerClip"), {
+        const keys4b = ["self_reaction_per_self_non_goal_chance"];
+        new Chart(document.getElementById("chartSelfRxPerChance"), {
           type: "bar",
           data: {
-            labels: ["Persona seconds per clip"],
+            labels: ["Self reaction ÷ self non-goal chances (s/chance)"],
             datasets: [
-              {
-                label: "Winner-role",
-                data: [ppc.winner_mean],
-                backgroundColor: "rgba(74,222,128,0.75)",
-              },
-              {
-                label: "Loser-role",
-                data: [ppc.loser_mean],
-                backgroundColor: "rgba(244,114,182,0.75)",
-              },
+              { label: "Winner", data: [rx.winner_mean], backgroundColor: "rgba(74,222,128,0.75)" },
+              { label: "Loser", data: [rx.loser_mean], backgroundColor: "rgba(244,114,182,0.75)" },
             ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-              y: { beginAtZero: true, title: { display: true, text: "seconds" }, grid: { color: "#2a2f3a" } },
-            },
+            scales: { y: { beginAtZero: true, title: { display: true, text: "s / chance" }, grid: { color: "#2a2f3a" } } },
             plugins: {
               tooltip: {
                 callbacks: {
                   footer: function () {
-                    return "n=" + ppc.n;
+                    return "n=" + rx.n + " (≥1 self non-goal chance each side)";
                   },
                 },
               },
             },
           },
         });
-        document.getElementById("fig3b-conc").innerHTML = conclusionLines([
+        document.getElementById("fig4b-conc").innerHTML = conclusionLines([
           "<strong>" +
-            fmtNum(ppc.winner_mean, 2) +
-            "</strong>s vs <strong>" +
-            fmtNum(ppc.loser_mean, 2) +
-            "</strong>s persona time per clip — winner-role <strong>" +
-            fmtPct(pctWL(ppc.winner_mean, ppc.loser_mean)) +
+            fmtNum(rx.winner_mean, 2) +
+            "</strong> vs <strong>" +
+            fmtNum(rx.loser_mean, 2) +
+            "</strong> s per self non-goal chance — Δ <strong>" +
+            fmtPct(pctWL(rx.winner_mean, rx.loser_mean)) +
             "</strong> vs loser baseline (<em>n</em>=" +
-            ppc.n +
+            rx.n +
             ").",
         ]);
 
-        new Chart(document.getElementById("chartRivalPersona"), {
+        const keys4c = ["rival_reaction_per_rival_non_goal_chance"];
+        new Chart(document.getElementById("chartRivalRxPerChance"), {
           type: "bar",
           data: {
-            labels: ["Rival celebration + reaction (s)"],
+            labels: ["Rival reaction ÷ rival non-goal chances (s/chance)"],
             datasets: [
               {
-                label: "Winner-role",
-                data: [rp.winner_mean],
+                label: "Winner",
+                data: [rivrx.winner_mean],
                 backgroundColor: "rgba(74,222,128,0.75)",
               },
               {
-                label: "Loser-role",
-                data: [rp.loser_mean],
+                label: "Loser",
+                data: [rivrx.loser_mean],
                 backgroundColor: "rgba(244,114,182,0.75)",
               },
             ],
@@ -872,52 +908,54 @@
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true, title: { display: true, text: "seconds" }, grid: { color: "#2a2f3a" } } },
+            scales: { y: { beginAtZero: true, title: { display: true, text: "s / chance" }, grid: { color: "#2a2f3a" } } },
             plugins: {
               tooltip: {
                 callbacks: {
                   footer: function () {
-                    return "n=" + rp.n;
+                    return "n=" + rivrx.n + " (≥1 rival non-goal chance each side)";
                   },
                 },
               },
             },
           },
         });
-        document.getElementById("fig3c-conc").innerHTML = conclusionLines([
-          "Rival-only persona: loser-role <strong>" +
-            fmtNum(rp.loser_mean, 2) +
-            "</strong>s vs winner-role <strong>" +
-            fmtNum(rp.winner_mean, 2) +
-            "</strong>s — loser-role runs <strong>" +
-            fmtPct(pctAbove(rp.loser_mean, rp.winner_mean)) +
-            "</strong> more rival persona time (<em>n</em>=" +
-            rp.n +
+        document.getElementById("fig4c-conc").innerHTML = conclusionLines([
+          "<strong>" +
+            fmtNum(rivrx.winner_mean, 2) +
+            "</strong> vs <strong>" +
+            fmtNum(rivrx.loser_mean, 2) +
+            "</strong> s of rival reaction per rival non-goal chance — Δ <strong>" +
+            fmtPct(pctWL(rivrx.winner_mean, rivrx.loser_mean)) +
+            "</strong> vs loser baseline (<em>n</em>=" +
+            rivrx.n +
             ").",
         ]);
+        document.getElementById("fig4-note-n").textContent =
+          "Normalized metrics drop fixtures missing denominators (shutouts for celebration/goal; zero chance counts). Raw persona totals remain in stats.json for audit.";
 
         /* Deep-dive blocks */
         var deep = [
           {
             title: "Rival non-goal chances (count)",
             measured:
-              "Number of clips that are non-goal attacking chances for the **rival**, per official highlight video. A clip is one play; anything that is not a goal counts as a chance for the attacking side in that clip.",
+              "Number of clips that are non-goal attacking chances for the **opponent in this match** (“rival”), per official highlight. A clip is one play; anything that is not a goal counts as a chance for the attacking side in that clip.",
             implies:
-              "Shows how often the editor includes **optional** rival attacking moments they could omit (beyond mandatory goals). Higher counts trend **cordial** — more space ceded to the opponent’s story.",
+              "Shows how often the editor includes **optional** opponent attacking moments they could omit (beyond mandatory goals). Higher counts trend **cordial**.",
           },
           {
             title: "Rival non-goal replays (count)",
             measured:
-              "Count of **extra angles** for rival non-goal actions (not seconds). Attribution follows the project’s benefit-of-the-doubt rules for whose replay it is.",
+              "Count of **extra angles** for opponent non-goal actions (not seconds). Attribution follows the project’s benefit-of-the-doubt rules.",
             implies:
-              "Captures **optional re-showing** of rival near-miss / defensive highlights. Often lower means near-zero baselines — interpret next to absolute means.",
+              "Captures **optional re-showing** of opponent near-miss / defensive highlights. Near-zero baselines inflate % — read absolutes too.",
           },
           {
             title: "Average clip length (seconds)",
             measured:
               "(Total runtime minus final-whistle celebration block) ÷ clip count. Final-whistle celebration is excluded from both clip list and time base.",
             implies:
-              "A **pacing** measure: longer averages imply looser cutting within plays on average.",
+              "**Pacing**: longer averages imply looser cutting within plays on average.",
           },
           {
             title: "Clip count",
@@ -934,25 +972,25 @@
               "Overall package length; compare alongside clip count and avg clip length to separate **runtime** from **density**.",
           },
           {
-            title: "Persona share of runtime",
+            title: "Self celebration per goal scored (s / goal)",
             measured:
-              "(Self + rival celebration + self + rival reaction seconds) ÷ total length. Blank celebration/reaction cells treated as zero when summing.",
+              "(Self celebration seconds for that channel’s team) ÷ (goals that team scored in the match). Paired rows require **both teams scored ≥1** so neither denominator is zero.",
             implies:
-              "Share of the edit devoted to **people-focused** beats vs pure play. Not positive/negative — aggregate exposure.",
+              "Controls for scoreline when comparing **winner vs loser** edits — asks how much **post-goal persona dwell** each editor packs **per goal**, not total goals.",
           },
           {
-            title: "Persona seconds per clip",
+            title: "Self reaction per self non-goal chance (s / chance)",
             measured:
-              "Same persona sum as above, divided by clip count.",
+              "(Self reaction seconds) ÷ (count of **self** non-goal chances). Only fixtures where that side had **≥1** self non-goal chance.",
             implies:
-              "**Intensity** of persona focus per play — how much human/emotional framing each clip carries on average.",
+              "Controls for how many non-goal beats existed — measures **reaction intensity** conditional on showing those chances.",
           },
           {
-            title: "Rival-only persona (seconds)",
+            title: "Rival reaction per rival non-goal chance (s / chance)",
             measured:
-              "Rival celebration seconds + rival reaction seconds only.",
+              "(Rival reaction seconds) ÷ (rival non-goal chance count). Only where **≥1** rival non-goal chance was tagged.",
             implies:
-              "Isolates **cordial** rival face-time — exposure explicitly on the opponent’s emotional reactions.",
+              "**Cordial exposure** to the opponent’s emotional beats, **normalized** by how much optional rival football you showed — fairer than raw rival reaction totals.",
           },
         ];
 

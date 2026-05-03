@@ -80,5 +80,29 @@
     "mean_diff_w_minus_l": -2.0833333333333335,
     "median_diff": 0.0,
     "pct_winner_higher": 36.11111111111111
+  },
+  "self_celebration_per_goal": {
+    "n": 16,
+    "winner_mean": 6.755208333333333,
+    "loser_mean": 4.291666666666667,
+    "mean_diff_w_minus_l": 2.4635416666666665,
+    "median_diff": 3.5,
+    "pct_winner_higher": 75.0
+  },
+  "self_reaction_per_self_non_goal_chance": {
+    "n": 25,
+    "winner_mean": 1.4213333333333333,
+    "loser_mean": 1.638,
+    "mean_diff_w_minus_l": -0.21666666666666667,
+    "median_diff": 0.16666666666666669,
+    "pct_winner_higher": 56.00000000000001
+  },
+  "rival_reaction_per_rival_non_goal_chance": {
+    "n": 18,
+    "winner_mean": 0.9212962962962963,
+    "loser_mean": 0.7817460317460317,
+    "mean_diff_w_minus_l": 0.13955026455026454,
+    "median_diff": 0.0,
+    "pct_winner_higher": 44.44444444444444
   }
 }

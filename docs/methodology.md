@@ -39,6 +39,10 @@ When there is **no** standalone red card, the identity should close without fudg
 - **Home/away link columns:** ignore for current analysis.
 - **Comments / empty column AQ:** ignore for v1.
 
+### Aggregate comparisons that control for score / volume
+
+When comparing **winner vs loser** edits, raw **self celebration** totals mostly scale with **goals scored**. Report **self celebration seconds ÷ goals scored** (match score columns) when comparing emotional dwell across outcomes. Similarly use **self reaction ÷ self non-goal chances** and **rival reaction ÷ rival non-goal chances** when denominators exist — paired stats exclude rows with zero denominators (e.g. shutouts for per-goal celebration).
+
 ---
 
 ## How parameters interact (for analysis & storytelling)

@@ -162,6 +162,54 @@ def main() -> int:
     ].fillna(0)
     stats["rival_persona_sec"] = paired(df, "w_rival_face", "l_rival_face")
 
+    # Score / exposure-normalized emotional metrics (control for goals & chance volume)
+    wg = df["winner goals"].fillna(0)
+    lg = df["loser goals"].fillna(0)
+    df["w_celeb_per_goal"] = np.where(
+        wg > 0,
+        df["winner total self celebrations time"].fillna(0) / wg,
+        np.nan,
+    )
+    df["l_celeb_per_goal"] = np.where(
+        lg > 0,
+        df["loser total self celebrations time"].fillna(0) / lg,
+        np.nan,
+    )
+
+    wsng = df["winner amount of self non-goal chances"].fillna(0)
+    lsng = df["loser amount of self non-goal chances"].fillna(0)
+    df["w_rx_per_sng"] = np.where(
+        wsng > 0,
+        df["winner total self reaction time"].fillna(0) / wsng,
+        np.nan,
+    )
+    df["l_rx_per_sng"] = np.where(
+        lsng > 0,
+        df["loser total self reaction time"].fillna(0) / lsng,
+        np.nan,
+    )
+
+    wrng = df["winner amount of rival non-goal chances"].fillna(0)
+    lrng = df["loser amount of rival non-goal chances"].fillna(0)
+    df["w_rival_rx_per_rng"] = np.where(
+        wrng > 0,
+        df["winner total rival reaction time"].fillna(0) / wrng,
+        np.nan,
+    )
+    df["l_rival_rx_per_rng"] = np.where(
+        lrng > 0,
+        df["loser total rival reaction time"].fillna(0) / lrng,
+        np.nan,
+    )
+
+    stats["self_celebration_per_goal"] = paired(df, "w_celeb_per_goal", "l_celeb_per_goal")
+    stats["self_reaction_per_self_non_goal_chance"] = paired(
+        df, "w_rx_per_sng", "l_rx_per_sng"
+    )
+    stats["rival_reaction_per_rival_non_goal_chance"] = paired(
+        df, "w_rival_rx_per_rng", "l_rival_rx_per_rng"
+    )
+
     out = ROOT / "docs" / "stats.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(stats, indent=2), encoding="utf-8")
