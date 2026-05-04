@@ -690,130 +690,10 @@
         </div>
       </details>
     </div>
-
-    <!-- STATS_EMBED -->
-    <script>
-      const STATS = {
-  "source_file": "/Users/yotam.kushnir/Downloads/pl_highlight_links_ENRICHED.xlsx",
-  "fixture_count_decisive": 36,
-  "matchdays": [
-    30,
-    31,
-    32,
-    33,
-    34
-  ],
-  "matchday_count": 5,
-  "rival_non_goal_chances": {
-    "n": 32,
-    "winner_mean": 1.90625,
-    "loser_mean": 1.9375,
-    "mean_diff_w_minus_l": -0.03125,
-    "median_diff": 0.0,
-    "pct_winner_higher": 40.625
-  },
-  "rival_non_goal_replays": {
-    "n": 31,
-    "winner_mean": 0.16129032258064516,
-    "loser_mean": 0.5161290322580645,
-    "mean_diff_w_minus_l": -0.3548387096774194,
-    "median_diff": 0.0,
-    "pct_winner_higher": 9.67741935483871
-  },
-  "self_non_goal_chances": {
-    "n": 32,
-    "winner_mean": 2.4375,
-    "loser_mean": 4.0625,
-    "mean_diff_w_minus_l": -1.625,
-    "median_diff": -1.0,
-    "pct_winner_higher": 18.75
-  },
-  "avg_clip_length": {
-    "n": 32,
-    "winner_mean": 20.266222492187502,
-    "loser_mean": 17.9727379339375,
-    "mean_diff_w_minus_l": 2.2934845582499994,
-    "median_diff": 3.3666666649999986,
-    "pct_winner_higher": 59.375
-  },
-  "total_length": {
-    "n": 32,
-    "winner_mean": 144.125,
-    "loser_mean": 138.5,
-    "mean_diff_w_minus_l": 5.625,
-    "median_diff": 8.5,
-    "pct_winner_higher": 59.375
-  },
-  "clip_count": {
-    "n": 32,
-    "winner_mean": 7.21875,
-    "loser_mean": 8.8125,
-    "mean_diff_w_minus_l": -1.59375,
-    "median_diff": -1.0,
-    "pct_winner_higher": 31.25
-  },
-  "persona_total_sec": {
-    "n": 36,
-    "winner_mean": 21.555555555555557,
-    "loser_mean": 12.694444444444445,
-    "mean_diff_w_minus_l": 8.86111111111111,
-    "median_diff": 8.0,
-    "pct_winner_higher": 83.33333333333334
-  },
-  "persona_share_of_runtime": {
-    "n": 32,
-    "winner_mean": 0.15223841743844715,
-    "loser_mean": 0.10247732659266293,
-    "mean_diff_w_minus_l": 0.049761090845784214,
-    "median_diff": 0.03776216936428203,
-    "pct_winner_higher": 78.125
-  },
-  "persona_sec_per_clip": {
-    "n": 32,
-    "winner_mean": 3.3680363906926405,
-    "loser_mean": 1.9099292615596966,
-    "mean_diff_w_minus_l": 1.4581071291329444,
-    "median_diff": 1.2294254658385093,
-    "pct_winner_higher": 75.0
-  },
-  "rival_persona_sec": {
-    "n": 36,
-    "winner_mean": 4.166666666666667,
-    "loser_mean": 6.25,
-    "mean_diff_w_minus_l": -2.0833333333333335,
-    "median_diff": 0.0,
-    "pct_winner_higher": 36.11111111111111
-  },
-  "self_celebration_per_goal": {
-    "n": 16,
-    "winner_mean": 6.755208333333333,
-    "loser_mean": 4.291666666666667,
-    "mean_diff_w_minus_l": 2.4635416666666665,
-    "median_diff": 3.5,
-    "pct_winner_higher": 75.0
-  },
-  "self_reaction_per_self_non_goal_chance": {
-    "n": 25,
-    "winner_mean": 1.4213333333333333,
-    "loser_mean": 1.638,
-    "mean_diff_w_minus_l": -0.21666666666666667,
-    "median_diff": 0.16666666666666669,
-    "pct_winner_higher": 56.00000000000001
-  },
-  "rival_reaction_per_rival_non_goal_chance": {
-    "n": 18,
-    "winner_mean": 0.9212962962962963,
-    "loser_mean": 0.7817460317460317,
-    "mean_diff_w_minus_l": 0.13955026455026454,
-    "median_diff": 0.0,
-    "pct_winner_higher": 44.44444444444444
-  }
-};
-    </script>
+    <!-- STATS_EMBED: charts load docs/stats.json at runtime (small HTML; reliable GitHub Pages). -->
     <script>
       (function () {
-        const S = typeof STATS !== "undefined" && STATS.fixture_count_decisive ? STATS : null;
-        if (!S) {
+        function showStatsLoadError() {
           var _rs = getComputedStyle(document.documentElement);
           var _bg = _rs.getPropertyValue("--banner-error-bg").trim() || "#8e1616";
           var _fg = _rs.getPropertyValue("--banner-error-fg").trim() || "#ff6161";
@@ -823,10 +703,14 @@
               _bg +
               ";color:" +
               _fg +
-              ';padding:12px;text-align:center;font-family:Inter,Helvetica,Arial,sans-serif;font-weight:600">Load stats failed — run python3 scripts/build_stats.py and scripts/embed_stats_in_html.py.</div>'
+              ';padding:12px;text-align:center;font-family:Inter,Helvetica,Arial,sans-serif;font-weight:600">Load stats failed — keep <code>stats.json</code> next to this page (run <code>python3 scripts/build_stats.py</code>). <code>file://</code> cannot load it; use <code>cd docs &amp;&amp; python3 -m http.server 8000</code> and open <code>http://localhost:8000</code>.</div>'
           );
-          return;
         }
+        function runDashboard(S) {
+          if (!S || !S.fixture_count_decisive) {
+            showStatsLoadError();
+            return;
+          }
 
         var rootStyle = getComputedStyle(document.documentElement);
         function cssHex(name, fallback) {
@@ -1429,6 +1313,14 @@
             );
           })
           .join("");
+        }
+        fetch(new URL("stats.json", document.location.href))
+          .then(function (r) {
+            if (!r.ok) throw new Error("stats fetch failed");
+            return r.json();
+          })
+          .then(runDashboard)
+          .catch(showStatsLoadError);
       })();
     </script>
   </body>
