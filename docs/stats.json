@@ -1,5 +1,5 @@
 {
-  "source_file": "/Users/yotam.kushnir/Downloads/pl_highlight_links_ENRICHED.xlsx",
+  "source_file": "/Users/yotam.kushnir/team-subjective-highlights/data/pl_highlight_links_ENRICHED.xlsx",
   "fixture_count_decisive": 36,
   "matchdays": [
     30,
@@ -33,7 +33,7 @@
     "median_diff": -1.0,
     "pct_winner_higher": 18.75
   },
-  "avg_clip_length": {
+  "avg_pbp_length": {
     "n": 32,
     "winner_mean": 20.266222492187502,
     "loser_mean": 17.9727379339375,
@@ -49,7 +49,7 @@
     "median_diff": 8.5,
     "pct_winner_higher": 59.375
   },
-  "clip_count": {
+  "pbp_count": {
     "n": 32,
     "winner_mean": 7.21875,
     "loser_mean": 8.8125,
@@ -73,7 +73,7 @@
     "median_diff": 0.03776216936428203,
     "pct_winner_higher": 78.125
   },
-  "persona_sec_per_clip": {
+  "persona_sec_per_pbp": {
     "n": 32,
     "winner_mean": 3.3680363906926405,
     "loser_mean": 1.9099292615596966,

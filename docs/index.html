@@ -694,7 +694,7 @@
     <!-- STATS_EMBED -->
     <script>
       const STATS = {
-  "source_file": "/Users/yotam.kushnir/Downloads/pl_highlight_links_ENRICHED.xlsx",
+  "source_file": "/Users/yotam.kushnir/team-subjective-highlights/data/pl_highlight_links_ENRICHED.xlsx",
   "fixture_count_decisive": 36,
   "matchdays": [
     30,
@@ -728,7 +728,7 @@
     "median_diff": -1.0,
     "pct_winner_higher": 18.75
   },
-  "avg_clip_length": {
+  "avg_pbp_length": {
     "n": 32,
     "winner_mean": 20.266222492187502,
     "loser_mean": 17.9727379339375,
@@ -744,7 +744,7 @@
     "median_diff": 8.5,
     "pct_winner_higher": 59.375
   },
-  "clip_count": {
+  "pbp_count": {
     "n": 32,
     "winner_mean": 7.21875,
     "loser_mean": 8.8125,
@@ -768,7 +768,7 @@
     "median_diff": 0.03776216936428203,
     "pct_winner_higher": 78.125
   },
-  "persona_sec_per_clip": {
+  "persona_sec_per_pbp": {
     "n": 32,
     "winner_mean": 3.3680363906926405,
     "loser_mean": 1.9099292615596966,
@@ -885,8 +885,8 @@
 
         const rn = S.rival_non_goal_chances;
         const sng = S.self_non_goal_chances;
-        const ac = S.avg_clip_length;
-        const cc = S.clip_count;
+        const ac = S.avg_pbp_length;
+        const cc = S.pbp_count;
         const tl = S.total_length;
         const cg = S.self_celebration_per_goal;
         const rx = S.self_reaction_per_self_non_goal_chance;
@@ -1077,7 +1077,7 @@
         ]);
 
         /* Figure 1b — pacing */
-        const keys1b = ["avg_clip_length", "clip_count"];
+        const keys1b = ["avg_pbp_length", "pbp_count"];
         new Chart(document.getElementById("chartPacing"), {
           type: "bar",
           data: {
@@ -1370,14 +1370,14 @@
           {
             title: "Average PBP length (seconds)",
             measured:
-              "(Total runtime minus final-whistle celebration block) ÷ PBP count (sheet column <code>clip_count</code>). Final-whistle celebration is excluded from both PBP list and time base.",
+              "(Total runtime minus final-whistle celebration block) ÷ PBP count (sheet column <code>pbp_count</code> / <code>…total pbps</code>). Final-whistle celebration is excluded from both PBP list and time base.",
             implies:
               "<strong>Pacing</strong>: longer averages imply looser cutting within plays on average.",
           },
           {
             title: "PBP count",
             measured:
-              "Number of plays (PBPs) in the video under project rules — chances, goals, red-card logic, etc. (sheet column <code>clip_count</code>).",
+              "Number of plays (PBPs) in the video under project rules — chances, goals, red-card logic, etc. (sheet columns <code>…total pbps</code> or legacy <code>…total clips</code>).",
             implies:
               "Higher counts imply <strong>busier</strong> videos with more discrete beats.",
           },

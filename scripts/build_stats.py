@@ -25,6 +25,20 @@ def num(x):
         return np.nan
 
 
+def pick_col(df: pd.DataFrame, *candidates: str) -> str:
+    """Return the first column name that exists (supports PBP renames in the sheet)."""
+    for c in candidates:
+        if c in df.columns:
+            return c
+    raise KeyError(
+        "Missing column; tried: "
+        + ", ".join(candidates)
+        + ". Columns include: "
+        + ", ".join(str(x) for x in list(df.columns)[:20])
+        + ("…" if len(df.columns) > 20 else "")
+    )
+
+
 def paired(df: pd.DataFrame, col_w: str, col_l: str) -> dict:
     w = df[col_w].values
     l = df[col_l].values
@@ -100,13 +114,15 @@ def main() -> int:
         "winner amount of self non-goal chances",
         "loser amount of self non-goal chances",
     )
-    stats["avg_clip_length"] = paired(
-        df, "winner average clip lenght", "loser average clip lenght"
+    stats["avg_pbp_length"] = paired(
+        df,
+        pick_col(df, "winner average pbp lenght", "winner average clip lenght"),
+        pick_col(df, "loser average pbp lenght", "loser average clip lenght"),
     )
     stats["total_length"] = paired(df, "winner total lenght", "loser total lenght")
-    stats["clip_count"] = paired(
-        df, "winner amount of total clips", "loser amount of total clips"
-    )
+    w_pbp = pick_col(df, "winner amount of total pbps", "winner amount of total clips")
+    l_pbp = pick_col(df, "loser amount of total pbps", "loser amount of total clips")
+    stats["pbp_count"] = paired(df, w_pbp, l_pbp)
 
     for side in ("winner", "loser"):
         pcols = [
@@ -140,20 +156,20 @@ def main() -> int:
             "pct_winner_higher": float(100 * (d > 0).mean()),
         }
 
-    df["w_persona_per_clip"] = df["winner_persona_sec"] / df["winner amount of total clips"]
-    df["l_persona_per_clip"] = df["loser_persona_sec"] / df["loser amount of total clips"]
+    df["w_persona_per_pbp"] = df["winner_persona_sec"] / df[w_pbp]
+    df["l_persona_per_pbp"] = df["loser_persona_sec"] / df[l_pbp]
     mask2 = (
-        np.isfinite(df["w_persona_per_clip"])
-        & np.isfinite(df["l_persona_per_clip"])
-        & (df["winner amount of total clips"] > 0)
-        & (df["loser amount of total clips"] > 0)
+        np.isfinite(df["w_persona_per_pbp"])
+        & np.isfinite(df["l_persona_per_pbp"])
+        & (df[w_pbp] > 0)
+        & (df[l_pbp] > 0)
     )
     if mask2.any():
-        d2 = df.loc[mask2, "w_persona_per_clip"] - df.loc[mask2, "l_persona_per_clip"]
-        stats["persona_sec_per_clip"] = {
+        d2 = df.loc[mask2, "w_persona_per_pbp"] - df.loc[mask2, "l_persona_per_pbp"]
+        stats["persona_sec_per_pbp"] = {
             "n": int(mask2.sum()),
-            "winner_mean": float(df.loc[mask2, "w_persona_per_clip"].mean()),
-            "loser_mean": float(df.loc[mask2, "l_persona_per_clip"].mean()),
+            "winner_mean": float(df.loc[mask2, "w_persona_per_pbp"].mean()),
+            "loser_mean": float(df.loc[mask2, "l_persona_per_pbp"].mean()),
             "mean_diff_w_minus_l": float(d2.mean()),
             "median_diff": float(d2.median()),
             "pct_winner_higher": float(100 * (d2 > 0).mean()),

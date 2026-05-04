@@ -35,7 +35,7 @@ When there is **no** standalone red card, the identity should close without fudg
 
 - **Length / celebration / reaction:** seconds.
 - **Replays:** **counts** (how many angles), not seconds.
-- **Average PBP length** (column `avg_clip_length`) = `(total video length − final whistle celebration seconds) ÷ clip count`. Final-whistle block is **not** a PBP and is **excluded** from the average’s time base.
+- **Average PBP length** (aggregates as `avg_pbp_length`; sheet may use `winner average pbp lenght` or legacy `winner average clip lenght`) = `(total video length − final whistle celebration seconds) ÷ PBP count`. Final-whistle block is **not** a PBP and is **excluded** from the average’s time base.
 - **Home/away link columns:** ignore for current analysis.
 - **Comments / empty column AQ:** ignore for v1.
 
@@ -71,7 +71,7 @@ Pair **rival goal replay counts** with **rival non-goal** metrics to separate ma
 
 ### 3. Pacing and density
 
-- **Total length** + **clip count** (`clip_count`) + **average PBP length** (`avg_clip_length`, whistle-adjusted) describe how **compressed** or **extended** the video is.
+- **Total length** + **PBP count** (`pbp_count` in JSON; sheet `…total pbps` or legacy `…total clips`) + **average PBP length** (`avg_pbp_length`, whistle-adjusted) describe how **compressed** or **extended** the video is.
 - **Avg PBP length** is the best **normalized** pacing metric because it removes the **final-whistle celebration** block from both numerator and PBP list.
 
 ### 4. Persona / emotional focus (winner video vs loser video)

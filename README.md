@@ -2,67 +2,84 @@
 
 Internal research kit comparing **winner-channel** vs **loser-channel** Premier League official highlight **videos** for the same fixtures (club-blind aggregate).
 
-**New chat / agent context:** see [`HANDOFF.md`](HANDOFF.md) (full, up-to-date project context for agents and collaborators).
+**New chat / agent context:** see [`HANDOFF.md`](HANDOFF.md).
 
 **Live report (GitHub Pages):** [https://yotamkushnir.github.io/team-subjective-highlights/](https://yotamkushnir.github.io/team-subjective-highlights/)  
-*First deploy can take 1–2 minutes; hard-refresh if charts look empty.*
+*After `git push`, wait 1–2 minutes and hard-refresh if the site looks stale.*
 
 **Repository:** [https://github.com/yotamkushnir/team-subjective-highlights](https://github.com/yotamkushnir/team-subjective-highlights)
 
+---
+
+## Quick start (clone + stats)
+
+```bash
+git clone https://github.com/yotamkushnir/team-subjective-highlights.git
+cd team-subjective-highlights
+git submodule update --init --recursive
+python3 -m pip install -r requirements.txt
+export HIGHLIGHTS_XLSX=/path/to/pl_highlight_links_ENRICHED.xlsx   # optional
+python3 scripts/build_stats.py && python3 scripts/embed_stats_in_html.py
+```
+
+Open **`docs/index.html`** in a browser.
+
+---
+
 ## Design system
 
-This repo vendors [**wsc-components-library**](https://github.com/WSCSportsEngineering/wsc-components-library) as a **git submodule** at `vendor/wsc-components-library`. After cloning, run:
+Submodule: **`vendor/wsc-components-library`** ([WSCSportsEngineering/wsc-components-library](https://github.com/WSCSportsEngineering/wsc-components-library)). After clone:
 
 ```bash
 git submodule update --init --recursive
 ```
 
-The static dashboard loads approved tokens from **`docs/assets/wsc-theme.css`** (synced from the library’s `wscTheme` — see the comment at the top of that file). Refresh that snapshot when design tokens change upstream.
+Published styling is **`docs/assets/wsc-theme.css`** (synced from `wscTheme` — see file header).
+
+---
+
+## Data & naming (PBP)
+
+The workbook may use **PBP** column labels (e.g. `winner amount of total pbps`, `winner average pbp lenght`) or **legacy** “clip” labels. `scripts/build_stats.py` resolves either.
+
+Aggregates in **`docs/stats.json`** / embedded **`STATS`** use **`avg_pbp_length`**, **`pbp_count`**, **`persona_sec_per_pbp`**, etc. Tagging rules: **`docs/methodology.md`**.
+
+---
 
 ## Repo layout
 
 | Path | Purpose |
 |------|---------|
-| `docs/methodology.md` | Tagging definitions, PBP accounting, cordiality framing |
-| `docs/results.md` | Narrative + paired summary tables |
-| `docs/index.html` | Static dashboard (Chart.js); executive playbook, highlights, figures, deep dive |
-| `docs/assets/wsc-theme.css` | WSC palette + semantic aliases for the dashboard |
-| `docs/stats.json` | Machine-readable aggregates |
-| `scripts/build_stats.py` | Reads spreadsheet → writes `docs/stats.json` |
-| `scripts/embed_stats_in_html.py` | Inlines `stats.json` into `docs/index.html` |
+| `docs/index.html` | Static dashboard (Chart.js + embedded stats) |
+| `docs/assets/wsc-theme.css` | Design tokens for the dashboard |
+| `docs/assets/wsc-mark-white.svg` | Header logo |
+| `docs/stats.json` | Aggregates from `build_stats.py` |
+| `scripts/build_stats.py` | Spreadsheet → `stats.json` |
+| `scripts/embed_stats_in_html.py` | Inline stats into `index.html` |
+| `docs/methodology.md` | Definitions & QA |
+| `docs/results.md` | Narrative + tables |
 
-## Refresh numbers after editing the workbook
+---
 
-Default spreadsheet path: `~/Downloads/pl_highlight_links_ENRICHED.xlsx`, or set:
-
-```bash
-export HIGHLIGHTS_XLSX=/path/to/pl_highlight_links_ENRICHED.xlsx
-```
-
-Then refresh aggregates and embed stats into `docs/index.html`:
+## Publish updates to GitHub Pages
 
 ```bash
-python3 scripts/build_stats.py && python3 scripts/embed_stats_in_html.py
+git add -A
+git status   # review
+git commit -m "Your message"
+git push origin main
 ```
 
-To change narrative blocks (executive playbook, deep dive, etc.), edit the corresponding sections in **`docs/index.html`** and push.
+Include **`docs/index.html`** and **`docs/stats.json`** whenever you rerun the embed step after changing numbers.
 
-Optional: copy the workbook to `data/pl_highlight_links_ENRICHED.xlsx` for a portable checkout.
+---
 
 ## Dependencies
 
-Python **3**. Install from the repo root:
+Python **3** + `pandas`, `openpyxl` (`requirements.txt`).
 
-```bash
-python3 -m pip install -r requirements.txt
-```
-
-(`pandas` and `openpyxl`.)
-
-## Viewing the HTML report
-
-Open `docs/index.html` in a browser after running `embed_stats_in_html.py`.
+---
 
 ## Editing
 
-All artifacts are plain Markdown/HTML/JavaScript—edit directly in Cursor.
+Markdown/HTML/JS in-repo; no build step except stats embed for numbers.

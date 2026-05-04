@@ -56,13 +56,13 @@ Metrics compare **winner-channel value − loser-channel value** per fixture (ne
 
 ### Pacing / structure
 
-_(Sheet columns: `total_length`, `clip_count`, `avg_clip_length`.)_
+_(Sheet / JSON: `total_length`, `pbp_count` [or legacy `…total clips`], `avg_pbp_length` [or legacy average clip length columns].)_
 
 | Metric | Winner mean | Loser mean | Mean Δ (W−L) | Median Δ | % winner higher |
 |--------|-------------|------------|--------------|----------|-----------------|
 | Total length (s), _n_=32 | 144.1 | 138.5 | **+5.6** | +8.5 | 59.4% |
-| PBP count (`clip_count`), _n_=32 | 7.22 | 8.81 | **−1.59** | −1.0 | 31.3% |
-| Avg PBP length (s), _n_=32 | 20.27 | 17.97 | **+2.29** | +3.37 | 59.4% |
+| PBP count (`pbp_count`), _n_=32 | 7.22 | 8.81 | **−1.59** | −1.0 | 31.3% |
+| Avg PBP length (s) (`avg_pbp_length`), _n_=32 | 20.27 | 17.97 | **+2.29** | +3.37 | 59.4% |
 
 **Read:** Winner-role videos are **slightly longer** and **slightly fewer PBPs** ⇒ **longer average PBP length**—a **looser** pacing signature vs loser-role videos in this sample.
 
