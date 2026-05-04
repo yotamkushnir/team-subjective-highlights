@@ -1,0 +1,3 @@
+[submodule "vendor/wsc-components-library"]
+	path = vendor/wsc-components-library
+	url = https://github.com/WSCSportsEngineering/wsc-components-library.git

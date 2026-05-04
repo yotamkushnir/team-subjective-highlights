@@ -4,9 +4,9 @@ Internal reference for tagging, QA, and analysis (Premier League official highli
 
 ---
 
-## Clip accounting (sanity check)
+## PBP / “clip” accounting (sanity check)
 
-**Identity (per video: winner’s edit or loser’s edit):**
+In documentation and the dashboard we often say **PBP** (play-by-play); spreadsheet columns may still use **clip** in the name. **Identity (per video: winner’s video or loser’s video):**
 
 `self non-goal chances` + `rival non-goal chances` + `goal clips` ≈ `total clips`
 
@@ -35,13 +35,13 @@ When there is **no** standalone red card, the identity should close without fudg
 
 - **Length / celebration / reaction:** seconds.
 - **Replays:** **counts** (how many angles), not seconds.
-- **Average clip length** = `(total video length − final whistle celebration seconds) ÷ clip count`. Final-whistle block is **not** a clip and is **excluded** from the average’s time base.
+- **Average PBP length** (column `avg_clip_length`) = `(total video length − final whistle celebration seconds) ÷ clip count`. Final-whistle block is **not** a PBP and is **excluded** from the average’s time base.
 - **Home/away link columns:** ignore for current analysis.
 - **Comments / empty column AQ:** ignore for v1.
 
 ### Aggregate comparisons that control for score / volume
 
-When comparing **winner vs loser** edits, raw **self celebration** totals mostly scale with **goals scored**. Report **self celebration seconds ÷ goals scored** (match score columns) when comparing emotional dwell across outcomes. Similarly use **self reaction ÷ self non-goal chances** and **rival reaction ÷ rival non-goal chances** when denominators exist — paired stats exclude rows with zero denominators (e.g. shutouts for per-goal celebration).
+When comparing **winner vs loser** videos, raw **self celebration** totals mostly scale with **goals scored**. Report **self celebration seconds ÷ goals scored** (match score columns) when comparing emotional dwell across outcomes. Similarly use **self reaction ÷ self non-goal chances** and **rival reaction ÷ rival non-goal chances** when denominators exist — paired stats exclude rows with zero denominators (e.g. shutouts for per-goal celebration).
 
 ---
 
@@ -71,15 +71,15 @@ Pair **rival goal replay counts** with **rival non-goal** metrics to separate ma
 
 ### 3. Pacing and density
 
-- **Total length** + **clip count** + **average clip length** (whistle-adjusted) describe how **compressed** or **extended** the edit is.
-- **Avg clip length** is the best **normalized** pacing metric because it removes the **final-whistle celebration** block from both numerator and clip list.
+- **Total length** + **clip count** (`clip_count`) + **average PBP length** (`avg_clip_length`, whistle-adjusted) describe how **compressed** or **extended** the video is.
+- **Avg PBP length** is the best **normalized** pacing metric because it removes the **final-whistle celebration** block from both numerator and PBP list.
 
-### 4. Persona / emotional focus (winner edit vs loser edit)
+### 4. Persona / emotional focus (winner video vs loser video)
 
 - **Celebration** = post-goal window (project timer rules).
 - **Reaction** = close-up emotional beats; **often** frustration or protest — not only frustration.
 
-For **headline comparisons**, **aggregate** self + rival celebration + self + rival reaction into **total persona seconds**, then normalize by **runtime** and/or **per clip** to describe how much of the edit is **people-focused** vs pure play.
+For **headline comparisons**, **aggregate** self + rival celebration + self + rival reaction into **total persona seconds**, then normalize by **runtime** and/or **per PBP** to describe how much of the video is **people-focused** vs pure play.
 
 ### 5. Goal emphasis vs non-goal emphasis
 

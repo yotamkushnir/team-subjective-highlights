@@ -1,0 +1,83 @@
+/**
+ * WSC design tokens — snapshot for static GitHub Pages.
+ * Synced from vendor/wsc-components-library @ 6d2649eb04d0fe56134363d0c725af0deb756c48
+ * Source of truth: vendor/wsc-components-library/src/theme/wscTheme.ts (wscTheme object).
+ * Typography: Inter per getTheme() in the same file.
+ *
+ * To refresh: update the submodule, align values with src/theme/wscTheme.ts, bump the commit hash above.
+ */
+
+:root {
+  /* Primary */
+  --primary-100: #80b8ff;
+  --primary-300: #5aa3ff;
+  --primary-500: #3079d6;
+  --primary-700: #13244d;
+  --primary-contrast-text: #f0f0f0;
+
+  /* Neutral */
+  --neutral-0: #ffffff;
+  --neutral-100: #f0f0f0;
+  --neutral-200: #bababa;
+  --neutral-300: #8e8e8e;
+  --neutral-400: #616161;
+  --neutral-500: #404040;
+  --neutral-600: #333333;
+  --neutral-700: #282828;
+  --neutral-800: #181818;
+  --neutral-900: #010101;
+
+  /* Success */
+  --success-100: #00e5a0;
+  --success-300: #00b27c;
+  --success-500: #007f58;
+  --success-700: #006547;
+
+  /* Warning */
+  --warning-100: #ff6161;
+  --warning-300: #ff3131;
+  --warning-500: #b72c2c;
+  --warning-700: #8e1616;
+
+  /* Caution */
+  --caution-100: #ffce66;
+  --caution-300: #ffae00;
+  --caution-500: #b27a00;
+  --caution-700: #805700;
+
+  /* Supporting */
+  --supporting-pink-100: #ffc7f2;
+  --supporting-pink-300: #ff60c9;
+  --supporting-pink-500: #c149a5;
+  --supporting-light-yellow-300: #fdff91;
+  --brand-yellow-300: #e5ff00;
+
+  /* Radius & shadow (wscTheme.radius / shadow) */
+  --radius-m: 0.571rem;
+  --radius-l: 1.143rem;
+  --shadow-s1: 0px 4px 10px 2px rgba(58, 89, 134, 0.15);
+
+  /* Aliases used by layout */
+  --supporting-pink: var(--supporting-pink-300);
+  --supporting-yellow: var(--brand-yellow-300);
+
+  /* Dashboard semantic aliases */
+  --bg: var(--neutral-900);
+  --card: var(--neutral-800);
+  --text: var(--neutral-100);
+  --muted: var(--neutral-300);
+  --accent: var(--primary-300);
+  --border: var(--neutral-600);
+  --callout: var(--neutral-700);
+  --maxw: 54rem;
+
+  /* Chart.js (winner = success[300], loser = supporting.pink[300]) */
+  --chart-winner-rgba: rgba(0, 178, 124, 0.78);
+  --chart-loser-rgba: rgba(255, 96, 201, 0.78);
+  --chart-grid: var(--neutral-500);
+  --chart-label-text: var(--neutral-200);
+
+  /* Error / banner */
+  --banner-error-bg: var(--warning-700);
+  --banner-error-fg: var(--warning-100);
+}

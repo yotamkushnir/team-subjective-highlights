@@ -7,23 +7,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="assets/wsc-theme.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
-      :root {
-        --bg: #0f1115;
-        --card: #171a21;
-        --text: #e8eaed;
-        --muted: #9aa0a6;
-        --accent: #7c9eff;
-        --winner: #4ade80;
-        --loser: #f472b6;
-        --border: #2a2f3a;
-        --callout: #1e2430;
-        --maxw: 54rem;
-      }
+      /* Layout overrides — palette/tokens: assets/wsc-theme.css (from wsc-components-library wscTheme) */
       * {
         box-sizing: border-box;
       }
@@ -31,66 +21,94 @@
         margin: 0;
         background: var(--bg);
         color: var(--text);
-        font-family: "DM Sans", system-ui, sans-serif;
+        font-family: "Inter", "Helvetica", "Arial", sans-serif;
         line-height: 1.55;
-        font-size: 1.02rem;
+        font-size: 1rem;
       }
       .wrap {
         max-width: var(--maxw);
         margin: 0 auto;
         padding: 2.5rem 1.25rem 4rem;
       }
+      .site-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .site-logo {
+        width: 2.75rem;
+        height: auto;
+        flex-shrink: 0;
+        margin-top: 0.15rem;
+      }
+      .site-header-text {
+        flex: 1;
+        min-width: 0;
+      }
       h1,
       h2,
       h3 {
-        font-family: "IBM Plex Serif", Georgia, serif;
-        font-weight: 600;
+        font-family: "Inter", "Helvetica", "Arial", sans-serif;
+        font-weight: 700;
         line-height: 1.25;
       }
       h1 {
-        font-size: 1.75rem;
+        font-size: 1.714rem;
         margin: 0 0 1rem;
+        font-weight: 700;
       }
       h2 {
-        font-size: 1.22rem;
+        font-size: 1.286rem;
         margin: 2.35rem 0 0.65rem;
-        color: #d8dce3;
+        color: var(--neutral-100);
+        font-weight: 600;
       }
       h3.hero-part {
-        font-family: "IBM Plex Serif", Georgia, serif;
-        font-size: 1.05rem;
+        font-size: 1.143rem;
         margin: 1.25rem 0 0.5rem;
         color: var(--accent);
+        font-weight: 600;
       }
       h3.hero-part:first-of-type {
         margin-top: 0.75rem;
       }
       p,
       li {
-        color: #c4c7ce;
+        color: var(--neutral-200);
       }
       .tag {
         display: inline-block;
-        font-size: 0.75rem;
+        font-size: 0.714rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
         color: var(--accent);
-        font-weight: 600;
+        font-weight: 700;
         margin-bottom: 0.35rem;
       }
       .card {
         background: var(--card);
         border: 1px solid var(--border);
-        border-radius: 10px;
+        border-radius: var(--radius-m);
         padding: 1.25rem 1.35rem;
         margin: 1.25rem 0;
+        box-shadow: var(--shadow-s1);
+      }
+      .card--explore {
+        border-left: 3px solid var(--supporting-yellow);
+        opacity: 1;
       }
       .hero-card p {
         margin: 0 0 0.65rem;
       }
       .exec-summary {
         background: var(--callout);
-        border: 1px solid #2e3648;
+        border: 1px solid var(--neutral-600);
+      }
+      .exec-summary .exec-lead {
+        margin: 0;
+        color: var(--neutral-300);
+        font-size: 0.857rem;
       }
       .exec-summary ul {
         margin: 0.5rem 0 0;
@@ -119,7 +137,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem 1rem;
-        font-size: 0.9rem;
+        font-size: 0.857rem;
         color: var(--muted);
         margin: 0.75rem 0 0;
       }
@@ -150,8 +168,9 @@
       .metric-deep h4 {
         margin: 0 0 0.35rem;
         font-size: 1rem;
-        font-family: "IBM Plex Serif", Georgia, serif;
-        color: #eef0f3;
+        font-family: "Inter", "Helvetica", "Arial", sans-serif;
+        color: var(--neutral-100);
+        font-weight: 600;
       }
       .metric-deep p {
         margin: 0 0 0.75rem;
@@ -171,7 +190,7 @@
       }
       .metric-deep dd {
         margin: 0.15rem 0 0 0;
-        color: #b8bcc4;
+        color: var(--neutral-200);
       }
       .note {
         font-size: 0.88rem;
@@ -183,218 +202,299 @@
       a {
         color: var(--accent);
       }
+      a:hover {
+        color: var(--primary-100);
+      }
+      a:focus-visible {
+        outline: 2px solid var(--primary-300);
+        outline-offset: 2px;
+      }
       code {
         font-size: 0.88em;
-        background: #0b0c0f;
+        background: var(--neutral-900);
+        border: 1px solid var(--neutral-600);
         padding: 0.1em 0.35em;
-        border-radius: 4px;
+        border-radius: var(--radius-m);
       }
       ul.norm {
         padding-left: 1.2rem;
       }
-      .editorial-disclosure {
+      .wsc-details {
         padding: 0;
         overflow: hidden;
       }
-      .editorial-disclosure > summary {
+      .wsc-details > summary {
         list-style: none;
         cursor: pointer;
         padding: 1rem 1.35rem;
-        font-size: 1.02rem;
+        font-size: 1rem;
         color: var(--accent);
         font-weight: 600;
         display: flex;
         align-items: center;
         gap: 0.5rem;
       }
-      .editorial-disclosure > summary::-webkit-details-marker {
+      .wsc-details > summary::-webkit-details-marker {
         display: none;
       }
-      .editorial-disclosure > summary::before {
+      .wsc-details > summary::before {
         content: "▸";
         display: inline-block;
         transition: transform 0.15s ease;
         color: var(--muted);
         font-weight: 700;
       }
-      .editorial-disclosure[open] > summary::before {
+      .wsc-details[open] > summary::before {
         transform: rotate(90deg);
       }
-      .editorial-disclosure > summary:hover {
-        color: #a8bcff;
+      .wsc-details > summary:hover {
+        color: var(--primary-100);
       }
-      .editorial-playbook-body {
+      .wsc-details > summary:focus-visible {
+        outline: 2px solid var(--primary-300);
+        outline-offset: -2px;
+      }
+      .wsc-details-body {
         border-top: 1px solid var(--border);
         padding: 0.25rem 1.35rem 1.25rem;
       }
-      .editorial-playbook-body h3 {
-        font-size: 1.05rem;
-        margin: 1.15rem 0 0.5rem;
-        color: #d8dce3;
-        font-family: "IBM Plex Serif", Georgia, serif;
+      .exec-sub {
+        margin: -0.5rem 0 1rem;
+        font-size: 1rem;
         font-weight: 600;
+        color: var(--neutral-300);
       }
-      .editorial-playbook-body h3:first-of-type {
-        margin-top: 0.85rem;
-      }
-      .editorial-playbook-body .playbook-title {
-        font-family: "IBM Plex Serif", Georgia, serif;
-        font-size: 1.2rem;
-        margin: 0.5rem 0 0.75rem;
-        color: #eef0f3;
+      .exec-block-title {
+        font-size: 1.143rem;
+        margin: 0 0 0.65rem;
+        color: var(--accent);
         font-weight: 600;
-        line-height: 1.25;
+        font-family: "Inter", "Helvetica", "Arial", sans-serif;
       }
-      .editorial-playbook-body .playbook-lead {
-        margin: 0 0 0.75rem;
-        font-size: 0.98rem;
+      .exec-block-title--spaced {
+        margin-top: 1.5rem;
       }
-      .editorial-playbook-body hr {
-        border: none;
-        border-top: 1px solid var(--border);
-        margin: 1rem 0;
-      }
-      .editorial-playbook-body ul {
-        margin: 0.4rem 0 0;
+      .playbook {
+        margin: 0;
         padding-left: 1.2rem;
       }
-      .editorial-playbook-body li {
-        margin-bottom: 0.5rem;
+      .playbook > li {
+        margin-bottom: 0.85rem;
+      }
+      .playbook-detail {
+        margin-top: 0.45rem;
+        margin-left: 0;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-m);
+        background: var(--neutral-900);
+        padding: 0;
+      }
+      .playbook-detail > summary {
+        cursor: pointer;
+        padding: 0.45rem 0.65rem;
+        font-size: 0.857rem;
+        color: var(--muted);
+        font-weight: 600;
+        list-style: none;
+      }
+      .playbook-detail > summary::-webkit-details-marker {
+        display: none;
+      }
+      .playbook-detail[open] > summary {
+        border-bottom: 1px solid var(--border);
+      }
+      .playbook-detail p {
+        margin: 0;
+        padding: 0.65rem 0.75rem 0.75rem;
+        font-size: 0.95rem;
+      }
+      .desk-line {
+        margin: 0.5rem 0 0;
+        font-size: 0.98rem;
+      }
+      .section-break {
+        margin: 3rem 0 2rem;
+        border: none;
+        border-top: 1px solid var(--neutral-600);
+      }
+      .deep-dive-body .deep-section-title {
+        font-size: 1.143rem;
+        margin: 1.35rem 0 0.5rem;
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .deep-dive-body .deep-section-title:first-child {
+        margin-top: 0.35rem;
+      }
+      .deep-metrics-heading {
+        font-size: 1.286rem;
+        margin: 1.75rem 0 0.5rem;
+        color: var(--neutral-100);
+        font-weight: 600;
+      }
+      .deep-metrics-lead {
+        margin: 0 0 0.75rem;
+        font-size: 0.95rem;
       }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <p class="tag">Team Subjective Highlights</p>
-      <h1>Winner-channel vs loser-channel edits (club-blind)</h1>
+      <header class="site-header">
+        <img
+          class="site-logo"
+          src="assets/wsc-mark-white.svg"
+          width="44"
+          height="28"
+          alt="WSC Sports"
+        />
+        <div class="site-header-text">
+          <p class="tag">Team Subjective Highlights</p>
+          <h1>Winner-channel vs loser-channel videos (club-blind)</h1>
+        </div>
+      </header>
 
       <div class="card hero-card">
+        <h3 class="hero-part">What this is</h3>
+        <p>
+          I reviewed <strong>two videos</strong> for every game in the sample: the <strong>winning</strong>
+          team’s official highlight (<strong>winner</strong> video) and the <strong>losing</strong> team’s
+          official highlight (<strong>loser</strong> video). In the analysis, <strong>winner</strong> /
+          <strong>loser</strong> means which channel the video <strong>belongs to</strong> (by match
+          result). <strong>Self</strong> / <strong>rival</strong> means the two teams <strong>as they
+          appear in that channel’s video</strong> — our side vs the opponent in the same cut.
+        </p>
+
         <h3 class="hero-part">Role-based scope</h3>
-        <p>
-          We compare <strong>winner-channel</strong> vs <strong>loser-channel</strong> edits for the
-          same matches, <strong>club-blind</strong> in the main analysis: teams are only
-          “winner” or “loser” in that fixture, not named brands in the headline claim.
-        </p>
-
-        <h3 class="hero-part">What this study does not try to explain</h3>
-        <p>
-          We did not analyze what happened in the match in terms of type of action (e.g. shot
-          shape, set pieces, “quality” of save or goal). The play-by-play content of the match is
-          <strong>given</strong>: goals and obviously strong plays will appear. There is no
-          meaningful “editorial voice” in which PBP moments get in at that level. The editorial
-          voice shows up in <strong>pacing</strong>, how things are split
-          (<strong>how many</strong> of each kind of beat, not which specific plays),
-          <strong>exposure to people</strong> (how much time on self vs rival personas),
-          <strong>emotional emphasis</strong>, and how much room is left to the opponent in the
-          cut.
-        </p>
-
-        <h3 class="hero-part">Cordiality</h3>
         <p style="margin-bottom: 0">
-          Any extra exposure to the rival is “generous” in this framework — not only optional
-          chances. <strong>Rival reaction time</strong> is not the opposite of self celebration;
-          it is another form of screen time you can give the opponent. High rival exposure
-          (reactions, rival celebrations you still show, etc.) reads cordial in the same
-          direction as showing rival non-goal chances — you are <strong>ceding space</strong> in
-          the edit.
+          We compare <strong>winner-channel</strong> vs <strong>loser-channel</strong> videos for the
+          same matches, <strong>club-blind</strong> in the main analysis: teams are only “winner” or
+          “loser” in that fixture, not named brands in the headline claim.
         </p>
       </div>
-
-      <div class="card" style="border-color: #334155; padding: 1rem 1.25rem">
-        <p style="margin: 0; font-size: 0.95rem">
-          <strong>“Rival”</strong> always means <strong>the other team in this match</strong> (your
-          opponent that day), not a historic derby “rival.”
-        </p>
-      </div>
-
-      <div class="stat-pill" id="pill-meta"></div>
 
       <h2>Executive summary</h2>
+      <p class="exec-sub">How a video editor interprets the data</p>
       <div class="card exec-summary">
-        <p style="margin: 0; color: #aab0b8; font-size: 0.92rem">
-          Bottom line first (paired fixtures; exact <em>n</em> varies by column completeness in the
-          sheet — see each figure).
-          <strong>% convention:</strong> where <strong>winner</strong> edits are higher on average,
-          we report <code>100×(W−L)/L</code> (“vs loser baseline”). Where <strong>loser</strong> edits
-          are higher (e.g. clips, rival replays), we report
-          <code>100×(high−low)/low</code> using the lower mean as baseline.
+        <h3 class="exec-block-title">When we win, the video tends to</h3>
+        <ul class="playbook">
+          <li>
+            <strong>Breathe more.</strong>
+            <details class="playbook-detail">
+              <summary>Details</summary>
+              <p>
+                Fewer total PBPs, but each moment stays on screen longer, and the whole video is a bit
+                longer (~4%). It feels less frantic, more “let this moment land.”
+              </p>
+            </details>
+          </li>
+          <li>
+            <strong>Lean into joy.</strong>
+            <details class="playbook-detail">
+              <summary>Details</summary>
+              <p>
+                After our goals, we spend a lot more time on celebrations (especially in games where
+                both teams scored). The story is: we scored, and we’re feeling it — linger on hugs, runs,
+                crowd, bench.
+              </p>
+            </details>
+          </li>
+          <li>
+            <strong>Show our misses a bit less.</strong>
+            <details class="playbook-detail">
+              <summary>Details</summary>
+              <p>
+                We include fewer “we almost scored” moments overall — the video doesn’t need to prove we
+                could have; the result already did.
+              </p>
+            </details>
+          </li>
+          <li>
+            <strong>Let the rival sweat (a little).</strong>
+            <details class="playbook-detail">
+              <summary>Details</summary>
+              <p>
+                When they fluff a chance, we give more of their frustrated reactions — it reads as
+                “they had their moments but couldn’t take them,” which flatters our win.
+              </p>
+            </details>
+          </li>
+        </ul>
+
+        <h3 class="exec-block-title exec-block-title--spaced">When we lose, the video tends to</h3>
+        <ul class="playbook">
+          <li>
+            <strong>Cut faster and pack more in.</strong>
+            <details class="playbook-detail">
+              <summary>Details</summary>
+              <p>
+                More PBPs, shorter average PBP length — snappier, more “here’s everything that
+                happened,” less time to sit in any single beat.
+              </p>
+            </details>
+          </li>
+          <li>
+            <strong>Spend less time celebrating our goals</strong> (where both teams scored).
+            <details class="playbook-detail">
+              <summary>Details</summary>
+              <p>
+                We still show we scored, but we don’t milk the happy bits as long — the mood of the day
+                pulls the cut forward.
+              </p>
+            </details>
+          </li>
+          <li>
+            <strong>Show more of our near-goals.</strong>
+            <details class="playbook-detail">
+              <summary>Details</summary>
+              <p>
+                More own-team non-goal chances — often reads as “we were in it,” “look how close it
+                was,” or simply “we didn’t get the breaks.” It’s the classic “we fought / could’ve been
+                different” layer.
+              </p>
+            </details>
+          </li>
+          <li>
+            <strong>Give the opponent a bit more spotlight.</strong>
+            <details class="playbook-detail">
+              <summary>Details</summary>
+              <p>
+                More editorial emphasis on their threatening moments — visually, the opponent’s story
+                gets a bit more air without leaning on small-sample replay counts in this report.
+              </p>
+            </details>
+          </li>
+        </ul>
+
+        <h3 class="exec-block-title exec-block-title--spaced">One-line takeaway for the desk</h3>
+        <p class="desk-line">
+          <strong>Wins</strong> sell emotion and clarity: longer holds, bigger celebrations, fewer
+          “almost” PBPs, a touch of rival pain. <strong>Losses</strong> sell effort and narrative: quicker
+          pace, more “our chances” and “their moments” to frame the game, with celebrations trimmed so the
+          piece doesn’t pretend it was a party.
         </p>
-        <ul id="exec-bullets"></ul>
       </div>
 
-      <details class="card editorial-disclosure">
-        <summary>Want to know how a video editor would interpret this data?</summary>
-        <div class="editorial-playbook-body">
-          <h2 class="playbook-title">Video editor takeaways</h2>
-          <p class="playbook-lead">
-            Plain-language read on winner-channel vs loser-channel cuts — directional only.
+      <details class="card wsc-details">
+        <summary>Highlights from the data</summary>
+        <div class="wsc-details-body highlights-body">
+          <p class="exec-lead">
+            Bottom line from paired fixtures; exact <em>n</em> varies by column completeness in the sheet
+            — see each figure.
+            <strong>% convention:</strong> where <strong>winner</strong> videos are higher on average, we
+            report <code>100×(W−L)/L</code> (“vs loser baseline”). Where <strong>loser</strong> videos are
+            higher (e.g. PBP count), we report <code>100×(high−low)/low</code> using the lower mean as
+            baseline.
           </p>
-          <hr />
-          <h3>When we win, the reel tends to…</h3>
-          <ul>
-            <li>
-              <strong>Breathe more.</strong> Fewer total clips, but each moment stays on screen
-              longer, and the whole video is a bit longer (~4%). It feels less frantic, more “let
-              this moment land.”
-            </li>
-            <li>
-              <strong>Lean into joy.</strong> After our goals, we spend a lot more time on
-              celebrations (especially in games where both teams scored). The story is: we scored,
-              and we’re feeling it — linger on hugs, runs, crowd, bench.
-            </li>
-            <li>
-              <strong>Show our misses a bit less.</strong> We include fewer “we almost scored”
-              moments overall — the edit doesn’t need to prove we could have; the result already did.
-            </li>
-            <li>
-              <strong>Let the rival sweat (a little).</strong> When they fluff a chance, we give
-              more of their frustrated reactions — it reads as “they had their moments but couldn’t
-              take them,” which flatters our win.
-            </li>
-          </ul>
-          <h3>When we lose, the reel tends to…</h3>
-          <ul>
-            <li>
-              <strong>Cut faster and pack more in.</strong> More clips, shorter average clip —
-              snappier, more “here’s everything that happened,” less time to sit in any single beat.
-            </li>
-            <li>
-              <strong>Spend less time celebrating our goals</strong> (again, where both teams
-              scored). We still show we scored, but we don’t milk the happy bits as long — the mood
-              of the day pulls the cut forward.
-            </li>
-            <li>
-              <strong>Show more of our near-goals.</strong> More own-team non-goal chances — often
-              reads as “we were in it,” “look how close it was,” or simply “we didn’t get the
-              breaks.” It’s the classic “we fought / could’ve been different” layer.
-            </li>
-            <li>
-              <strong>Give the opponent a bit more non-goal spotlight.</strong> More replays of
-              their non-goal highlights (saves, close calls, etc.) — not necessarily more chances in
-              the data, but more editorial emphasis on those moments. Visually, the opponent’s story
-              gets a bit more air.
-            </li>
-          </ul>
-          <h3>One-line takeaway for the desk</h3>
-          <p>
-            <strong>Wins</strong> sell emotion and clarity: longer holds, bigger celebrations, fewer
-            “almost” clips, a touch of rival pain. <strong>Losses</strong> sell effort and narrative:
-            quicker pace, more “our chances” and “their moments” to frame the game, with celebrations
-            trimmed so the piece doesn’t pretend it was a party.
-          </p>
-          <h3>Caveat (worth keeping in mind)</h3>
-          <p>
-            Sample sizes are small (<em>n</em> in the teens–30s for some metrics). Treat this as
-            directional editorial instinct, not a rigid formula — brand, opponent, and how ugly the
-            loss was still override averages.
-          </p>
+          <ul id="exec-bullets"></ul>
         </div>
       </details>
 
-      <h2>Figure 1 — Optional rival football exposure</h2>
+      <div class="stat-pill" id="pill-meta"></div>
+
+      <h2>Figure 1 — Rival non-goal chances (optional exposure)</h2>
       <p class="note" style="margin: 0 0 0.5rem">
-        Optional moments involving the <strong>opponent</strong> in the fixture (same vertical
-        scale for both metrics).
+        Optional non-goal attacking PBPs for the <strong>opponent</strong> in the fixture (counts).
       </p>
       <div class="card">
         <div class="chart-box"><canvas id="chartRivalOptional"></canvas></div>
@@ -404,9 +504,8 @@
 
       <h2>Figure 2 — Self non-goal chances (optional own-team exposure)</h2>
       <p class="note" style="margin: 0 0 0.5rem">
-        Non-goal attacking clips for <strong>your own</strong> team — shots and attacks you chose
-        to show beyond mandatory goals. Compares to optional <strong>rival</strong> chances in
-        Figure 1.
+        Non-goal attacking PBPs for <strong>your own</strong> team — shots and attacks you chose to
+        show beyond mandatory goals. Compares to optional <strong>rival</strong> chances in Figure 1.
       </p>
       <div class="card">
         <div class="chart-box tall"><canvas id="chartSelfNonGoalChances"></canvas></div>
@@ -414,7 +513,7 @@
         <p class="note" id="fig-self-ng-note"></p>
       </div>
 
-      <h2>Figure 3 — Pacing (clip structure)</h2>
+      <h2>Figure 3 — Pacing (PBP structure)</h2>
       <p class="note" style="margin: 0 0 0.5rem">
         Average length of a play and how many plays make up the highlight (excluding total
         runtime — see Figure 4).
@@ -434,13 +533,13 @@
       <h2>Figure 5 — Persona &amp; emotion (score-adjusted)</h2>
       <p>
         Raw celebration seconds mostly track <strong>how many goals</strong> each side scored, which
-        biases winner edits upward. Here we <strong>control for score and exposure volume</strong>:
+        biases winner videos upward. Here we <strong>control for score and exposure volume</strong>:
         <strong>self celebration ÷ goals scored</strong> by that channel’s team (from the match
         score columns), <strong>self reaction ÷ self non-goal chances</strong> (only rows where that
         side had at least one self non-goal chance), and <strong>rival reaction ÷ rival non-goal
         chances</strong> (cordial rival face-time per optional rival chance shown).
         <strong>Celebration</strong> and <strong>reaction</strong> are not opposites — both are
-        persona dwell; these ratios make cuts comparable across different scorelines.
+        persona dwell; these ratios make videos comparable across different scorelines.
       </p>
       <div class="grid-2">
         <div class="card">
@@ -465,38 +564,77 @@
         <p class="note" id="fig4-note-n"></p>
       </div>
 
-      <h2>What each metric means</h2>
-      <p style="margin-top: 0">
-        Short definitions aligned with the tagging sheet and <code>docs/methodology.md</code>.
-      </p>
-      <div class="card metric-deep" id="deep-metrics"></div>
+      <hr class="section-break" />
 
-      <h2>Later &amp; exploratory (not the headline claim)</h2>
-      <ul class="norm">
-        <li>
-          <strong>Per-club</strong> cuts need larger <em>n</em> per club — optional follow-up.
-        </li>
-        <li>
-          <strong>Rival identity</strong> (e.g. big-six vs rest): future scope for whether pacing or
-          generosity shifts by opponent draw.
-        </li>
-      </ul>
+      <details class="card wsc-details">
+        <summary>Deep dive context for future use</summary>
+        <div class="wsc-details-body deep-dive-body">
+          <h3 class="deep-section-title">Caveat</h3>
+          <p>
+            Sample sizes are small (<em>n</em> in the teens–30s for some metrics). Treat this as
+            directional editorial instinct, not a rigid formula — brand, opponent, and how ugly the loss
+            was still override averages.
+          </p>
 
-      <div class="card" style="border-color: #3d3428">
-        <h3 style="margin: 0 0 0.35rem; font-size: 1rem">Before any per-team view</h3>
-        <p style="margin: 0">
-          Per-team charts are <strong>exploratory only</strong>. The aggregate window spans only
-          <strong id="mw-count"></strong> matchweeks; slice-by-club sample sizes are tiny — use as
-          a conversation starter unless tagging expands.
-        </p>
-      </div>
+          <h3 class="deep-section-title">Cordiality</h3>
+          <p>
+            Any extra exposure to the rival is “generous” in this framework — not only optional
+            chances. <strong>Rival reaction time</strong> is not the opposite of self celebration; it is
+            another form of screen time you can give the opponent. High rival exposure (reactions, rival
+            celebrations you still show, etc.) reads cordial in the same direction as showing rival
+            non-goal chances — you are <strong>ceding space</strong> in the video.
+          </p>
 
-      <h2>References</h2>
-      <ul class="norm">
-        <li><code>docs/results.md</code> — paired tables &amp; synthesis.</li>
-        <li><code>docs/methodology.md</code> — definitions, clip accounting.</li>
-        <li><code>scripts/build_stats.py</code> — regenerate <code>stats.json</code>.</li>
-      </ul>
+          <h3 class="deep-section-title">What this study does not try to explain</h3>
+          <p>
+            We did not analyze what happened in the match in terms of type of action (e.g. shot shape,
+            set pieces, “quality” of save or goal). The play-by-play content of the match is
+            <strong>given</strong>: goals and obviously strong plays will appear. There is no meaningful
+            “editorial voice” in which PBP moments get in at that level. The editorial voice shows up in
+            <strong>pacing</strong>, how things are split (<strong>how many</strong> of each kind of beat,
+            not which specific plays), <strong>exposure to people</strong> (how much time on self vs rival
+            personas), <strong>emotional emphasis</strong>, and how much room is left to the opponent in
+            the cut.
+          </p>
+
+          <h2 class="deep-metrics-heading">What each metric means</h2>
+          <p class="deep-metrics-lead">
+            Short definitions aligned with the tagging sheet and <code>docs/methodology.md</code>.
+          </p>
+          <p class="note" style="margin: 0 0 1rem">
+            Rival non-goal <strong>replay</strong> counts remain in the workbook and
+            <code>stats.json</code>; this dashboard does not chart them (small <em>n</em>).
+          </p>
+          <div class="metric-deep" id="deep-metrics"></div>
+
+          <h2 class="deep-metrics-heading">Later &amp; exploratory (not the headline claim)</h2>
+          <ul class="norm">
+            <li>
+              <strong>Per-club</strong> views need larger <em>n</em> per club — optional follow-up.
+            </li>
+            <li>
+              <strong>Rival identity</strong> (e.g. big-six vs rest): future scope for whether pacing or
+              generosity shifts by opponent draw.
+            </li>
+          </ul>
+
+          <div class="card card--explore">
+            <h3 style="margin: 0 0 0.35rem; font-size: 1rem">Before any per-team view</h3>
+            <p style="margin: 0">
+              Per-team charts are <strong>exploratory only</strong>. The aggregate window spans only
+              <strong id="mw-count"></strong> matchweeks; slice-by-club sample sizes are tiny — use as a
+              conversation starter unless tagging expands.
+            </p>
+          </div>
+
+          <h2 class="deep-metrics-heading">References</h2>
+          <ul class="norm">
+            <li><code>docs/results.md</code> — paired tables &amp; synthesis.</li>
+            <li><code>docs/methodology.md</code> — definitions, PBP accounting.</li>
+            <li><code>scripts/build_stats.py</code> — regenerate <code>stats.json</code>.</li>
+          </ul>
+        </div>
+      </details>
     </div>
 
     <!-- STATS_EMBED -->
@@ -622,15 +760,34 @@
       (function () {
         const S = typeof STATS !== "undefined" && STATS.fixture_count_decisive ? STATS : null;
         if (!S) {
+          var _rs = getComputedStyle(document.documentElement);
+          var _bg = _rs.getPropertyValue("--banner-error-bg").trim() || "#8e1616";
+          var _fg = _rs.getPropertyValue("--banner-error-fg").trim() || "#ff6161";
           document.body.insertAdjacentHTML(
             "afterbegin",
-            '<div style="background:#3d1111;color:#fecaca;padding:10px;text-align:center">Load stats failed — run python3 scripts/build_stats.py and scripts/embed_stats_in_html.py.</div>'
+            '<div style="background:' +
+              _bg +
+              ";color:" +
+              _fg +
+              ';padding:12px;text-align:center;font-family:Inter,Helvetica,Arial,sans-serif;font-weight:600">Load stats failed — run python3 scripts/build_stats.py and scripts/embed_stats_in_html.py.</div>'
           );
           return;
         }
 
-        Chart.defaults.color = "#c4c7ce";
-        Chart.defaults.borderColor = "#2a2f3a";
+        var rootStyle = getComputedStyle(document.documentElement);
+        function cssHex(name, fallback) {
+          var v = rootStyle.getPropertyValue(name).trim();
+          return v || fallback;
+        }
+        /* Matches docs/assets/wsc-theme.css — chart series colors */
+        var WSC_WIN = cssHex("--chart-winner-rgba", "rgba(0, 178, 124, 0.78)");
+        var WSC_LOSE = cssHex("--chart-loser-rgba", "rgba(255, 96, 201, 0.78)");
+        var WSC_GRID = cssHex("--chart-grid", "#404040");
+        var WSC_CHART_TEXT = cssHex("--chart-label-text", "#bababa");
+
+        Chart.defaults.color = WSC_CHART_TEXT;
+        Chart.defaults.borderColor = WSC_GRID;
+        Chart.defaults.font.family = "Inter, Helvetica, Arial, sans-serif";
 
         /** Winner vs loser baseline (L): 100*(W-L)/L — negative ⇒ winner lower. */
         function pctWL(W, L) {
@@ -670,7 +827,6 @@
         document.getElementById("mw-count").textContent = S.matchday_count;
 
         const rn = S.rival_non_goal_chances;
-        const rr = S.rival_non_goal_replays;
         const sng = S.self_non_goal_chances;
         const ac = S.avg_clip_length;
         const cc = S.clip_count;
@@ -688,15 +844,15 @@
 
         const exec = [];
         exec.push(
-          "<strong>Pacing:</strong> Loser edits use <strong>" +
+          "<strong>Pacing:</strong> Loser videos use <strong>" +
             fmtPct(pClipAbove) +
-            "</strong> more clips than winner edits on average (<strong>" +
+            "</strong> more PBPs than winner videos on average (<strong>" +
             fmtNum(cc.loser_mean, 2) +
             "</strong> vs <strong>" +
             fmtNum(cc.winner_mean, 2) +
-            "</strong> clips; <em>n</em>=" +
+            "</strong> PBPs; <em>n</em>=" +
             cc.n +
-            "). Winner average clip length is <strong>" +
+            "). Winner average PBP length is <strong>" +
             fmtPct(pAvg) +
             "</strong> vs loser (<strong>" +
             fmtNum(ac.winner_mean, 2) +
@@ -716,13 +872,7 @@
             ")."
         );
         exec.push(
-          "<strong>Optional rival football exposure:</strong> Rival non-goal <strong>replay counts</strong> skew toward <strong>loser</strong> edits (<strong>" +
-            fmtNum(rr.loser_mean, 2) +
-            "</strong> vs <strong>" +
-            fmtNum(rr.winner_mean, 2) +
-            "</strong>; <em>n</em>=" +
-            rr.n +
-            "). Rival non-goal <strong>chance</strong> counts are flat (<strong>" +
+          "<strong>Optional rival football exposure:</strong> Rival non-goal <strong>chance</strong> counts are flat on average (<strong>" +
             fmtNum(rn.winner_mean, 2) +
             "</strong> vs <strong>" +
             fmtNum(rn.loser_mean, 2) +
@@ -733,13 +883,13 @@
         exec.push(
           "<strong>Self non-goal chances (own team):</strong> mean counts <strong>" +
             fmtNum(sng.winner_mean, 2) +
-            "</strong> (winner edits) vs <strong>" +
+            "</strong> (winner videos) vs <strong>" +
             fmtNum(sng.loser_mean, 2) +
-            "</strong> (loser edits); Δ vs loser baseline <strong>" +
+            "</strong> (loser videos); Δ vs loser baseline <strong>" +
             fmtPct(pctWL(sng.winner_mean, sng.loser_mean)) +
             "</strong> (<em>n</em>=" +
             sng.n +
-            "). Negative Δ ⇒ loser cuts include more optional own-team chances on average."
+            "). Negative Δ ⇒ loser videos include more optional own-team chances on average."
         );
         exec.push(
           "<strong>Score-adjusted emotion:</strong> <strong>Self celebration per goal</strong> is <strong>" +
@@ -768,9 +918,9 @@
           .join("");
 
         document.getElementById("fig1a-note-n").textContent =
-          "Paired rows: rival non-goal chances n=" + rn.n + ", rival replays n=" + rr.n + ".";
+          "Paired rows: rival non-goal chances n=" + rn.n + ".";
         document.getElementById("fig1b-note-n").textContent =
-          "Paired rows: avg clip length n=" + ac.n + ", clip count n=" + cc.n + ".";
+          "Paired rows: avg PBP length n=" + ac.n + ", PBP count n=" + cc.n + ".";
 
         function barLabelsPlugin() {
           return {
@@ -787,8 +937,8 @@
                       ? el.tooltipPosition()
                       : { x: el.x, y: el.y };
                   ctx.save();
-                  ctx.fillStyle = "#e8eaed";
-                  ctx.font = "600 11px DM Sans, system-ui, sans-serif";
+                  ctx.fillStyle = cssHex("--neutral-100", "#f0f0f0");
+                  ctx.font = "600 11px Inter, Helvetica, Arial, sans-serif";
                   ctx.textAlign = "center";
                   ctx.textBaseline = "bottom";
                   var txt =
@@ -825,23 +975,23 @@
           }).join("");
         }
 
-        /* Figure 1a — rival optional exposure */
-        const keys1a = ["rival_non_goal_chances", "rival_non_goal_replays"];
+        /* Figure 1 — rival non-goal chances only (replay counts in JSON, not charted) */
+        const keys1a = ["rival_non_goal_chances"];
         new Chart(document.getElementById("chartRivalOptional"), {
           type: "bar",
           data: {
-            labels: ["Rival non-goal chances", "Rival non-goal replays (count)"],
+            labels: ["Rival non-goal chances (count)"],
             datasets: [
               {
                 label: "Winner",
-                data: [rn.winner_mean, rr.winner_mean],
-                backgroundColor: "rgba(74,222,128,0.7)",
+                data: [rn.winner_mean],
+                backgroundColor: WSC_WIN,
                 borderWidth: 0,
               },
               {
                 label: "Loser",
-                data: [rn.loser_mean, rr.loser_mean],
-                backgroundColor: "rgba(244,114,182,0.7)",
+                data: [rn.loser_mean],
+                backgroundColor: WSC_LOSE,
                 borderWidth: 0,
               },
             ],
@@ -851,7 +1001,7 @@
             maintainAspectRatio: false,
             scales: {
               x: { ticks: { maxRotation: 22 } },
-              y: { beginAtZero: true, grid: { color: "#2a2f3a" } },
+              y: { beginAtZero: true, grid: { color: WSC_GRID } },
             },
             plugins: {
               legend: { labels: { boxWidth: 12 } },
@@ -869,15 +1019,6 @@
             "</strong> (<em>n</em>=" +
             rn.n +
             "). Flat on average.",
-          "<strong>Rival non-goal replays:</strong> loser mean <strong>" +
-            fmtNum(rr.loser_mean, 2) +
-            "</strong> vs winner <strong>" +
-            fmtNum(rr.winner_mean, 2) +
-            "</strong> — loser <strong>" +
-            fmtPct(pctAbove(rr.loser_mean, rr.winner_mean)) +
-            "</strong> higher vs winner baseline; absolute counts small (<em>n</em>=" +
-            rr.n +
-            ").",
         ]);
 
         /* Figure 1b — pacing */
@@ -885,18 +1026,18 @@
         new Chart(document.getElementById("chartPacing"), {
           type: "bar",
           data: {
-            labels: ["Avg clip length (s)", "Clip count"],
+            labels: ["Avg PBP length (s)", "PBP count"],
             datasets: [
               {
                 label: "Winner",
                 data: [ac.winner_mean, cc.winner_mean],
-                backgroundColor: "rgba(74,222,128,0.7)",
+                backgroundColor: WSC_WIN,
                 borderWidth: 0,
               },
               {
                 label: "Loser",
                 data: [ac.loser_mean, cc.loser_mean],
-                backgroundColor: "rgba(244,114,182,0.7)",
+                backgroundColor: WSC_LOSE,
                 borderWidth: 0,
               },
             ],
@@ -906,7 +1047,7 @@
             maintainAspectRatio: false,
             scales: {
               x: { ticks: { maxRotation: 22 } },
-              y: { beginAtZero: true, grid: { color: "#2a2f3a" } },
+              y: { beginAtZero: true, grid: { color: WSC_GRID } },
             },
             plugins: {
               legend: { labels: { boxWidth: 12 } },
@@ -915,7 +1056,7 @@
           },
         });
         document.getElementById("fig1b-conc").innerHTML = conclusionLines([
-          "<strong>Avg clip length:</strong> winner <strong>" +
+          "<strong>Avg PBP length:</strong> winner <strong>" +
             fmtNum(ac.winner_mean, 2) +
             "</strong>s vs loser <strong>" +
             fmtNum(ac.loser_mean, 2) +
@@ -924,13 +1065,13 @@
             "</strong> vs loser baseline (<em>n</em>=" +
             ac.n +
             ").",
-          "<strong>Clip count:</strong> loser <strong>" +
+          "<strong>PBP count:</strong> loser <strong>" +
             fmtNum(cc.loser_mean, 2) +
             "</strong> vs winner <strong>" +
             fmtNum(cc.winner_mean, 2) +
             "</strong> — loser <strong>" +
             fmtPct(pctAbove(cc.loser_mean, cc.winner_mean)) +
-            "</strong> more clips (<em>n</em>=" +
+            "</strong> more PBPs (<em>n</em>=" +
             cc.n +
             ").",
         ]);
@@ -945,13 +1086,13 @@
               {
                 label: "Winner",
                 data: [sng.winner_mean],
-                backgroundColor: "rgba(74,222,128,0.75)",
+                backgroundColor: WSC_WIN,
                 borderWidth: 0,
               },
               {
                 label: "Loser",
                 data: [sng.loser_mean],
-                backgroundColor: "rgba(244,114,182,0.75)",
+                backgroundColor: WSC_LOSE,
                 borderWidth: 0,
               },
             ],
@@ -959,7 +1100,7 @@
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true, grid: { color: "#2a2f3a" } } },
+            scales: { y: { beginAtZero: true, grid: { color: WSC_GRID } } },
             plugins: {
               legend: { labels: { boxWidth: 12 } },
               tooltip: mkTooltipN(keysSng),
@@ -968,18 +1109,18 @@
         });
         var sngConc =
           sng.loser_mean > sng.winner_mean
-            ? "Loser edits average <strong>" +
+            ? "Loser videos average <strong>" +
               fmtPct(pctAbove(sng.loser_mean, sng.winner_mean)) +
-              "</strong> more self non-goal chances than winner edits (<strong>" +
+              "</strong> more self non-goal chances than winner videos (<strong>" +
               fmtNum(sng.loser_mean, 2) +
               "</strong> vs <strong>" +
               fmtNum(sng.winner_mean, 2) +
               "</strong>; <em>n</em>=" +
               sng.n +
               ")."
-            : "Winner edits average <strong>" +
+            : "Winner videos average <strong>" +
               fmtPct(pctAbove(sng.winner_mean, sng.loser_mean)) +
-              "</strong> more self non-goal chances than loser edits (<strong>" +
+              "</strong> more self non-goal chances than loser videos (<strong>" +
               fmtNum(sng.winner_mean, 2) +
               "</strong> vs <strong>" +
               fmtNum(sng.loser_mean, 2) +
@@ -988,7 +1129,7 @@
               ").";
         document.getElementById("fig-self-ng-conc").innerHTML = conclusionLines([sngConc]);
         document.getElementById("fig-self-ng-note").textContent =
-          "Count of non-goal attacking clips for the channel’s own team in that highlight. Paired <em>n</em>=" +
+          "Count of non-goal attacking PBPs for the channel’s own team in that highlight. Paired <em>n</em>=" +
           sng.n +
           ".";
 
@@ -1001,13 +1142,13 @@
               {
                 label: "Winner",
                 data: [tl.winner_mean],
-                backgroundColor: "rgba(74,222,128,0.75)",
+                backgroundColor: WSC_WIN,
                 borderWidth: 0,
               },
               {
                 label: "Loser",
                 data: [tl.loser_mean],
-                backgroundColor: "rgba(244,114,182,0.75)",
+                backgroundColor: WSC_LOSE,
                 borderWidth: 0,
               },
             ],
@@ -1015,7 +1156,7 @@
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true, grid: { color: "#2a2f3a" } } },
+            scales: { y: { beginAtZero: true, grid: { color: WSC_GRID } } },
             plugins: {
               tooltip: {
                 callbacks: {
@@ -1046,14 +1187,14 @@
           data: {
             labels: ["Self celebration ÷ goals scored (s/goal)"],
             datasets: [
-              { label: "Winner", data: [cg.winner_mean], backgroundColor: "rgba(74,222,128,0.75)" },
-              { label: "Loser", data: [cg.loser_mean], backgroundColor: "rgba(244,114,182,0.75)" },
+              { label: "Winner", data: [cg.winner_mean], backgroundColor: WSC_WIN },
+              { label: "Loser", data: [cg.loser_mean], backgroundColor: WSC_LOSE },
             ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true, title: { display: true, text: "s / goal" }, grid: { color: "#2a2f3a" } } },
+            scales: { y: { beginAtZero: true, title: { display: true, text: "s / goal" }, grid: { color: WSC_GRID } } },
             plugins: {
               tooltip: {
                 callbacks: {
@@ -1066,7 +1207,7 @@
           },
         });
         document.getElementById("fig4a-conc").innerHTML = conclusionLines([
-          "Winner edits average <strong>" +
+          "Winner videos average <strong>" +
             fmtNum(cg.winner_mean, 2) +
             "</strong>s of self celebration per goal vs <strong>" +
             fmtNum(cg.loser_mean, 2) +
@@ -1083,14 +1224,14 @@
           data: {
             labels: ["Self reaction ÷ self non-goal chances (s/chance)"],
             datasets: [
-              { label: "Winner", data: [rx.winner_mean], backgroundColor: "rgba(74,222,128,0.75)" },
-              { label: "Loser", data: [rx.loser_mean], backgroundColor: "rgba(244,114,182,0.75)" },
+              { label: "Winner", data: [rx.winner_mean], backgroundColor: WSC_WIN },
+              { label: "Loser", data: [rx.loser_mean], backgroundColor: WSC_LOSE },
             ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true, title: { display: true, text: "s / chance" }, grid: { color: "#2a2f3a" } } },
+            scales: { y: { beginAtZero: true, title: { display: true, text: "s / chance" }, grid: { color: WSC_GRID } } },
             plugins: {
               tooltip: {
                 callbacks: {
@@ -1123,19 +1264,19 @@
               {
                 label: "Winner",
                 data: [rivrx.winner_mean],
-                backgroundColor: "rgba(74,222,128,0.75)",
+                backgroundColor: WSC_WIN,
               },
               {
                 label: "Loser",
                 data: [rivrx.loser_mean],
-                backgroundColor: "rgba(244,114,182,0.75)",
+                backgroundColor: WSC_LOSE,
               },
             ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true, title: { display: true, text: "s / chance" }, grid: { color: "#2a2f3a" } } },
+            scales: { y: { beginAtZero: true, title: { display: true, text: "s / chance" }, grid: { color: WSC_GRID } } },
             plugins: {
               tooltip: {
                 callbacks: {
@@ -1161,70 +1302,63 @@
         document.getElementById("fig4-note-n").textContent =
           "Normalized metrics drop fixtures missing denominators (shutouts for celebration/goal; zero chance counts). Raw persona totals remain in stats.json for audit.";
 
-        /* Deep-dive blocks */
+        /* Deep-dive metric definitions (keys unchanged in JSON; labels use PBP / video) */
         var deep = [
           {
             title: "Rival non-goal chances (count)",
             measured:
-              "Number of clips that are non-goal attacking chances for the **opponent in this match** (“rival”), per official highlight. A clip is one play; anything that is not a goal counts as a chance for the attacking side in that clip.",
+              "Number of PBPs that are non-goal attacking chances for the <strong>opponent in this match</strong> (“rival”), per official highlight. A PBP is one play; anything that is not a goal counts as a chance for the attacking side in that PBP.",
             implies:
-              "Shows how often the editor includes **optional** opponent attacking moments they could omit (beyond mandatory goals). Higher counts trend **cordial**.",
-          },
-          {
-            title: "Rival non-goal replays (count)",
-            measured:
-              "Count of **extra angles** for opponent non-goal actions (not seconds). Attribution follows the project’s benefit-of-the-doubt rules.",
-            implies:
-              "Captures **optional re-showing** of opponent near-miss / defensive highlights. Near-zero baselines inflate % — read absolutes too.",
+              "Shows how often the production includes <strong>optional</strong> opponent attacking moments they could omit (beyond mandatory goals). Higher counts trend cordial.",
           },
           {
             title: "Self non-goal chances (count)",
             measured:
-              "Number of clips where **your** team has a non-goal attacking chance in **your** official highlight — optional **own-team** football beyond goals.",
+              "Number of PBPs where <strong>your</strong> team has a non-goal attacking chance in <strong>your</strong> official highlight — optional <strong>own-team</strong> football beyond goals.",
             implies:
-              "Higher counts mean the editor kept more **self** attacking beats in the cut. Compare to **rival** non-goal chances (Figure 1) for generosity vs self-focus.",
+              "Higher counts mean more <strong>self</strong> attacking beats in the video. Compare to rival non-goal chances (Figure 1) for generosity vs self-focus.",
           },
           {
-            title: "Average clip length (seconds)",
+            title: "Average PBP length (seconds)",
             measured:
-              "(Total runtime minus final-whistle celebration block) ÷ clip count. Final-whistle celebration is excluded from both clip list and time base.",
+              "(Total runtime minus final-whistle celebration block) ÷ PBP count (sheet column <code>clip_count</code>). Final-whistle celebration is excluded from both PBP list and time base.",
             implies:
-              "**Pacing**: longer averages imply looser cutting within plays on average.",
+              "<strong>Pacing</strong>: longer averages imply looser cutting within plays on average.",
           },
           {
-            title: "Clip count",
+            title: "PBP count",
             measured:
-              "Number of plays (clips) in the edit under project rules — chances, goals, red-card logic, etc.",
+              "Number of plays (PBPs) in the video under project rules — chances, goals, red-card logic, etc. (sheet column <code>clip_count</code>).",
             implies:
-              "Higher counts imply **busier** edits with more discrete beats per video.",
+              "Higher counts imply <strong>busier</strong> videos with more discrete beats.",
           },
           {
             title: "Total video length (seconds)",
             measured:
               "Wall-clock length of the published highlight as tagged.",
             implies:
-              "Overall package length; compare alongside clip count and avg clip length to separate **runtime** from **density**.",
+              "Overall package length; compare alongside PBP count and avg PBP length to separate <strong>runtime</strong> from <strong>density</strong>.",
           },
           {
             title: "Self celebration per goal scored (s / goal)",
             measured:
-              "(Self celebration seconds for that channel’s team) ÷ (goals that team scored in the match). Paired rows require **both teams scored ≥1** so neither denominator is zero.",
+              "(Self celebration seconds for that channel’s team) ÷ (goals that team scored in the match). Paired rows require <strong>both teams scored ≥1</strong> so neither denominator is zero.",
             implies:
-              "Controls for scoreline when comparing **winner vs loser** edits — asks how much **post-goal persona dwell** each editor packs **per goal**, not total goals.",
+              "Controls for scoreline when comparing <strong>winner vs loser</strong> videos — asks how much <strong>post-goal persona dwell</strong> each channel packs <strong>per goal</strong>, not total goals.",
           },
           {
             title: "Self reaction per self non-goal chance (s / chance)",
             measured:
-              "(Self reaction seconds) ÷ (count of **self** non-goal chances). Only fixtures where that side had **≥1** self non-goal chance.",
+              "(Self reaction seconds) ÷ (count of <strong>self</strong> non-goal chances). Only fixtures where that side had <strong>≥1</strong> self non-goal chance.",
             implies:
-              "Controls for how many non-goal beats existed — measures **reaction intensity** conditional on showing those chances.",
+              "Controls for how many non-goal beats existed — measures <strong>reaction intensity</strong> conditional on showing those chances.",
           },
           {
             title: "Rival reaction per rival non-goal chance (s / chance)",
             measured:
-              "(Rival reaction seconds) ÷ (rival non-goal chance count). Only where **≥1** rival non-goal chance was tagged.",
+              "(Rival reaction seconds) ÷ (rival non-goal chance count). Only where <strong>≥1</strong> rival non-goal chance was tagged.",
             implies:
-              "**Cordial exposure** to the opponent’s emotional beats, **normalized** by how much optional rival football you showed — fairer than raw rival reaction totals.",
+              "<strong>Cordial exposure</strong> to the opponent’s emotional beats, <strong>normalized</strong> by how much optional rival football you showed — fairer than raw rival reaction totals.",
           },
         ];
 

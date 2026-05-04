@@ -6,9 +6,9 @@ Paste this file (or `@HANDOFF.md`) at the start of a **new** chat so an agent or
 
 ## What this project is
 
-Research kit comparing **official Premier League match highlights** edited for the **winner’s channel** vs the **loser’s channel** for the **same fixtures**.
+Research kit comparing **official Premier League match highlights** published on the **winner’s channel** vs the **loser’s channel** for the **same fixtures**.
 
-**Headline analysis is club-blind:** we aggregate by **winner edit vs loser edit** (role in that match), not by club name or brand.
+**Headline analysis is club-blind:** we aggregate by **winner video vs loser video** (role in that match), not by club name or brand.
 
 The **live dashboard** is a static Chart.js page on GitHub Pages. Charts read embedded JSON inside `docs/index.html`; there is no backend.
 
@@ -27,10 +27,10 @@ After a push, Pages may take **1–2 minutes** to update; use a **hard refresh**
 
 ## Definitions that matter
 
-- **“Rival”** = the **opponent in that fixture** (the other shirt), **not** a historic derby “rival.”
-- **Cordiality:** optional extra **rival** exposure (rival non-goal chances/replays, rival reaction time, etc.) reads as **ceding space** in the edit. **Celebration** and **reaction** are **not** opposites — both are persona dwell.
-- **Replays** in the sheet are **counts** (how many angles), **not** seconds.
-- **Avg clip length** (as used in the sheet/report) follows project rules: **total length minus final-whistle celebration**, divided by clip count — see `docs/methodology.md` for full clip accounting.
+- **Winner / loser** = which **channel’s video** (by match result). **Self / rival** = the two teams **as shown in that channel’s cut** (our side vs opponent).
+- **Cordiality:** optional extra **rival** exposure (rival non-goal chances, rival reaction time, etc.) reads as **ceding space** in the **video**. **Celebration** and **reaction** are **not** opposites — both are persona dwell.
+- **Replays** in the sheet are **counts** (how many angles), **not** seconds. **`rival_non_goal_replays`** remains in `stats.json` but is **not charted** on the dashboard (small _n_).
+- **Avg PBP length** (narrative term for the sheet’s avg clip length) follows project rules: **total length minus final-whistle celebration**, divided by PBP count (`clip_count`) — see `docs/methodology.md` for full accounting. JSON keys stay **`avg_clip_length`**, **`clip_count`**.
 - **Full tagging rules** and QA expectations: **`docs/methodology.md`**.
 - **Written narrative / tables:** **`docs/results.md`** (may lag the HTML dashboard).
 
@@ -40,7 +40,9 @@ After a push, Pages may take **1–2 minutes** to update; use a **hard refresh**
 
 | Path | Role |
 |------|------|
-| `docs/index.html` | **Dashboard:** Chart.js + embedded `const STATS = { ... }` + inline prose (hero, figures, **collapsible “video editor” section**). |
+| `docs/index.html` | **Dashboard:** Chart.js + embedded `const STATS = { ... }` + layout prose (hero, **Executive summary** with video-editor playbook + desk line, **Highlights from the data** `<details>`, figures, **Deep dive** `<details>`). |
+| `docs/assets/wsc-theme.css` | **WSC design tokens** snapshot for GitHub Pages (synced from `vendor/wsc-components-library` — see below). |
+| `vendor/wsc-components-library` | **Git submodule** — WSC component library / `wscTheme` source (`src/theme/wscTheme.ts`). |
 | `docs/stats.json` | Machine-readable aggregates — output of `build_stats.py`. |
 | `scripts/build_stats.py` | Reads enriched **Excel** → writes `docs/stats.json`. |
 | `scripts/embed_stats_in_html.py` | Reads `docs/stats.json` → inlines into `docs/index.html` after `<!-- STATS_EMBED -->`. |
@@ -50,7 +52,16 @@ After a push, Pages may take **1–2 minutes** to update; use a **hard refresh**
 | `requirements.txt` | Python deps: `pandas`, `openpyxl` (for `build_stats.py`). |
 | `README.md` | Short contributor-facing overview; points here for agents. |
 
-**Editorial / plain-language block:** There is **no** separate markdown source. The collapsible **“Want to know how a video editor would interpret this data?”** section is **static HTML** inside `docs/index.html` (`<details class="card editorial-disclosure">` … `</details>`), placed **after Executive summary** and **before Figure 1**. Edit that block directly when the narrative changes.
+**Static copy:** Executive playbook bullets, deep-dive prose, and section order live in **`docs/index.html`**. Data bullets under **Highlights from the data** are filled by JavaScript from `STATS`.
+
+---
+
+## Design system (`wsc-components-library`)
+
+After clone, run **`git submodule update --init --recursive`** so `vendor/wsc-components-library` is populated.
+
+- **Source of truth** for color/type: submodule `src/theme/wscTheme.ts`.
+- **Published site** uses **`docs/assets/wsc-theme.css`** (same values; safe for GitHub Pages). When the library changes, update that file and bump the sync comment at the top.
 
 ---
 
@@ -81,9 +92,9 @@ git commit -m "Refresh stats" && git push
 ```
 
 - **`build_stats.py`** updates `docs/stats.json` only.
-- **`embed_stats_in_html.py`** replaces the `const STATS = ...` block in **`docs/index.html`**. It does **not** rewrite the editorial `<details>` HTML unless you edited `index.html` yourself in the same commit.
+- **`embed_stats_in_html.py`** replaces the `const STATS = ...` block in **`docs/index.html`**. It does **not** rewrite other HTML.
 
-**Editorial copy only (no data change):** edit the `<details class="card editorial-disclosure">` region in **`docs/index.html`**, then commit and push. No Python step required.
+**Copy-only (no data change):** edit **`docs/index.html`** (including `<details>` sections), then commit and push. No Python step required.
 
 ---
 
@@ -102,8 +113,8 @@ Rows are **paired decisive fixtures** (`who won` ∈ {Home, Away}), with winner/
 
 Paired aggregates include (among others):
 
-- **Rival exposure:** `rival_non_goal_chances`, `rival_non_goal_replays`
-- **Own-team optional clips:** `self_non_goal_chances`
+- **Rival exposure:** `rival_non_goal_chances`, `rival_non_goal_replays` (replays not charted on dashboard)
+- **Own-team optional PBPs:** `self_non_goal_chances`
 - **Pacing / length:** `avg_clip_length`, `clip_count`, `total_length`
 - **Score-adjusted persona** (normalize by goals / chance volume where relevant):
   - `self_celebration_per_goal`
@@ -116,31 +127,31 @@ Older keys may still appear in JSON for backward compatibility even if not every
 
 ## Report structure in `index.html` (current)
 
-1. Hero / scope (club-blind, cordiality, what the study does **not** claim).
-2. **“Rival”** glossary callout.
-3. **Executive summary** (bullets filled by JS from `STATS`).
-4. **Collapsible “video editor” interpretation** (`<details>` — static HTML).
-5. **Figure 1** — Optional rival exposure (rival NG chances + rival NG replays).
+1. Header + **What this is** (two videos per fixture; winner/loser vs self/rival) + **Role-based scope**.
+2. **Executive summary** — subheader *How a video editor interprets the data*; **When we win / When we lose** bullets with nested `<details>`; **One-line takeaway for the desk**.
+3. **Highlights from the data** (`<details>`) — % convention + JS-filled bullets from `STATS`.
+4. Meta pill (fixture counts, source path).
+5. **Figure 1** — Rival non-goal chances only (`rival_non_goal_replays` omitted from charts).
 6. **Figure 2** — Self non-goal chances.
-7. **Figure 3** — Pacing (avg clip length + clip count).
+7. **Figure 3** — Pacing (avg PBP length + PBP count).
 8. **Figure 4** — Total runtime.
 9. **Figure 5** — Persona / emotion (score-adjusted charts).
-10. Metric definitions / references / exploratory notes.
+10. **Deep dive context for future use** (`<details>`) — caveat, cordiality, what the study does not claim, metric definitions, exploratory notes, per-team warning, references.
 
-Percent conventions for deltas are explained on-page in the executive summary.
+Percent conventions for deltas are explained under **Highlights from the data**.
 
 ---
 
 ## Out of scope for the main claim
 
-- **Per-club** cuts, **“big six”** opponent tiers, etc. — **small n**, exploratory only unless the tagging window grows.
+- **Per-club** views, **“big six”** opponent tiers, etc. — **small n**, exploratory only unless the tagging window grows.
 
 ---
 
 ## Maintainer note
 
-Update **`HANDOFF.md`** when you change: metrics, figure order, spreadsheet filename/locations, embed scripts, or anything agents must not get wrong about this repo.
+Update **`HANDOFF.md`** when you change: metrics, figure order, spreadsheet filename/locations, embed scripts, design tokens, or anything agents must not get wrong about this repo.
 
 ---
 
-*Last consolidated: aligns with inline editorial HTML, stats-only embed, and `data/` workbook path as of the current `main` branch.*
+*Last consolidated: dashboard restructure, `wsc-theme.css`, submodule `vendor/wsc-components-library`, rival replay suppressed in charts only.*
