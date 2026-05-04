@@ -88,13 +88,13 @@ For **headline comparisons**, **aggregate** self + rival celebration + self + ri
 
 ### 6. End-of-game celebration (seconds)
 
-- Not a clip; subtracted for **avg clip length**.
+- Not a PBP; subtracted for **avg PBP length**.
 - Use as **narrative closure**: share of runtime (`end celebration ÷ total length`) — separate from in-match pacing.
 
 ### 7. Cross-field consistency checks (for collaborators)
 
 1. **Clip sum** vs **chances + goals**, adjusted for **standalone red cards** only.
-2. **Avg clip length** recomputes from total length, whistle duration, and clip count.
+2. **Avg PBP length** recomputes from total length, whistle duration, and PBP count.
 3. **Replay columns** stay **integer counts**, never seconds.
 
 ---
