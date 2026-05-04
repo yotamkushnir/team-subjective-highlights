@@ -22,7 +22,7 @@ export HIGHLIGHTS_XLSX=/path/to/pl_highlight_links_ENRICHED.xlsx   # optional
 python3 scripts/build_stats.py && python3 scripts/embed_stats_in_html.py
 ```
 
-Open **`docs/index.html`** in a browser.
+Preview the dashboard: `cd docs && python3 -m http.server 8000` and open **http://localhost:8000** (the page loads **`stats.json`** from the same folder; opening a raw `file://` URL will not work).
 
 ---
 
@@ -42,7 +42,7 @@ Published styling is **`docs/assets/wsc-theme.css`** (synced from `wscTheme` —
 
 The workbook may use **PBP** column labels (e.g. `winner amount of total pbps`, `winner average pbp lenght`) or **legacy** “clip” labels. `scripts/build_stats.py` resolves either.
 
-Aggregates in **`docs/stats.json`** / embedded **`STATS`** use **`avg_pbp_length`**, **`pbp_count`**, **`persona_sec_per_pbp`**, etc. Tagging rules: **`docs/methodology.md`**.
+Aggregates in **`docs/stats.json`** (loaded at runtime by the dashboard) use **`avg_pbp_length`**, **`pbp_count`**, **`persona_sec_per_pbp`**, etc. Tagging rules: **`docs/methodology.md`**.
 
 ---
 
@@ -50,12 +50,12 @@ Aggregates in **`docs/stats.json`** / embedded **`STATS`** use **`avg_pbp_length
 
 | Path | Purpose |
 |------|---------|
-| `docs/index.html` | Static dashboard (Chart.js + embedded stats) |
+| `docs/index.html` | Static dashboard (Chart.js; reads `stats.json` at runtime) |
 | `docs/assets/wsc-theme.css` | Design tokens for the dashboard |
 | `docs/assets/wsc-mark-white.svg` | Header logo |
 | `docs/stats.json` | Aggregates from `build_stats.py` |
 | `scripts/build_stats.py` | Spreadsheet → `stats.json` |
-| `scripts/embed_stats_in_html.py` | Inline stats into `index.html` |
+| `scripts/embed_stats_in_html.py` | Verify `docs/stats.json` exists (companion to `build_stats.py`) |
 | `docs/methodology.md` | Definitions & QA |
 | `docs/results.md` | Narrative + tables |
 

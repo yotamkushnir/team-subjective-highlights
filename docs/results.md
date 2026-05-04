@@ -111,4 +111,4 @@ python3 scripts/build_stats.py
 ## Next steps
 
 - Refresh stats after new rows land in the enriched workbook.
-- HTML dashboard: open `docs/index.html` locally after regenerating `stats.json` and running `scripts/embed_stats_in_html.py`.
+- HTML dashboard: regenerate `stats.json` (`build_stats.py`), then serve `docs/` with a local HTTP server (e.g. `cd docs && python3 -m http.server 8000`) so `index.html` can load `stats.json`.

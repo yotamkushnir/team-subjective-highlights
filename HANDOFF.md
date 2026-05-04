@@ -10,7 +10,7 @@ Research kit comparing **official Premier League match highlights** published on
 
 **Headline analysis is club-blind:** we aggregate by **winner video vs loser video** (role in that match), not by club name or brand.
 
-The **live dashboard** is a static Chart.js page on GitHub Pages. Charts read embedded JSON inside `docs/index.html`; there is no backend.
+The **live dashboard** is a static Chart.js page on GitHub Pages. Charts read **`docs/stats.json`** (fetched at runtime from the same directory as `index.html`); there is no backend. The repo includes **`docs/.nojekyll`** so GitHub Pages does not run Jekyll on the `docs/` tree.
 
 ---
 
@@ -40,19 +40,19 @@ After a push, Pages may take **1–2 minutes** to update; use a **hard refresh**
 
 | Path | Role |
 |------|------|
-| `docs/index.html` | **Dashboard:** Chart.js + embedded `const STATS = { ... }` + layout (header + lead, **Executive summary** with white “When we win/lose…” section titles and yellow collapsible rows, **Highlights from the data**, figures, **Deep dive** in topic cards). |
+| `docs/index.html` | **Dashboard:** Chart.js + layout; loads **`stats.json`** at runtime + **`<script>`** for figures and copy (header + lead, **Executive summary** with white “When we win/lose…” section titles and yellow collapsible rows, **Highlights from the data**, figures, **Deep dive** in topic cards). |
 | `docs/assets/wsc-theme.css` | **WSC design tokens** for Pages (yellow accent; chart fills = light yellow / light orange 100; logo loads from `assets/` with GitHub Pages URL fallback on error). |
 | `vendor/wsc-components-library` | **Git submodule** — `wscTheme` source (`src/theme/wscTheme.ts`). |
 | `docs/stats.json` | Machine-readable aggregates — output of `build_stats.py`. |
 | `scripts/build_stats.py` | Reads enriched **Excel** → writes `docs/stats.json` (PBP column aliases supported). |
-| `scripts/embed_stats_in_html.py` | Reads `docs/stats.json` → inlines into `docs/index.html` after `<!-- STATS_EMBED -->`. |
+| `scripts/embed_stats_in_html.py` | Optional check: ensures `docs/stats.json` exists after `build_stats.py` (no longer inlines JSON into HTML). |
 | `data/pl_highlight_links_ENRICHED.xlsx` | **Portable master workbook** (optional). See spreadsheet resolution below. |
 | `docs/methodology.md` | Source of truth for metrics and tagging. |
 | `docs/results.md` | Long-form results / paired tables. |
 | `requirements.txt` | Python deps: `pandas`, `openpyxl`. |
 | `README.md` | Short contributor-facing overview. |
 
-**Static copy:** Executive playbook, deep-dive prose, and section order live in **`docs/index.html`**. Data bullets under **Highlights from the data** are filled by JavaScript from `STATS`.
+**Static copy:** Executive playbook, deep-dive prose, and section order live in **`docs/index.html`**. Data bullets under **Highlights from the data** are filled by JavaScript from the fetched `stats.json` payload.
 
 ---
 
@@ -96,12 +96,12 @@ After changing the **workbook** or regenerating stats:
 cd /path/to/team-subjective-highlights
 python3 -m pip install -r requirements.txt   # if needed
 python3 scripts/build_stats.py && python3 scripts/embed_stats_in_html.py
-git add docs/stats.json docs/index.html
+git add docs/stats.json
 git commit -m "Refresh stats" && git push
 ```
 
 - **`build_stats.py`** updates **`docs/stats.json`** only.
-- **`embed_stats_in_html.py`** replaces the `const STATS = ...` block in **`docs/index.html`**.
+- **`embed_stats_in_html.py`** confirms `docs/stats.json` is present (the dashboard loads it at runtime; no inlining).
 
 **Copy-only:** edit **`docs/index.html`**, then commit and push (no Python).
 
@@ -123,12 +123,12 @@ git submodule update --init --recursive
 
 ---
 
-## Critical: embedded stats in `index.html`
+## Critical: `stats.json` next to `index.html`
 
-The charts require **`const STATS = { ... }`** inside `docs/index.html` (after `<!-- STATS_EMBED -->`). If `STATS` is empty `{}`, the UI shows an error and **no real numbers**.
+The charts **`fetch("stats.json")`** relative to the page URL. If the JSON is missing or the fetch fails (including opening **`file://`** instead of an HTTP server), the UI shows an error and **no real numbers**.
 
-- A **fully embedded** `index.html` is **very large** because JSON is inlined.
-- If stats look empty, run **`embed_stats_in_html.py`** again after **`build_stats.py`**.
+- **GitHub Pages:** deploy **`docs/stats.json`** together with **`docs/index.html`** (commit both after **`build_stats.py`**).
+- **Local preview:** run **`cd docs && python3 -m http.server 8000`** (do not rely on double-click / `file://`).
 
 ---
 
@@ -150,7 +150,7 @@ Paired aggregates include (among others):
 
 1. **Header** — logo, tag, **H1**, one **lead** paragraph (club-blind scope).
 2. **Executive summary** — *How a video editor interprets the data*; **When we win / When we lose** (white headings); yellow collapsible rows; **One-line takeaway for the desk**.
-3. **Highlights from the data** (`<details>`) — % convention + JS bullets from `STATS`.
+3. **Highlights from the data** (`<details>`) — % convention + JS bullets from the loaded `stats.json` data.
 4. Meta pill (fixtures, matchweeks, source path).
 5. **Figures 1–5** — rival chances; self NG chances; pacing; runtime; persona (score-adjusted).
 6. **Deep dive** (`<details>`) — **cards by topic:** (a) caveat + cordiality + what the study does not claim, (b) what each metric means, (c) later/exploratory + before per-team view, (d) references.
