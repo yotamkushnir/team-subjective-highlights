@@ -34,7 +34,7 @@
         display: flex;
         align-items: flex-start;
         gap: 1rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0;
       }
       .site-logo {
         width: 2.75rem;
@@ -55,23 +55,23 @@
       }
       h1 {
         font-size: 1.714rem;
-        margin: 0 0 1rem;
+        margin: 0 0 0.75rem;
         font-weight: 700;
+        color: var(--neutral-100);
       }
       h2 {
-        font-size: 1.286rem;
-        margin: 2.35rem 0 0.65rem;
-        color: var(--neutral-100);
+        font-size: 1.35rem;
+        margin: 2.15rem 0 0.6rem;
+        color: var(--heading-accent);
         font-weight: 600;
+        letter-spacing: 0.02em;
       }
-      h3.hero-part {
-        font-size: 1.143rem;
-        margin: 1.25rem 0 0.5rem;
-        color: var(--accent);
-        font-weight: 600;
-      }
-      h3.hero-part:first-of-type {
-        margin-top: 0.75rem;
+      .site-lead {
+        margin: 0 0 1.5rem;
+        max-width: 40rem;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        color: var(--neutral-200);
       }
       p,
       li {
@@ -97,9 +97,6 @@
       .card--explore {
         border-left: 3px solid var(--supporting-yellow);
         opacity: 1;
-      }
-      .hero-card p {
-        margin: 0 0 0.65rem;
       }
       .exec-summary {
         background: var(--callout);
@@ -169,8 +166,14 @@
         margin: 0 0 0.35rem;
         font-size: 1rem;
         font-family: "Inter", "Helvetica", "Arial", sans-serif;
-        color: var(--neutral-100);
+        color: var(--heading-accent);
         font-weight: 600;
+      }
+      .chart-panel-title {
+        margin: 0 0 0.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--heading-accent);
       }
       .metric-deep p {
         margin: 0 0 0.75rem;
@@ -249,6 +252,7 @@
       }
       .wsc-details > summary:hover {
         color: var(--primary-100);
+        text-shadow: 0 0 12px rgba(229, 255, 0, 0.25);
       }
       .wsc-details > summary:focus-visible {
         outline: 2px solid var(--primary-300);
@@ -258,59 +262,85 @@
         border-top: 1px solid var(--border);
         padding: 0.25rem 1.35rem 1.25rem;
       }
+      .exec-main-title {
+        font-size: 1.875rem;
+        font-weight: 700;
+        margin: 1.75rem 0 0.35rem;
+        color: var(--heading-accent);
+        letter-spacing: 0.03em;
+      }
       .exec-sub {
-        margin: -0.5rem 0 1rem;
-        font-size: 1rem;
+        margin: 0 0 1.15rem;
+        font-size: 1.125rem;
         font-weight: 600;
         color: var(--neutral-300);
       }
       .exec-block-title {
-        font-size: 1.143rem;
-        margin: 0 0 0.65rem;
-        color: var(--accent);
-        font-weight: 600;
+        font-size: 1.5rem;
+        margin: 0 0 0.85rem;
+        color: var(--heading-accent);
+        font-weight: 700;
         font-family: "Inter", "Helvetica", "Arial", sans-serif;
+        letter-spacing: 0.02em;
       }
       .exec-block-title--spaced {
-        margin-top: 1.5rem;
+        margin-top: 2rem;
       }
       .playbook {
         margin: 0;
-        padding-left: 1.2rem;
+        padding: 0;
+        list-style: none;
       }
       .playbook > li {
-        margin-bottom: 0.85rem;
+        margin-bottom: 0.65rem;
       }
       .playbook-detail {
-        margin-top: 0.45rem;
-        margin-left: 0;
         border: 1px solid var(--border);
         border-radius: var(--radius-m);
         background: var(--neutral-900);
-        padding: 0;
+        overflow: hidden;
       }
       .playbook-detail > summary {
         cursor: pointer;
-        padding: 0.45rem 0.65rem;
-        font-size: 0.857rem;
-        color: var(--muted);
+        padding: 0.65rem 0.85rem 0.65rem 2rem;
+        font-size: 1.0625rem;
+        color: var(--accent);
         font-weight: 600;
         list-style: none;
+        position: relative;
+        line-height: 1.35;
       }
       .playbook-detail > summary::-webkit-details-marker {
         display: none;
       }
+      .playbook-detail > summary::before {
+        content: "▸";
+        position: absolute;
+        left: 0.75rem;
+        top: 0.65rem;
+        color: var(--muted);
+        font-weight: 700;
+        transition: transform 0.15s ease;
+      }
+      .playbook-detail[open] > summary::before {
+        transform: rotate(90deg);
+      }
       .playbook-detail[open] > summary {
         border-bottom: 1px solid var(--border);
+        color: var(--primary-100);
       }
       .playbook-detail p {
         margin: 0;
-        padding: 0.65rem 0.75rem 0.75rem;
-        font-size: 0.95rem;
+        padding: 0.75rem 1rem 1rem;
+        font-size: 0.98rem;
       }
       .desk-line {
-        margin: 0.5rem 0 0;
-        font-size: 0.98rem;
+        margin: 0.65rem 0 0;
+        font-size: 1.02rem;
+      }
+      .desk-heading {
+        font-size: 1.35rem !important;
+        margin-top: 1.75rem !important;
       }
       .section-break {
         margin: 3rem 0 2rem;
@@ -329,7 +359,7 @@
       .deep-metrics-heading {
         font-size: 1.286rem;
         margin: 1.75rem 0 0.5rem;
-        color: var(--neutral-100);
+        color: var(--heading-accent);
         font-weight: 600;
       }
       .deep-metrics-lead {
@@ -351,37 +381,22 @@
         <div class="site-header-text">
           <p class="tag">Team Subjective Highlights</p>
           <h1>Winner-channel vs loser-channel videos (club-blind)</h1>
+          <p class="site-lead">
+            We compare <strong>winner-channel</strong> vs <strong>loser-channel</strong> videos for the
+            same matches, <strong>club-blind</strong> in the main analysis: teams are only “winner” or
+            “loser” in that fixture, not named brands in the headline claim.
+          </p>
         </div>
       </header>
 
-      <div class="card hero-card">
-        <h3 class="hero-part">What this is</h3>
-        <p>
-          I reviewed <strong>two videos</strong> for every game in the sample: the <strong>winning</strong>
-          team’s official highlight (<strong>winner</strong> video) and the <strong>losing</strong> team’s
-          official highlight (<strong>loser</strong> video). In the analysis, <strong>winner</strong> /
-          <strong>loser</strong> means which channel the video <strong>belongs to</strong> (by match
-          result). <strong>Self</strong> / <strong>rival</strong> means the two teams <strong>as they
-          appear in that channel’s video</strong> — our side vs the opponent in the same cut.
-        </p>
-
-        <h3 class="hero-part">Role-based scope</h3>
-        <p style="margin-bottom: 0">
-          We compare <strong>winner-channel</strong> vs <strong>loser-channel</strong> videos for the
-          same matches, <strong>club-blind</strong> in the main analysis: teams are only “winner” or
-          “loser” in that fixture, not named brands in the headline claim.
-        </p>
-      </div>
-
-      <h2>Executive summary</h2>
+      <h2 class="exec-main-title">Executive summary</h2>
       <p class="exec-sub">How a video editor interprets the data</p>
       <div class="card exec-summary">
         <h3 class="exec-block-title">When we win, the video tends to</h3>
         <ul class="playbook">
           <li>
-            <strong>Breathe more.</strong>
             <details class="playbook-detail">
-              <summary>Details</summary>
+              <summary>Breathe more.</summary>
               <p>
                 Fewer total PBPs, but each moment stays on screen longer, and the whole video is a bit
                 longer (~4%). It feels less frantic, more “let this moment land.”
@@ -389,9 +404,8 @@
             </details>
           </li>
           <li>
-            <strong>Lean into joy.</strong>
             <details class="playbook-detail">
-              <summary>Details</summary>
+              <summary>Lean into joy.</summary>
               <p>
                 After our goals, we spend a lot more time on celebrations (especially in games where
                 both teams scored). The story is: we scored, and we’re feeling it — linger on hugs, runs,
@@ -400,9 +414,8 @@
             </details>
           </li>
           <li>
-            <strong>Show our misses a bit less.</strong>
             <details class="playbook-detail">
-              <summary>Details</summary>
+              <summary>Show our misses a bit less.</summary>
               <p>
                 We include fewer “we almost scored” moments overall — the video doesn’t need to prove we
                 could have; the result already did.
@@ -410,9 +423,8 @@
             </details>
           </li>
           <li>
-            <strong>Let the rival sweat (a little).</strong>
             <details class="playbook-detail">
-              <summary>Details</summary>
+              <summary>Let the rival sweat (a little).</summary>
               <p>
                 When they fluff a chance, we give more of their frustrated reactions — it reads as
                 “they had their moments but couldn’t take them,” which flatters our win.
@@ -424,9 +436,8 @@
         <h3 class="exec-block-title exec-block-title--spaced">When we lose, the video tends to</h3>
         <ul class="playbook">
           <li>
-            <strong>Cut faster and pack more in.</strong>
             <details class="playbook-detail">
-              <summary>Details</summary>
+              <summary>Cut faster and pack more in.</summary>
               <p>
                 More PBPs, shorter average PBP length — snappier, more “here’s everything that
                 happened,” less time to sit in any single beat.
@@ -434,9 +445,10 @@
             </details>
           </li>
           <li>
-            <strong>Spend less time celebrating our goals</strong> (where both teams scored).
             <details class="playbook-detail">
-              <summary>Details</summary>
+              <summary>
+                Spend less time celebrating our goals (where both teams scored).
+              </summary>
               <p>
                 We still show we scored, but we don’t milk the happy bits as long — the mood of the day
                 pulls the cut forward.
@@ -444,9 +456,8 @@
             </details>
           </li>
           <li>
-            <strong>Show more of our near-goals.</strong>
             <details class="playbook-detail">
-              <summary>Details</summary>
+              <summary>Show more of our near-goals.</summary>
               <p>
                 More own-team non-goal chances — often reads as “we were in it,” “look how close it
                 was,” or simply “we didn’t get the breaks.” It’s the classic “we fought / could’ve been
@@ -455,9 +466,8 @@
             </details>
           </li>
           <li>
-            <strong>Give the opponent a bit more spotlight.</strong>
             <details class="playbook-detail">
-              <summary>Details</summary>
+              <summary>Give the opponent a bit more spotlight.</summary>
               <p>
                 More editorial emphasis on their threatening moments — visually, the opponent’s story
                 gets a bit more air without leaning on small-sample replay counts in this report.
@@ -466,7 +476,7 @@
           </li>
         </ul>
 
-        <h3 class="exec-block-title exec-block-title--spaced">One-line takeaway for the desk</h3>
+        <h3 class="exec-block-title exec-block-title--spaced desk-heading">One-line takeaway for the desk</h3>
         <p class="desk-line">
           <strong>Wins</strong> sell emotion and clarity: longer holds, bigger celebrations, fewer
           “almost” PBPs, a touch of rival pain. <strong>Losses</strong> sell effort and narrative: quicker
@@ -543,22 +553,18 @@
       </p>
       <div class="grid-2">
         <div class="card">
-          <h3 style="margin: 0 0 0.5rem; font-size: 1rem">Self celebration per goal scored</h3>
+          <h3 class="chart-panel-title">Self celebration per goal scored</h3>
           <div class="chart-box tall"><canvas id="chartCelebPerGoal"></canvas></div>
           <ul class="conclusions" id="fig4a-conc"></ul>
         </div>
         <div class="card">
-          <h3 style="margin: 0 0 0.5rem; font-size: 1rem">
-            Self reaction per self non-goal chance
-          </h3>
+          <h3 class="chart-panel-title">Self reaction per self non-goal chance</h3>
           <div class="chart-box tall"><canvas id="chartSelfRxPerChance"></canvas></div>
           <ul class="conclusions" id="fig4b-conc"></ul>
         </div>
       </div>
       <div class="card">
-        <h3 style="margin: 0 0 0.5rem; font-size: 1rem">
-          Rival reaction per rival non-goal chance
-        </h3>
+        <h3 class="chart-panel-title">Rival reaction per rival non-goal chance</h3>
         <div class="chart-box tall"><canvas id="chartRivalRxPerChance"></canvas></div>
         <ul class="conclusions" id="fig4c-conc"></ul>
         <p class="note" id="fig4-note-n"></p>
@@ -937,7 +943,7 @@
                       ? el.tooltipPosition()
                       : { x: el.x, y: el.y };
                   ctx.save();
-                  ctx.fillStyle = cssHex("--neutral-100", "#f0f0f0");
+                  ctx.fillStyle = cssHex("--chart-bar-label", "#0a0a0a");
                   ctx.font = "600 11px Inter, Helvetica, Arial, sans-serif";
                   ctx.textAlign = "center";
                   ctx.textBaseline = "bottom";

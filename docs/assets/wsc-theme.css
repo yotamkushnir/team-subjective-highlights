@@ -3,17 +3,18 @@
  * Synced from vendor/wsc-components-library @ 6d2649eb04d0fe56134363d0c725af0deb756c48
  * Source of truth: vendor/wsc-components-library/src/theme/wscTheme.ts (wscTheme object).
  * Typography: Inter per getTheme() in the same file.
+ * Dashboard accents use brand yellow; charts use neutral white vs grey bars (see --chart-*).
  *
  * To refresh: update the submodule, align values with src/theme/wscTheme.ts, bump the commit hash above.
  */
 
 :root {
-  /* Primary */
-  --primary-100: #80b8ff;
-  --primary-300: #5aa3ff;
-  --primary-500: #3079d6;
-  --primary-700: #13244d;
-  --primary-contrast-text: #f0f0f0;
+  /* Primary — WSC yellow (dashboard accent; replaces blue) */
+  --primary-100: #f1ff6c;
+  --primary-300: #e5ff00;
+  --primary-500: #b9d300;
+  --primary-700: #3f3f2b;
+  --primary-contrast-text: #333333;
 
   /* Neutral */
   --neutral-0: #ffffff;
@@ -55,7 +56,7 @@
   /* Radius & shadow (wscTheme.radius / shadow) */
   --radius-m: 0.571rem;
   --radius-l: 1.143rem;
-  --shadow-s1: 0px 4px 10px 2px rgba(58, 89, 134, 0.15);
+  --shadow-s1: 0px 4px 10px 2px rgba(0, 0, 0, 0.2);
 
   /* Aliases used by layout */
   --supporting-pink: var(--supporting-pink-300);
@@ -67,15 +68,18 @@
   --text: var(--neutral-100);
   --muted: var(--neutral-300);
   --accent: var(--primary-300);
+  --heading-accent: var(--primary-300);
   --border: var(--neutral-600);
   --callout: var(--neutral-700);
   --maxw: 54rem;
 
-  /* Chart.js (winner = success[300], loser = supporting.pink[300]) */
-  --chart-winner-rgba: rgba(0, 178, 124, 0.78);
-  --chart-loser-rgba: rgba(255, 96, 201, 0.78);
-  --chart-grid: var(--neutral-500);
+  /* Chart.js — winner = WSC white / near-white, loser = WSC grey */
+  --chart-winner-rgba: rgba(240, 240, 240, 0.92);
+  --chart-loser-rgba: rgba(97, 97, 97, 0.92);
+  --chart-grid: var(--neutral-600);
   --chart-label-text: var(--neutral-200);
+  /* Values drawn above bars (readable on light + mid-grey bars) */
+  --chart-bar-label: #0a0a0a;
 
   /* Error / banner */
   --banner-error-bg: var(--warning-700);
