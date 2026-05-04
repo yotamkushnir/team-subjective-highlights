@@ -70,7 +70,7 @@ git commit -m "Your message"
 git push origin main
 ```
 
-Include **`docs/index.html`** and **`docs/stats.json`** whenever you rerun the embed step after changing numbers.
+The **Deploy GitHub Pages** workflow (on push to `main`) publishes the whole **`docs/`** folder. After changing numbers, commit **`docs/stats.json`** (and any **`docs/index.html`** edits) so the live site matches.
 
 ---
 
@@ -82,4 +82,4 @@ Python **3** + `pandas`, `openpyxl` (`requirements.txt`).
 
 ## Editing
 
-Markdown/HTML/JS in-repo; no build step except stats embed for numbers.
+Markdown/HTML/JS in-repo; run **`build_stats.py`** when the spreadsheet changes.

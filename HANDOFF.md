@@ -21,7 +21,7 @@ The **live dashboard** is a static Chart.js page on GitHub Pages. Charts read **
 | **Live report (GitHub Pages)** | https://yotamkushnir.github.io/team-subjective-highlights/ |
 | **Git repository** | https://github.com/yotamkushnir/team-subjective-highlights |
 
-After a push, Pages may take **1–2 minutes** to update; use a **hard refresh** if charts or copy look stale.
+After a push, the **Deploy GitHub Pages** workflow publishes `docs/` (usually under a minute). Use a **hard refresh** if charts or copy look stale.
 
 ---
 
@@ -108,6 +108,8 @@ git commit -m "Refresh stats" && git push
 ---
 
 ## Publish to GitHub / Pages
+
+The repo uses **GitHub Actions** (`.github/workflows/pages.yml`) to deploy the **`docs/`** folder — not legacy branch/Jekyll builds.
 
 Local commits are not live until pushed:
 
