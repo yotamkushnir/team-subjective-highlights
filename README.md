@@ -34,7 +34,7 @@ Submodule: **`vendor/wsc-components-library`** ([WSCSportsEngineering/wsc-compon
 git submodule update --init --recursive
 ```
 
-Published styling is **`docs/assets/wsc-theme.css`** (synced from `wscTheme` — see file header).
+Published styling is **`docs/assets/wsc-theme.css`** (synced from `wscTheme` — see file header). Bar charts use **winner = `success[100]`** (green) and **loser = `neutral[200]`** (grey).
 
 ---
 

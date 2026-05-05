@@ -717,9 +717,9 @@
           var v = rootStyle.getPropertyValue(name).trim();
           return v || fallback;
         }
-        /* Matches docs/assets/wsc-theme.css — lightYellow[100] / lightOrange[100] */
-        var WSC_WIN = cssHex("--chart-winner-rgba", "rgba(255, 255, 215, 0.92)");
-        var WSC_LOSE = cssHex("--chart-loser-rgba", "rgba(255, 198, 159, 0.92)");
+        /* Matches docs/assets/wsc-theme.css — success[100] / neutral[200] (WSC green vs grey) */
+        var WSC_WIN = cssHex("--chart-winner-rgba", "rgba(0, 229, 160, 0.92)");
+        var WSC_LOSE = cssHex("--chart-loser-rgba", "rgba(186, 186, 186, 0.92)");
         var WSC_GRID = cssHex("--chart-grid", "#404040");
         var WSC_CHART_TEXT = cssHex("--chart-label-text", "#bababa");
         var CHART_BAR_EDGE = "rgba(0, 0, 0, 0.32)";

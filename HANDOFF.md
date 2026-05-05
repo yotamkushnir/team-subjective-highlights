@@ -41,7 +41,7 @@ After a push, the **Deploy GitHub Pages** workflow publishes `docs/` (usually un
 | Path | Role |
 |------|------|
 | `docs/index.html` | **Dashboard:** Chart.js + layout; loads **`stats.json`** at runtime + **`<script>`** for figures and copy (header + lead, **Executive summary** with white “When we win/lose…” section titles and yellow collapsible rows, **Highlights from the data**, figures, **Deep dive** in topic cards). |
-| `docs/assets/wsc-theme.css` | **WSC design tokens** for Pages (yellow accent; chart fills = light yellow / light orange 100; logo loads from `assets/` with GitHub Pages URL fallback on error). |
+| `docs/assets/wsc-theme.css` | **WSC design tokens** for Pages (yellow accent; chart fills = success green / neutral grey; logo loads from `assets/` with GitHub Pages URL fallback on error). |
 | `vendor/wsc-components-library` | **Git submodule** — `wscTheme` source (`src/theme/wscTheme.ts`). |
 | `docs/stats.json` | Machine-readable aggregates — output of `build_stats.py`. |
 | `scripts/build_stats.py` | Reads enriched **Excel** → writes `docs/stats.json` (PBP column aliases supported). |
@@ -60,7 +60,7 @@ After a push, the **Deploy GitHub Pages** workflow publishes `docs/` (usually un
 
 - **Accent:** WSC **yellow** (`--primary-300`, etc.) for links, tags, figure titles, collapsible summaries.
 - **Executive block:** Section lines **“When we win…” / “When we lose…”** are **white**; each **row label** (e.g. “Breathe more.”) is the `<details>` summary and stays **yellow**.
-- **Charts:** **Winner** series ≈ **light yellow 100**, **Loser** series ≈ **light orange 100** (from `wsc-theme.css`), with a thin dark bar outline.
+- **Charts:** **Winner** series ≈ **`palette.success[100]`** (WSC green), **Loser** series ≈ **`palette.neutral[200]`** (grey), from `wsc-theme.css` (`--chart-winner-rgba` / `--chart-loser-rgba`), with a thin dark bar outline.
 - **Logo:** `assets/wsc-mark-white.svg` — if a relative path fails on Pages, `onerror` falls back to the absolute `github.io` asset URL.
 
 ---
@@ -173,4 +173,4 @@ Update **`HANDOFF.md`** when you change metrics, figure order, spreadsheet paths
 
 ---
 
-*Last consolidated: yellow/orange chart series, white exec section titles, deep-dive topic cards, logo fallback, PBP JSON keys + spreadsheet aliases.*
+*Last consolidated: green/grey chart series (success[100] vs neutral[200]), white exec section titles, deep-dive topic cards, logo fallback, PBP JSON keys + spreadsheet aliases.*

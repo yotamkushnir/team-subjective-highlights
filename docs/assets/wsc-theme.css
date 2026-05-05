@@ -3,7 +3,7 @@
  * Synced from vendor/wsc-components-library @ 6d2649eb04d0fe56134363d0c725af0deb756c48
  * Source of truth: vendor/wsc-components-library/src/theme/wscTheme.ts (wscTheme object).
  * Typography: Inter per getTheme() in the same file.
- * Dashboard accents use brand yellow; charts use supporting lightYellow[100] vs lightOrange[100] (see --chart-*).
+ * Dashboard accents use brand yellow; charts use palette.success[100] vs palette.neutral[200] (see --chart-*).
  *
  * To refresh: update the submodule, align values with src/theme/wscTheme.ts, bump the commit hash above.
  */
@@ -76,9 +76,9 @@
   --callout: var(--neutral-700);
   --maxw: 54rem;
 
-  /* Chart.js — wscTheme.supporting.lightYellow[100] vs lightOrange[100] */
-  --chart-winner-rgba: rgba(255, 255, 215, 0.92);
-  --chart-loser-rgba: rgba(255, 198, 159, 0.92);
+  /* Chart.js — wscTheme.palette.success[100] vs neutral[200] (#00E5A0 / #BABABA) */
+  --chart-winner-rgba: rgba(0, 229, 160, 0.92);
+  --chart-loser-rgba: rgba(186, 186, 186, 0.92);
   --chart-grid: var(--neutral-600);
   --chart-label-text: var(--neutral-200);
   /* Values drawn above bars (readable on light + mid-grey bars) */

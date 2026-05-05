@@ -18,7 +18,7 @@ We **did not** analyze **which specific plays** made the cut at PBP level—whet
 
 More **rival airtime**—rival non-goal chances, **rival celebration + rival reaction** seconds, and (in the sheet) optional rival non-goal replays—tracks **ceding space** to the opponent on channels where producers control discretion. **Reaction is not treated as the opposite of celebration**; both are **persona exposure** buckets.
 
-> **Live dashboard:** `rival_non_goal_replays` remains in `stats.json` but is **not charted** (small _n_). Tables below still document the aggregate for reference.
+> **Live dashboard:** `rival_non_goal_replays` remains in `stats.json` but is **not charted** (small _n_). Tables below still document the aggregate for reference. Bar charts encode **winner** vs **loser** with WSC **`palette.success[100]`** (green) and **`palette.neutral[200]`** (grey); see `docs/assets/wsc-theme.css`.
 
 ### Later / exploratory (not primary inference)
 
